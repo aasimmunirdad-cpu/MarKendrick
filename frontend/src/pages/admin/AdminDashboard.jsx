@@ -8,7 +8,7 @@ import { useAuth } from "../../context/AuthContext";
 import Seo from "../../components/Seo";
 
 const TABS = ["Posts", "Case Studies", "Testimonials", "Whitepapers", "Newsletter", "Leads", "Bookings", "Subscribers"];
-const EMPTY_POST = { title: "", category: "Strategy", excerpt: "", body: "", author: "MarKendrick Team", tags: "", cover: "", read_time: "5 min read", published: true };
+const EMPTY_POST = { title: "", category: "Strategy", excerpt: "", body: "", author: "Dr Aasim Munir Dad", tags: "", cover: "", read_time: "5 min read", published: true };
 const EMPTY_CS = { client: "", title: "", industry: "", services: "", summary: "", challenge: "", approach: "", results: "", quote: "", quote_author: "", cover: "", published: true };
 
 export default function AdminDashboard() {

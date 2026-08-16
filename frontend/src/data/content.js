@@ -232,24 +232,10 @@ export const OFFICE = {
 
 export const AUTHORS = [
   {
-    slug: "ayesha-rahman",
-    name: "Ayesha Rahman",
-    role: "Founder & Chief Strategy Officer",
-    bio: "Fourteen years leading brand strategy and consumer research across South Asia and the Gulf, with a PhD in consumer behaviour. Ayesha founded MarKendrick on one conviction: research should end in decisions, not decks.",
-    focus: "Brand strategy, positioning, consumer research",
-  },
-  {
-    slug: "hassan-raza",
-    name: "Hassan Raza",
-    role: "Head of Insight & Neuromarketing",
-    bio: "Behavioural scientist behind MarKendrick's neuromarketing lab. Hassan has run eye-tracking and implicit-testing programmes for FMCG brands across three continents.",
-    focus: "Neuromarketing, behavioural science, research methodology",
-  },
-  {
-    slug: "sana-qureshi",
-    name: "Sana Qureshi",
-    role: "Director of Performance",
-    bio: "Sana has managed nine figures of media spend across Meta, Google and TikTok for brands in Pakistan, the Gulf and the UK. She is allergic to vanity metrics and devoted to incrementality.",
-    focus: "Performance marketing, measurement, media strategy",
+    slug: "aasim-munir-dad",
+    name: "Dr Aasim Munir Dad",
+    role: "Founder & Chief Executive Officer",
+    bio: "A decade of published research in neuromarketing, consumer psychology and data- and AI-driven marketing strategy, paired with hands-on experience in market research and financial services. Founded MarKendrick to bring that same evidence-first discipline to client campaigns.",
+    focus: "Research-led strategy, neuromarketing, brand positioning",
   },
 ];
