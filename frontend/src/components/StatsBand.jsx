@@ -6,8 +6,10 @@ export function Stat({ value, suffix, label }) {
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const [display, setDisplay] = useState(0);
 
+  const isNumeric = typeof value === "number";
+
   useEffect(() => {
-    if (!inView) return;
+    if (!inView || !isNumeric) return;
     const start = performance.now();
     const dur = 1400;
     let raf;
@@ -18,12 +20,12 @@ export function Stat({ value, suffix, label }) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [inView, value]);
+  }, [inView, value, isNumeric]);
 
   return (
     <div ref={ref} data-testid={`stat-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>
-      <p className="font-display text-5xl sm:text-6xl font-extrabold tracking-tighter">
-        {display}<span className="text-vermilion">{suffix}</span>
+      <p className="font-display text-4xl sm:text-5xl font-extrabold tracking-tighter">
+        {isNumeric ? display : value}<span className="text-vermilion">{suffix}</span>
       </p>
       <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mt-2">{label}</p>
     </div>

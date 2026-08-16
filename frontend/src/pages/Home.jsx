@@ -117,7 +117,7 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
           <StatsBand
             items={[
-              { value: 19, suffix: "", label: "Marketing capabilities" },
+              { value: "Full-Service", suffix: "", label: "Marketing capabilities" },
               { value: 13, suffix: "", label: "Industry playbooks" },
               { value: 6, suffix: "", label: "Regions served" },
               { value: 24, suffix: "h", label: "Response time, max" },
