@@ -97,6 +97,10 @@
     color: rgba(30, 50, 69, 0.14);
 }
 
+.marquee-text {
+    color: rgba(30, 50, 69, 0.62);
+}
+
 .mask-line {
     display: block;
     overflow: hidden;

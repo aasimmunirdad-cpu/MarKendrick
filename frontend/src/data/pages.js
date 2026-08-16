@@ -296,7 +296,7 @@ export const FAQS = [
       },
       {
         q: "What industries do you work with?",
-        a: "We have dedicated playbooks across 13 sectors: Real Estate & Property Development, Education & EdTech, Finance, Banking & Fintech, E-commerce & D2C Retail, Healthcare & Pharmaceuticals, Textile, Apparel & Fashion, Food, Beverage & Restaurants, Automotive & Auto Services, Travel, Tourism & Hospitality, IT, Software & Tech Startups, FMCG & Consumer Goods, Weddings, Events & Entertainment, and NGOs & Development Sector. The same diagnostic method applies to any category we haven't built a dedicated page for yet.",
+        a: "We have dedicated playbooks across sectors including Real Estate & Property Development, Education & EdTech, Finance, Banking & Fintech, E-commerce & D2C Retail, Healthcare & Pharmaceuticals, Textile, Apparel & Fashion, Food, Beverage & Restaurants, Automotive & Auto Services, Travel, Tourism & Hospitality, IT, Software & Tech Startups, FMCG & Consumer Goods, Weddings, Events & Entertainment, and NGOs & Development Sector. The same diagnostic method applies to any category we haven't built a dedicated page for yet.",
       },
       {
         q: "What is a Diagnostic Audit?",

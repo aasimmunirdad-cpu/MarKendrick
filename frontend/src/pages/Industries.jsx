@@ -7,12 +7,12 @@ import Seo from "../components/Seo";
 export default function Industries() {
   return (
     <div data-testid="industries-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title="Industries We Serve — 13 Sector Playbooks" description="Marketing playbooks for 13 sectors: real estate, education, fintech, e-commerce, healthcare, fashion, F&B, automotive, travel, tech, FMCG, events and NGOs." />
+      <Seo title="Industries We Serve — Sector Playbooks" description="Marketing playbooks across every sector: real estate, education, fintech, e-commerce, healthcare, fashion, F&B, automotive, travel, tech, FMCG, events and NGOs." />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-16">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">Industries We Serve</p>
           <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-7xl mb-6">Category-fluent.<br /><span className="text-vermilion">Never generic.</span></h1>
-          <p className="text-muted-foreground max-w-xl text-lg">Thirteen sector playbooks, each built from real category research. The same diagnostic method applies anywhere buyers decide.</p>
+          <p className="text-muted-foreground max-w-xl text-lg">Sector playbooks, each built from real category research. The same diagnostic method applies anywhere buyers decide.</p>
         </Reveal>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">
           {INDUSTRIES_DETAILED.map((ind, i) => (

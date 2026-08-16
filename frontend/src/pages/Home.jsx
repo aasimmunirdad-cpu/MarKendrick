@@ -40,7 +40,7 @@ export default function Home() {
 
   return (
     <div data-testid="home-page">
-      <Seo title="Global Marketing Agency in Lahore" description="MarKendrick is an insight-driven marketing agency rooted in Lahore, serving globally. Market research, neuromarketing, branding and performance marketing." />
+      <Seo title="Global Marketing & Media Agency in Lahore" description="MarKendrick is a full-service marketing and media agency rooted in Lahore, serving globally. Market research, neuromarketing, branding, media and performance marketing." />
 
       {/* HERO */}
       <section ref={heroRef} className="relative min-h-[100svh] flex items-end overflow-hidden" data-testid="hero-section">
@@ -56,7 +56,7 @@ export default function Home() {
             transition={{ delay: 0.1, duration: 0.7 }}
             className="text-xs sm:text-sm uppercase tracking-[0.35em] text-muted-foreground mb-6"
           >
-            A Global Insight-Driven Marketing Agency
+            A Global Insight-Driven Marketing & Media Agency
           </motion.p>
           <MaskLines
             lines={["INSIGHTS", "THAT INFORM."]}
@@ -105,8 +105,8 @@ export default function Home() {
       <section className="py-10 sm:py-14 border-y border-border overflow-hidden" data-testid="marquee-section">
         <Marquee speed={30} gradient={false}>
           {["Market Research", "Neuromarketing", "Branding", "Performance Marketing", "SEO", "Consumer Insight", "Advertising", "B2B Growth"].map((t) => (
-            <span key={t} className="mx-8 font-display font-extrabold text-4xl sm:text-6xl tracking-tighter outline-text whitespace-nowrap">
-              {t} <span className="text-vermilion" style={{ WebkitTextStroke: 0 }}>·</span>
+            <span key={t} className="mx-8 font-display font-extrabold text-4xl sm:text-6xl tracking-tighter marquee-text whitespace-nowrap">
+              {t} <span className="text-vermilion">·</span>
             </span>
           ))}
         </Marquee>
@@ -117,8 +117,8 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
           <StatsBand
             items={[
-              { value: "Full-Service", suffix: "", label: "Marketing capabilities" },
-              { value: 13, suffix: "", label: "Industry playbooks" },
+              { value: "360°", suffix: "", label: "Marketing & media agency" },
+              { value: "Multi-Sector", suffix: "", label: "Industry playbooks" },
               { value: 6, suffix: "", label: "Regions served" },
               { value: 24, suffix: "h", label: "Response time, max" },
             ]}
@@ -188,7 +188,7 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-5 sm:px-8 mb-8 flex items-end justify-between gap-6">
           <Reveal>
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-2">Who We Serve</p>
-            <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tighter">13 sector playbooks.</h2>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tighter">Playbooks for every sector.</h2>
           </Reveal>
           <Link to="/industries" data-testid="industries-strip-all-link" className="inline-flex items-center gap-2 text-sm font-semibold text-vermilion hover:gap-3 transition-all shrink-0">
             All industries <ArrowUpRight size={16} />

@@ -10,14 +10,14 @@ const STUDIO_VIDEO = "/media/studio-session.mp4";
 export default function About() {
   return (
     <div data-testid="about-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title="About — Rooted in Lahore, Built for the World" description="MarKendrick blends Welsh insight heritage with Lahore energy. Meet the team and the story behind the name." />
+      <Seo title="About — Rooted in Lahore, Built for the World" description="MarKendrick is a full-service marketing and media agency blending Welsh insight heritage with Lahore energy. Meet the team and the story behind the name." />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-20">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">About MarKendrick</p>
           <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-7xl mb-6">Welsh rigour.<br /><span className="text-vermilion">Lahore fire.</span></h1>
           <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed">
             The name is a collision: <strong className="text-foreground">Mar</strong> — from the Welsh <em>màr</em>, boundary lines drawn with intent — and <strong className="text-foreground">Kendrick</strong>, the Welsh name of our co-founder's grandfather, a market researcher in Cardiff who believed every number hides a human story.
-            We carry both: the discipline of evidence and the courage of a boundary-pushing new agency in Lahore.
+            We carry both: the discipline of evidence and the courage of a boundary-pushing marketing and media agency in Lahore.
           </p>
         </Reveal>
 

@@ -7,7 +7,7 @@ import Seo from "../components/Seo";
 export default function Services() {
   return (
     <div data-testid="services-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title="Marketing Services — Full-Service Capabilities" description="From market research and neuromarketing to SEO, performance marketing and brand strategy — every service under one insight-driven roof." />
+      <Seo title="Marketing & Media Services — Full-Service Capabilities" description="From market research and neuromarketing to SEO, performance marketing, media and brand strategy — every capability under one insight-driven roof." />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-20">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">The Services Hub</p>
