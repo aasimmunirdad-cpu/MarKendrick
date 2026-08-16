@@ -95,7 +95,7 @@ export default function Footer() {
         </div>
 
         <div className="py-8 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="font-display font-extrabold text-lg tracking-tighter">Mar<span className="text-vermilion">Kendrick</span></p>
+          <p className="font-display font-extrabold text-lg tracking-tighter"><span className="font-script text-vermilion text-xl align-middle -mr-0.5">mar</span>Kendrick</p>
           <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} MarKendrick. Insights that Inform. Strategies that Perform.</p>
           <div className="flex gap-5 text-xs text-muted-foreground">
             <Link to="/privacy-policy" className="hover:text-vermilion transition-colors">Privacy Policy</Link>

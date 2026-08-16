@@ -10,13 +10,16 @@ module.exports = {
       fontFamily: {
         display: ['Syne', 'sans-serif'],
         sans: ['"DM Sans"', 'sans-serif'],
+        script: ['Caveat', 'cursive'],
+        mono: ['"Space Mono"', 'monospace'],
       },
       colors: {
         ink: '#0A0A0A',
         coal: '#141414',
+        navy: '#1E3245',
         vermilion: {
-          DEFAULT: '#FF3B30',
-          hover: '#FF5240',
+          DEFAULT: '#E0923D',
+          hover: '#EEA654',
         },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',

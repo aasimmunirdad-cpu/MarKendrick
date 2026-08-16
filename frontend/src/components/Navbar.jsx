@@ -36,7 +36,7 @@ export default function Navbar({ onSearchOpen }) {
     >
       <nav className="max-w-[1400px] mx-auto px-5 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
         <Link to="/" data-testid="nav-logo" className="font-display font-extrabold text-xl sm:text-2xl tracking-tighter">
-          Mar<span className="text-vermilion">Kendrick</span>
+          <span className="font-script text-vermilion text-2xl sm:text-3xl align-middle -mr-0.5">mar</span>Kendrick
         </Link>
 
         <div className="hidden lg:flex items-center gap-8">
