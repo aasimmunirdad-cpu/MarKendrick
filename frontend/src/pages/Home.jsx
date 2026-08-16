@@ -277,7 +277,7 @@ export default function Home() {
         <div className="relative aspect-[16/9] sm:aspect-[21/9] max-h-[80vh] w-full">
           <video
             src="/media/studio-session.mp4"
-            poster="https://customer-assets-eiarnc6j.emergentagent.net/job_insights-perform/artifacts/bce0bppp_Team_working_in_marketing_agency_202608090142.webp"
+            poster="/media/office/office-2.jpg"
             autoPlay
             muted
             loop

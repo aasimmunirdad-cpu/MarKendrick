@@ -4,7 +4,7 @@ import { TEAM, INDUSTRIES, OFFICE } from "../data/content";
 import { Reveal, SectionHeading } from "../components/motion";
 import Seo from "../components/Seo";
 
-const TEAM_IMG = "https://customer-assets-eiarnc6j.emergentagent.net/job_insights-perform/artifacts/bce0bppp_Team_working_in_marketing_agency_202608090142.webp";
+const TEAM_IMG = "/media/office/office-1.jpg";
 const STUDIO_VIDEO = "/media/studio-session.mp4";
 
 export default function About() {

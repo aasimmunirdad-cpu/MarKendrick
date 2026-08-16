@@ -4,8 +4,10 @@ import { ArrowUpRight, Loader2, Check } from "lucide-react";
 import { toast } from "sonner";
 import { api, formatApiError } from "../lib/api";
 import { SERVICES, OFFICE } from "../data/content";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Footer() {
+  const { theme } = useTheme();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
 
@@ -95,7 +97,11 @@ export default function Footer() {
         </div>
 
         <div className="py-8 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="font-display font-extrabold text-lg tracking-tighter"><span className="font-script text-vermilion text-xl align-middle -mr-0.5">mar</span>Kendrick</p>
+          <img
+            src={theme === "dark" ? "/media/brand/logo-white-mark.png" : "/media/brand/logo-color-mark.png"}
+            alt="MarKendrick"
+            className="h-6 w-auto"
+          />
           <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} MarKendrick. Insights that Inform. Strategies that Perform.</p>
           <div className="flex gap-5 text-xs text-muted-foreground">
             <Link to="/privacy-policy" className="hover:text-vermilion transition-colors">Privacy Policy</Link>
