@@ -15,6 +15,7 @@ import httpx
 from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
+import certifi
 from pydantic import BaseModel, EmailStr
 
 ROOT_DIR = Path(__file__).parent
@@ -23,7 +24,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 mongo_url = os.environ["MONGO_URL"]
-client = AsyncIOMotorClient(mongo_url)
+client = AsyncIOMotorClient(mongo_url, tlsCAFile=certifi.where())
 db = client[os.environ["DB_NAME"]]
 
 EMAIL_BASE_URL = "https://integrations.emergentagent.com"
