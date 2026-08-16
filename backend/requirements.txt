@@ -27,3 +27,4 @@ reportlab==5.0.0
 # headshots are already saved as static files in frontend/public/media/team/,
 # so this script does not need to run again unless you want new photos
 # through Emergent specifically.
+certifi==2024.8.30
