@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Sun, Moon, Menu, X, ArrowUpRight } from "lucide-react";
-import { useTheme } from "../context/ThemeContext";
+import { Search, Menu, X, ArrowUpRight } from "lucide-react";
 
 const LINKS = [
   { to: "/services", label: "Services" },
@@ -14,7 +13,6 @@ const LINKS = [
 ];
 
 export default function Navbar({ onSearchOpen }) {
-  const { theme, toggle } = useTheme();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -37,7 +35,7 @@ export default function Navbar({ onSearchOpen }) {
       <nav className="max-w-[1400px] mx-auto px-5 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
         <Link to="/" data-testid="nav-logo" className="flex items-center">
           <img
-            src={theme === "dark" ? "/media/brand/logo-white-mark.png" : "/media/brand/logo-color-mark.png"}
+            src="/media/brand/logo-color-mark.png"
             alt="MarKendrick"
             className="h-7 sm:h-8 w-auto"
           />
@@ -68,14 +66,6 @@ export default function Navbar({ onSearchOpen }) {
             className="p-2 rounded-full border border-border hover:border-vermilion hover:text-vermilion transition-colors duration-200"
           >
             <Search size={17} />
-          </button>
-          <button
-            data-testid="theme-toggle-button"
-            onClick={toggle}
-            aria-label="Toggle theme"
-            className="p-2 rounded-full border border-border hover:border-vermilion hover:text-vermilion transition-colors duration-200"
-          >
-            {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
           </button>
           <Link
             to="/book-consultation"

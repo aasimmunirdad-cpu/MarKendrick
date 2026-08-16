@@ -9,7 +9,7 @@ export default function NotFound() {
       <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-6">Error 404 — Lost Signal</p>
       <MaskLines
         lines={["THIS PAGE", "WENT OFF-BRIEF."]}
-        className="font-display font-extrabold tracking-tighter leading-[0.95] text-[13vw] sm:text-[9vw]"
+        className="font-display font-extrabold tracking-tighter leading-[1.05] text-[11vw] sm:text-[7.5vw]"
       />
       <p className="text-muted-foreground mt-6 mb-10 max-w-md">The URL you followed doesn't map to anything we've published. It happens — even to research agencies.</p>
       <Link to="/" data-testid="not-found-home-button" className="inline-flex items-center gap-2 bg-vermilion hover:bg-vermilion-hover text-white font-semibold px-8 py-4 rounded-full transition-colors">

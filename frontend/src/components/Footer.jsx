@@ -4,10 +4,7 @@ import { ArrowUpRight, Loader2, Check } from "lucide-react";
 import { toast } from "sonner";
 import { api, formatApiError } from "../lib/api";
 import { SERVICES, OFFICE } from "../data/content";
-import { useTheme } from "../context/ThemeContext";
-
 export default function Footer() {
-  const { theme } = useTheme();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
 
@@ -93,12 +90,12 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-border overflow-hidden select-none" aria-hidden="true">
-          <p className="font-display font-extrabold tracking-tighter leading-none text-[13.5vw] outline-text whitespace-nowrap text-center -mb-[2vw]">MARKENDRICK</p>
+          <p className="font-display font-extrabold tracking-tighter leading-none text-[clamp(2.5rem,9vw,8.5rem)] outline-text whitespace-nowrap text-center overflow-hidden -mb-[2vw]">MARKENDRICK</p>
         </div>
 
         <div className="py-8 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <img
-            src={theme === "dark" ? "/media/brand/logo-white-mark.png" : "/media/brand/logo-color-mark.png"}
+            src="/media/brand/logo-color-mark.png"
             alt="MarKendrick"
             className="h-6 w-auto"
           />

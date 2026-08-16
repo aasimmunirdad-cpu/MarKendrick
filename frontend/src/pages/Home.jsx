@@ -140,10 +140,10 @@ export default function Home() {
                   <div className="lg:col-span-2">
                     <span className="font-display text-5xl sm:text-7xl font-extrabold text-vermilion tracking-tighter">{m.n}</span>
                   </div>
-                  <h3 className={`font-display text-2xl sm:text-4xl font-bold tracking-tighter lg:col-span-4 ${i % 2 === 1 ? "lg:order-3 lg:col-start-7" : ""}`}>
+                  <h3 className="font-display text-2xl sm:text-4xl font-bold tracking-tighter lg:col-span-4">
                     {m.title}
                   </h3>
-                  <p className={`text-base sm:text-lg text-muted-foreground leading-relaxed lg:col-span-5 lg:col-start-7 ${i % 2 === 1 ? "lg:order-2 lg:col-start-2" : ""}`}>
+                  <p className="text-base sm:text-lg text-muted-foreground leading-relaxed lg:col-span-5 lg:col-start-7">
                     {m.text}
                   </p>
                 </div>
@@ -346,7 +346,7 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
           <Reveal>
             <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-6">Ready when you are</p>
-            <h2 className="font-display font-extrabold tracking-tighter leading-[0.95] text-[11vw] sm:text-[7.5vw] mb-10">
+            <h2 className="font-display font-extrabold tracking-tighter leading-[1.08] text-[10vw] sm:text-[6.5vw] mb-10">
               Let's make your<br />marketing <span className="text-vermilion">perform.</span>
             </h2>
             <Link
