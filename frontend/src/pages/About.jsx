@@ -1,29 +1,52 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { TEAM, INDUSTRIES, OFFICE } from "../data/content";
+import { INDUSTRIES } from "../data/content";
 import { Reveal, SectionHeading } from "../components/motion";
 import Seo from "../components/Seo";
 
 const TEAM_IMG = "/media/office/office-1.jpg";
 const STUDIO_VIDEO = "/media/studio-session.mp4";
 
+const DIFFERENTIATORS = [
+  {
+    n: "01",
+    title: "Diagnosis before delivery",
+    text: "Every engagement opens with a research-led audit — consumer psychology, market data and competitor signal — before a single campaign is built.",
+  },
+  {
+    n: "02",
+    title: "One accountable team",
+    text: "Market research, brand strategy, digital, media and performance marketing sit under one roof. No agency-of-agencies hand-offs, no diluted accountability.",
+  },
+  {
+    n: "03",
+    title: "Evidence, not templates",
+    text: "Our methods draw on published research in neuromarketing and data- and AI-driven marketing strategy — not repurposed playbooks.",
+  },
+  {
+    n: "04",
+    title: "Measured on outcomes",
+    text: "Revenue, pipeline and market share are the scoreboard. Reach and impressions are inputs, not results.",
+  },
+];
+
 export default function About() {
   return (
     <div data-testid="about-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title="About — Rooted in Lahore, Built for the World" description="MarKendrick is a full-service marketing and media agency blending Welsh insight heritage with Lahore energy. Meet the team and the story behind the name." />
+      <Seo title="About MarKendrick — Full-Service Marketing & Media Agency" description="MarKendrick is a research-led, full-service marketing and media agency. Evidence-based strategy across market research, brand, digital, media and performance marketing." />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-20">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">About MarKendrick</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-7xl mb-6">Welsh rigour.<br /><span className="text-vermilion">Lahore fire.</span></h1>
+          <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-7xl mb-6">Built on evidence.<br /><span className="text-vermilion">Measured by results.</span></h1>
           <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed">
-            The name is a collision: <strong className="text-foreground">Mar</strong> — from the Welsh <em>màr</em>, boundary lines drawn with intent — and <strong className="text-foreground">Kendrick</strong>, the Welsh name of our co-founder's grandfather, a market researcher in Cardiff who believed every number hides a human story.
-            We carry both: the discipline of evidence and the courage of a boundary-pushing marketing and media agency in Lahore.
+            MarKendrick is a full-service marketing and media agency built on one premise: strategy should start with evidence, not opinion. Every engagement runs through a diagnostic process rooted in consumer psychology and data before any campaign work begins — a discipline shaped by over a decade of published research in neuromarketing, digital and AI-driven marketing strategy.
+            We operate across market research, brand strategy, digital, media and performance marketing — one accountable team, start to finish.
           </p>
         </Reveal>
 
         <Reveal className="mb-24">
           <div className="aspect-[21/9] overflow-hidden">
-            <img src={TEAM_IMG} alt="MarKendrick team collaborating in our Lahore studio" loading="lazy" className="w-full h-full object-cover" />
+            <img src={TEAM_IMG} alt="Inside MarKendrick's Lahore studio" loading="lazy" className="w-full h-full object-cover" />
           </div>
           <p className="text-xs text-muted-foreground mt-3">The strategy floor, Gulberg III, Lahore.</p>
         </Reveal>
@@ -46,16 +69,13 @@ export default function About() {
         </Reveal>
 
         <section className="mb-24">
-          <SectionHeading index="01" eyebrow="Leadership" title="The people behind the work." className="mb-14" />
+          <SectionHeading index="01" eyebrow="Why MarKendrick" title="What makes the work different." className="mb-14" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border">
-            {TEAM.map((t) => (
-              <div key={t.name} data-testid={`team-member-${t.initial.toLowerCase()}`} className="bg-background p-8 group hover:bg-card transition-colors duration-300">
-                <div className="w-24 h-24 rounded-full overflow-hidden mb-6 ring-2 ring-vermilion/40 group-hover:ring-vermilion group-hover:scale-105 transition-all duration-300">
-                  <img src={t.img} alt={`${t.name} — ${t.role} at MarKendrick`} loading="lazy" className="w-full h-full object-cover grayscale-[45%] group-hover:grayscale-0 transition-all duration-500" />
-                </div>
-                <h3 className="font-display text-xl font-bold tracking-tight mb-1">{t.name}</h3>
-                <p className="text-xs uppercase tracking-[0.2em] text-vermilion mb-4">{t.role}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">{t.bio}</p>
+            {DIFFERENTIATORS.map((d) => (
+              <div key={d.n} data-testid={`differentiator-${d.n}`} className="bg-background p-8 hover:bg-card transition-colors duration-300">
+                <span className="font-display text-3xl font-extrabold text-vermilion tracking-tighter mb-4 block">{d.n}</span>
+                <h3 className="font-display text-lg font-bold tracking-tight mb-3">{d.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{d.text}</p>
               </div>
             ))}
           </div>
@@ -70,6 +90,21 @@ export default function About() {
               </span>
             ))}
           </div>
+        </section>
+
+        <section className="mb-16 text-center border border-border p-10 sm:p-16">
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">Ready When You Are</p>
+          <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tighter mb-6">Let's put your strategy<br />through a diagnostic.</h2>
+          <p className="text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
+            Book a consultation and we'll show you exactly where your marketing has room to perform harder.
+          </p>
+          <Link
+            to="/book-consultation"
+            data-testid="about-book-consultation-button"
+            className="inline-flex items-center gap-2 bg-vermilion hover:bg-vermilion-hover text-white font-semibold px-8 py-4 rounded-full transition-colors"
+          >
+            Book a Consultation <ArrowUpRight size={18} />
+          </Link>
         </section>
 
         <section id="careers" className="border border-border bg-card/40 p-10 sm:p-16">

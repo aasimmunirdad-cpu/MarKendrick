@@ -222,13 +222,6 @@ export const INDUSTRIES = [
   "FMCG & Consumer Goods", "Weddings & Events", "NGOs & Development",
 ];
 
-export const TEAM = [
-  { name: "Ayesha Rahman", role: "Founder & Chief Strategy Officer", bio: "Fourteen years leading brand strategy across South Asia and the Gulf, with a PhD in consumer behaviour. Believes research should end in decisions, not decks.", initial: "AR", img: "/media/team/ayesha-rahman.png" },
-  { name: "Hassan Raza", role: "Head of Insight & Neuromarketing", bio: "Behavioural scientist behind our neuromarketing lab. Has run eye-tracking and implicit-testing programmes for FMCG brands across three continents.", initial: "HR", img: "/media/team/hassan-raza.png" },
-  { name: "Sana Qureshi", role: "Director of Performance", bio: "Managed nine figures of media spend across Meta, Google and TikTok. Allergic to vanity metrics.", initial: "SQ", img: "/media/team/sana-qureshi.png" },
-  { name: "Daniyal Sheikh", role: "Creative Director", bio: "Award-winning designer who thinks in systems. Leads brand identity and campaign craft across the agency.", initial: "DS", img: "/media/team/daniyal-sheikh.png" },
-];
-
 export const OFFICE = {
   city: "Lahore, Pakistan",
   address: "Gulberg III, Lahore, Punjab, Pakistan",

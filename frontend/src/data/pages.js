@@ -236,8 +236,8 @@ export const LOCATIONS = [
     slug: "united-kingdom",
     name: "Serving the United Kingdom",
     eyebrow: "Regional",
-    h1: "A Welsh-inspired agency, built for UK brands.",
-    intro: "Our name carries Welsh roots — and so does our method. UK brands get a research-led partner that thinks in evidence and delivers at offshore economics: insight studies, brand strategy, SEO and performance programs run by senior strategists, not account juniors.",
+    h1: "A research-led agency, built for UK brands.",
+    intro: "UK brands get a research-led partner that thinks in evidence and delivers at offshore economics: insight studies, brand strategy, SEO and performance programs run by senior strategists, not account juniors.",
     body2: "We work UK hours overlap, report in your formats, and price in a way that makes your current agency's retainer hard to defend.",
     points: [
       "UK-hours collaboration and weekly senior-led reporting",
