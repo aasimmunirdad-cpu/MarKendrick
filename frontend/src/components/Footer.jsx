@@ -72,7 +72,7 @@ export default function Footer() {
               {SERVICES.slice(0, 6).map((s) => (
                 <li key={s.slug}><Link to={`/services/${s.slug}`} className="hover:text-vermilion transition-colors">{s.name}</Link></li>
               ))}
-              <li><Link to="/services" className="text-vermilion font-medium inline-flex items-center gap-1">All 19 services <ArrowUpRight size={13} /></Link></li>
+              <li><Link to="/services" className="text-vermilion font-medium inline-flex items-center gap-1">All services <ArrowUpRight size={13} /></Link></li>
             </ul>
           </div>
 

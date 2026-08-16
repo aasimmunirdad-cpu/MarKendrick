@@ -7,11 +7,11 @@ import Seo from "../components/Seo";
 export default function Services() {
   return (
     <div data-testid="services-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title="Marketing Services — 19 Capabilities" description="From market research and neuromarketing to SEO, performance marketing and brand strategy — 19 services under one insight-driven roof." />
+      <Seo title="Marketing Services — Full-Service Capabilities" description="From market research and neuromarketing to SEO, performance marketing and brand strategy — every service under one insight-driven roof." />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-20">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">The Services Hub</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-7xl mb-6">19 capabilities.<br /><span className="text-vermilion">One engine.</span></h1>
+          <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-7xl mb-6">Every capability.<br /><span className="text-vermilion">One engine.</span></h1>
           <p className="text-muted-foreground max-w-xl text-lg">Every service begins with insight and ends with a number you can hold us to. Hire one, or run the full stack.</p>
           <Link to="/quiz" data-testid="services-quiz-banner" className="group mt-8 flex items-center justify-between border border-vermilion/40 bg-vermilion/5 p-6 max-w-xl hover:bg-vermilion/15 transition-colors">
             <div>

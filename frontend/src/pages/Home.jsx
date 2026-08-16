@@ -60,12 +60,12 @@ export default function Home() {
           </motion.p>
           <MaskLines
             lines={["INSIGHTS", "THAT INFORM."]}
-            className="font-display font-extrabold tracking-tighter leading-[0.95] text-[12.5vw] sm:text-[10vw] lg:text-[7.2vw]"
+            className="font-display font-extrabold tracking-tighter leading-[1.02] text-[11vw] sm:text-[8vw] lg:text-[4.5vw]"
             delay={0.25}
           />
           <MaskLines
             lines={["STRATEGIES", "THAT PERFORM."]}
-            className="font-display font-extrabold tracking-tighter leading-[0.95] text-[12.5vw] sm:text-[10vw] lg:text-[6.6vw] text-vermilion"
+            className="font-display font-extrabold tracking-tighter leading-[1.02] text-[11vw] sm:text-[8vw] lg:text-[4.2vw] text-vermilion"
             delay={0.55}
           />
           <motion.div
@@ -86,7 +86,7 @@ export default function Home() {
               data-testid="hero-explore-services-button"
               className="inline-flex items-center gap-2 border border-foreground/25 hover:border-vermilion hover:text-vermilion font-semibold px-8 py-4 rounded-full text-sm sm:text-base transition-colors duration-200"
             >
-              Explore 19 Services
+              Explore Services
             </Link>
           </motion.div>
         </motion.div>
@@ -157,7 +157,7 @@ export default function Home() {
       <section className="py-24 sm:py-36 bg-card/40 border-y border-border" data-testid="services-preview-section">
         <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
-            <SectionHeading index="01" eyebrow="What We Do" title="19 capabilities. One growth engine." />
+            <SectionHeading index="01" eyebrow="What We Do" title="Every capability. One growth engine." />
             <Link to="/services" data-testid="services-preview-all-link" className="inline-flex items-center gap-2 text-sm font-semibold text-vermilion hover:gap-3 transition-all shrink-0">
               All services <ArrowUpRight size={16} />
             </Link>

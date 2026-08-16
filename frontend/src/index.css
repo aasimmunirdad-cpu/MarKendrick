@@ -109,12 +109,13 @@
 }
 
 .outline-text {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.22);
-    color: transparent;
+    -webkit-text-stroke: 0;
+    color: rgba(255, 255, 255, 0.16);
 }
 
 .light .outline-text {
-    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.18);
+    -webkit-text-stroke: 0;
+    color: rgba(30, 50, 69, 0.14);
 }
 
 .mask-line {
