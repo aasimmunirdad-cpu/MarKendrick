@@ -86,7 +86,7 @@ export default function SearchOverlay({ open, onClose }) {
                 </button>
               </div>
 
-              <div className="mt-8 max-h-[55vh] overflow-y-auto pr-2 space-y-8 pb-8">
+              <div data-lenis-prevent className="mt-8 max-h-[55vh] overflow-y-auto pr-2 space-y-8 pb-8">
                 {matchedServices.length > 0 && (
                   <div>
                     <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Services</p>

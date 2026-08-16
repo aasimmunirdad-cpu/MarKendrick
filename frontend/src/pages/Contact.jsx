@@ -19,14 +19,22 @@ const stepAnim = {
 
 export default function Contact() {
   const [step, setStep] = useState(0);
-  const [form, setForm] = useState({ service: "", budget: "", timeline: "", name: "", email: "", company: "", message: "" });
+  const [form, setForm] = useState({ services: [], serviceOther: "", budget: "", timeline: "", name: "", email: "", company: "", message: "" });
   const [status, setStatus] = useState("idle");
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
+  const toggleService = (name) =>
+    setForm((f) => ({
+      ...f,
+      services: f.services.includes(name) ? f.services.filter((s) => s !== name) : [...f.services, name],
+    }));
 
   const submit = async () => {
     setStatus("loading");
     try {
-      await api.post("/leads", { ...form, source: "contact" });
+      const serviceParts = form.services.filter((s) => s !== "__other__");
+      if (form.services.includes("__other__")) serviceParts.push(`Other${form.serviceOther.trim() ? `: ${form.serviceOther.trim()}` : ""}`);
+      const { services, serviceOther, ...rest } = form;
+      await api.post("/leads", { ...rest, service: serviceParts.join(", "), source: "contact" });
       setStatus("done");
       toast.success("Brief received. We'll reply within one business day.");
     } catch (err) {
@@ -87,13 +95,23 @@ export default function Contact() {
                     {step === 0 && (
                       <motion.div key="s0" {...stepAnim} className="flex-1 flex flex-col">
                         <h2 className="font-display text-2xl font-bold tracking-tight mb-2">What do you need?</h2>
-                        <p className="text-sm text-muted-foreground mb-6">Pick the closest fit.</p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 overflow-y-auto max-h-72 pr-1">
+                        <p className="text-sm text-muted-foreground mb-6">Pick as many as apply.</p>
+                        <div data-lenis-prevent className="grid grid-cols-1 sm:grid-cols-2 gap-3 overflow-y-auto max-h-72 pr-1">
                           {SERVICES.map((s) => (
-                            <Option key={s.slug} testId={`contact-service-${s.slug}`} label={s.name} active={form.service === s.name} onClick={() => set("service", s.name)} />
+                            <Option key={s.slug} testId={`contact-service-${s.slug}`} label={s.name} active={form.services.includes(s.name)} onClick={() => toggleService(s.name)} />
                           ))}
+                          <Option testId="contact-service-other" label="Other" active={!!form.serviceOther || form.services.includes("__other__")} onClick={() => toggleService("__other__")} />
                         </div>
-                        <StepNav nextDisabled={!form.service} onNext={() => setStep(1)} step={step} />
+                        {form.services.includes("__other__") && (
+                          <input
+                            data-testid="contact-service-other-input"
+                            value={form.serviceOther}
+                            onChange={(e) => set("serviceOther", e.target.value)}
+                            placeholder="Tell us briefly what you need (optional)"
+                            className="mt-3 w-full bg-background border border-border px-4 py-3 text-sm outline-none focus:border-vermilion transition-colors"
+                          />
+                        )}
+                        <StepNav nextDisabled={form.services.length === 0} onNext={() => setStep(1)} step={step} />
                       </motion.div>
                     )}
                     {step === 1 && (

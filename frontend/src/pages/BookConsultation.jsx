@@ -14,7 +14,7 @@ export default function BookConsultation() {
   const [params] = useSearchParams();
   const preService = SERVICES.find((s) => s.slug === params.get("service"));
   const [step, setStep] = useState(0);
-  const [form, setForm] = useState({ service: preService?.name || "", date: "", slot: "", name: "", email: "", company: "", notes: "" });
+  const [form, setForm] = useState({ service: preService?.name || "", serviceOther: "", date: "", slot: "", name: "", email: "", company: "", notes: "" });
   const [status, setStatus] = useState("idle");
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -38,7 +38,9 @@ export default function BookConsultation() {
   const submit = async () => {
     setStatus("loading");
     try {
-      await api.post("/bookings", form);
+      const service = form.service === "__other__" ? `Other${form.serviceOther.trim() ? `: ${form.serviceOther.trim()}` : ""}` : form.service;
+      const { serviceOther, ...rest } = form;
+      await api.post("/bookings", { ...rest, service });
       setStatus("done");
       toast.success("Consultation requested. Confirmation is on its way to your inbox.");
     } catch (err) {
@@ -80,7 +82,7 @@ export default function BookConsultation() {
                   {step === 0 && (
                     <motion.div key="b0" {...stepAnim} className="flex-1 flex flex-col">
                       <h2 className="font-display text-2xl font-bold tracking-tight mb-6">What should we focus on?</h2>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 overflow-y-auto max-h-72 pr-1">
+                      <div data-lenis-prevent className="grid grid-cols-1 sm:grid-cols-2 gap-3 overflow-y-auto max-h-72 pr-1">
                         {SERVICES.map((s) => (
                           <button
                             key={s.slug}
@@ -92,7 +94,24 @@ export default function BookConsultation() {
                             {s.name}
                           </button>
                         ))}
+                        <button
+                          type="button"
+                          data-testid="booking-service-other"
+                          onClick={() => set("service", "__other__")}
+                          className={`text-left border px-5 py-4 text-sm font-medium transition-all duration-200 ${form.service === "__other__" ? "border-vermilion bg-vermilion text-white" : "border-border hover:border-vermilion"}`}
+                        >
+                          Other
+                        </button>
                       </div>
+                      {form.service === "__other__" && (
+                        <input
+                          data-testid="booking-service-other-input"
+                          value={form.serviceOther}
+                          onChange={(e) => set("serviceOther", e.target.value)}
+                          placeholder="Tell us briefly what you need (optional)"
+                          className="mt-3 w-full bg-background border border-border px-4 py-3 text-sm outline-none focus:border-vermilion transition-colors"
+                        />
+                      )}
                       <Nav onNext={() => setStep(1)} nextDisabled={!form.service} />
                     </motion.div>
                   )}
