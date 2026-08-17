@@ -90,7 +90,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-border overflow-hidden select-none" aria-hidden="true">
-          <p className="font-display font-extrabold tracking-tighter leading-none text-[clamp(2.5rem,9vw,8.5rem)] outline-text whitespace-nowrap text-center overflow-hidden -mb-[2vw]">MARKENDRICK</p>
+          <p className="font-display font-extrabold tracking-tighter leading-none text-[clamp(2rem,6.5vw,5.5rem)] outline-text whitespace-nowrap text-center overflow-hidden -mb-[2vw]">MARKENDRICK</p>
         </div>
 
         <div className="py-8 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
