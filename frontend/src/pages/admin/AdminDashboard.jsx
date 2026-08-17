@@ -250,7 +250,7 @@ function EditorModal({ editing, onClose, onSave }) {
     : [["summary", "Summary", 2], ["challenge", "Challenge", 4], ["approach", "Approach", 4], ["results", "Results — one per line: +212% | ROAS in 6 months", 3], ["quote", "Client Quote", 2]];
 
   return (
-    <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-testid="editor-modal">
+    <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-testid="editor-modal" data-lenis-prevent>
       <div className="w-full max-w-2xl bg-card border border-border p-6 sm:p-8">
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-display text-2xl font-bold tracking-tighter">{editing.id ? "Edit" : "New"} {isPost ? "Post" : "Case Study"}</h2>
@@ -435,7 +435,7 @@ function TestimonialsTab({ items, loading, onChanged }) {
       </div>
 
       {editing && (
-        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-testid="testimonial-modal">
+        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-testid="testimonial-modal" data-lenis-prevent>
           <div className="w-full max-w-xl bg-card border border-border p-6 sm:p-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-display text-2xl font-bold tracking-tighter">{editing.id ? "Edit" : "New"} Testimonial</h2>
@@ -556,7 +556,7 @@ function WhitepapersTab({ items, loading, onChanged }) {
       </div>
 
       {showUpload && (
-        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-testid="whitepaper-upload-modal">
+        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-testid="whitepaper-upload-modal" data-lenis-prevent>
           <div className="w-full max-w-xl bg-card border border-border p-6 sm:p-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-display text-2xl font-bold tracking-tighter">Upload New Report</h2>
@@ -587,7 +587,7 @@ function WhitepapersTab({ items, loading, onChanged }) {
       )}
 
       {editing && (
-        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-testid="whitepaper-edit-modal">
+        <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-testid="whitepaper-edit-modal" data-lenis-prevent>
           <div className="w-full max-w-xl bg-card border border-border p-6 sm:p-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-display text-2xl font-bold tracking-tighter">Edit Report</h2>
