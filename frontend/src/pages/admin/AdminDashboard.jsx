@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, Navigate } from "react-router-dom";
-import { Plus, Pencil, Trash2, LogOut, Loader2, X, Upload, FileText, ExternalLink, Radio } from "lucide-react";
+import { Plus, Pencil, Trash2, LogOut, Loader2, X, Upload, FileText, ExternalLink, Radio, Copy, Image as ImageIcon, Save } from "lucide-react";
 import { toast } from "sonner";
 import { api, formatApiError } from "../../lib/api";
 import { useAuth } from "../../context/AuthContext";
 import Seo from "../../components/Seo";
 
-const TABS = ["Posts", "Case Studies", "Testimonials", "Whitepapers", "Newsletter", "Leads", "Bookings", "Subscribers"];
+const TABS = ["Posts", "Case Studies", "Testimonials", "Whitepapers", "Media", "Settings", "Newsletter", "Leads", "Bookings", "Subscribers"];
 const EMPTY_POST = { title: "", category: "Strategy", excerpt: "", body: "", author: "Dr Aasim Munir Dad", tags: "", cover: "", read_time: "5 min read", published: true };
 const EMPTY_CS = { client: "", title: "", industry: "", services: "", summary: "", challenge: "", approach: "", results: "", quote: "", quote_author: "", cover: "", published: true };
 
@@ -25,6 +25,8 @@ export default function AdminDashboard() {
   const { data: subs = [] } = useQuery({ queryKey: ["admin-subs"], queryFn: async () => (await api.get("/admin/subscribers")).data, enabled: !!user && tab === "Subscribers" });
   const { data: testimonials = [], isLoading: lt } = useQuery({ queryKey: ["admin-testimonials"], queryFn: async () => (await api.get("/admin/testimonials")).data, enabled: !!user && tab === "Testimonials" });
   const { data: whitepapers = [], isLoading: lw } = useQuery({ queryKey: ["admin-whitepapers"], queryFn: async () => (await api.get("/admin/whitepapers")).data, enabled: !!user && tab === "Whitepapers" });
+  const { data: media = [], isLoading: lm } = useQuery({ queryKey: ["admin-media"], queryFn: async () => (await api.get("/admin/media")).data, enabled: !!user && tab === "Media" });
+  const { data: settings, isLoading: ls } = useQuery({ queryKey: ["admin-settings"], queryFn: async () => (await api.get("/admin/settings")).data, enabled: !!user && tab === "Settings" });
 
   if (user === null) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin text-vermilion" size={28} /></div>;
   if (user === false) return <Navigate to="/admin/login" replace />;
@@ -181,6 +183,22 @@ export default function AdminDashboard() {
             items={whitepapers}
             loading={lw}
             onChanged={() => { qc.invalidateQueries({ queryKey: ["admin-whitepapers"] }); qc.invalidateQueries({ queryKey: ["whitepapers"] }); }}
+          />
+        )}
+
+        {tab === "Media" && (
+          <MediaTab
+            items={media}
+            loading={lm}
+            onChanged={() => qc.invalidateQueries({ queryKey: ["admin-media"] })}
+          />
+        )}
+
+        {tab === "Settings" && (
+          <SettingsTab
+            settings={settings}
+            loading={ls}
+            onChanged={() => { qc.invalidateQueries({ queryKey: ["admin-settings"] }); qc.invalidateQueries({ queryKey: ["site-settings"] }); }}
           />
         )}
 
@@ -634,6 +652,193 @@ function WhitepapersTab({ items, loading, onChanged }) {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function MediaTab({ items, loading, onChanged }) {
+  const [uploading, setUploading] = useState(false);
+
+  const handleFile = async (file) => {
+    if (!file) return;
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await api.post("/admin/media", fd);
+      toast.success("Uploaded.");
+      onChanged();
+      navigator.clipboard?.writeText(res.data.url).catch(() => {});
+      toast("URL copied to clipboard.");
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const remove = async (id) => {
+    if (!window.confirm("Delete this image? Anything referencing its URL will break.")) return;
+    try {
+      await api.delete(`/admin/media/${id}`);
+      toast.success("Deleted.");
+      onChanged();
+    } catch (err) {
+      toast.error(formatApiError(err));
+    }
+  };
+
+  const copy = (url) => {
+    navigator.clipboard?.writeText(url).then(() => toast.success("URL copied."));
+  };
+
+  return (
+    <div data-testid="admin-media-tab">
+      <div className="border border-border bg-card/40 p-5 mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p className="font-display font-bold tracking-tight">Media library</p>
+          <p className="text-sm text-muted-foreground">Upload images, then copy the URL into any page field (cover images, logo, etc).</p>
+        </div>
+        <label className="inline-flex items-center gap-2 bg-vermilion hover:bg-vermilion-hover text-white text-sm font-semibold px-5 py-2.5 transition-colors cursor-pointer">
+          {uploading ? <Loader2 size={15} className="animate-spin" /> : <Upload size={15} />}
+          Upload Image
+          <input
+            data-testid="media-upload-input"
+            type="file"
+            accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml"
+            className="hidden"
+            disabled={uploading}
+            onChange={(e) => { handleFile(e.target.files[0]); e.target.value = ""; }}
+          />
+        </label>
+      </div>
+
+      {loading ? (
+        <Loader2 className="animate-spin" size={18} />
+      ) : items.length === 0 ? (
+        <p className="text-sm text-muted-foreground border border-border p-6">No images uploaded yet.</p>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4" data-testid="media-grid">
+          {items.map((m) => (
+            <div key={m.id} className="border border-border bg-card/40 group" data-testid={`media-item-${m.id}`}>
+              <div className="aspect-square bg-background/60 flex items-center justify-center overflow-hidden">
+                <img src={m.url} alt={m.filename} className="w-full h-full object-contain" loading="lazy" />
+              </div>
+              <div className="p-3">
+                <p className="text-xs truncate mb-2" title={m.filename}>{m.filename}</p>
+                <div className="flex gap-2">
+                  <button data-testid={`copy-media-${m.id}`} onClick={() => copy(m.url)} className="flex-1 p-1.5 border border-border hover:border-vermilion hover:text-vermilion transition-colors flex items-center justify-center gap-1 text-xs"><Copy size={12} /> Copy URL</button>
+                  <button data-testid={`delete-media-${m.id}`} onClick={() => remove(m.id)} className="p-1.5 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Trash2 size={12} /></button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SettingsTab({ settings, loading, onChanged }) {
+  const [data, setData] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+
+  if (data === null && settings) setData(settings);
+
+  const set = (k, v) => setData((d) => ({ ...d, [k]: v }));
+
+  const uploadLogo = async (file) => {
+    if (!file) return;
+    setUploadingLogo(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await api.post("/admin/media", fd);
+      set("logo_url", res.data.url);
+      toast.success("Logo uploaded. Remember to Save.");
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setUploadingLogo(false);
+    }
+  };
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      await api.put("/admin/settings", data);
+      toast.success("Settings saved. Live on site now.");
+      onChanged();
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading || !data) return <Loader2 className="animate-spin" size={18} />;
+
+  return (
+    <div data-testid="admin-settings-tab" className="max-w-2xl">
+      <div className="border border-border bg-card/40 p-5 mb-6">
+        <p className="font-display font-bold tracking-tight">Site settings</p>
+        <p className="text-sm text-muted-foreground">Controls the logo, footer text and office details shown across the live site.</p>
+      </div>
+
+      <div className="mb-6">
+        <label className={labelCls}>Logo</label>
+        <div className="flex items-center gap-4 border border-border p-4">
+          <div className="h-10 w-32 bg-background flex items-center justify-center shrink-0">
+            <img src={data.logo_url} alt="Logo preview" className="max-h-8 max-w-full object-contain" />
+          </div>
+          <input data-testid="settings-field-logo_url" className={`${inputCls} flex-1`} value={data.logo_url} onChange={(e) => set("logo_url", e.target.value)} placeholder="Logo image URL" />
+          <label className="inline-flex items-center gap-1.5 border border-border hover:border-vermilion hover:text-vermilion text-xs font-semibold px-3 py-2.5 transition-colors cursor-pointer shrink-0">
+            {uploadingLogo ? <Loader2 size={13} className="animate-spin" /> : <ImageIcon size={13} />} Upload
+            <input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" className="hidden" disabled={uploadingLogo} onChange={(e) => { uploadLogo(e.target.files[0]); e.target.value = ""; }} />
+          </label>
+        </div>
+      </div>
+
+      <h3 className="font-display text-lg font-bold tracking-tight mb-3">Footer</h3>
+      <div className="grid grid-cols-1 gap-4 mb-8">
+        <div>
+          <label className={labelCls}>Newsletter heading</label>
+          <input data-testid="settings-field-footer_newsletter_title" className={inputCls} value={data.footer_newsletter_title} onChange={(e) => set("footer_newsletter_title", e.target.value)} />
+        </div>
+        <div>
+          <label className={labelCls}>Newsletter description</label>
+          <input data-testid="settings-field-footer_newsletter_desc" className={inputCls} value={data.footer_newsletter_desc} onChange={(e) => set("footer_newsletter_desc", e.target.value)} />
+        </div>
+        <div>
+          <label className={labelCls}>Copyright line (year is added automatically)</label>
+          <input data-testid="settings-field-footer_copyright" className={inputCls} value={data.footer_copyright} onChange={(e) => set("footer_copyright", e.target.value)} />
+        </div>
+      </div>
+
+      <h3 className="font-display text-lg font-bold tracking-tight mb-3">Office</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+        <div className="sm:col-span-2">
+          <label className={labelCls}>Address</label>
+          <input data-testid="settings-field-office_address" className={inputCls} value={data.office_address} onChange={(e) => set("office_address", e.target.value)} />
+        </div>
+        <div>
+          <label className={labelCls}>Email</label>
+          <input data-testid="settings-field-office_email" className={inputCls} value={data.office_email} onChange={(e) => set("office_email", e.target.value)} />
+        </div>
+        <div>
+          <label className={labelCls}>Hours</label>
+          <input data-testid="settings-field-office_hours" className={inputCls} value={data.office_hours} onChange={(e) => set("office_hours", e.target.value)} />
+        </div>
+        <div>
+          <label className={labelCls}>WhatsApp number</label>
+          <input data-testid="settings-field-office_whatsapp" className={inputCls} value={data.office_whatsapp} onChange={(e) => set("office_whatsapp", e.target.value)} />
+        </div>
+      </div>
+
+      <button data-testid="settings-save-button" disabled={saving} onClick={save} className="inline-flex items-center gap-2 px-8 py-3 text-sm font-semibold bg-vermilion hover:bg-vermilion-hover text-white transition-colors disabled:opacity-50">
+        {saving ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />} Save Settings
+      </button>
     </div>
   );
 }

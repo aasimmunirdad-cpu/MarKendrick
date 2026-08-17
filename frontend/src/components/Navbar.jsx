@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Menu, X, ArrowUpRight } from "lucide-react";
+import { useSiteSettings } from "../hooks/useSiteSettings";
 
 const LINKS = [
   { to: "/services", label: "Services" },
@@ -16,6 +17,7 @@ export default function Navbar({ onSearchOpen }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const settings = useSiteSettings();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -35,7 +37,7 @@ export default function Navbar({ onSearchOpen }) {
       <nav className="max-w-[1400px] mx-auto px-5 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
         <Link to="/" data-testid="nav-logo" className="flex items-center">
           <img
-            src="/media/brand/logo-color-mark.png"
+            src={settings.logo_url}
             alt="MarKendrick"
             className="h-7 sm:h-8 w-auto"
           />

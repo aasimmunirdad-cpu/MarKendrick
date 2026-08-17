@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, Loader2, Check } from "lucide-react";
 import { toast } from "sonner";
 import { api, formatApiError } from "../lib/api";
-import { SERVICES, OFFICE } from "../data/content";
+import { SERVICES } from "../data/content";
+import { useSiteSettings } from "../hooks/useSiteSettings";
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
+  const settings = useSiteSettings();
 
   const subscribe = async (e) => {
     e.preventDefault();
@@ -30,7 +32,7 @@ export default function Footer() {
           <div className="lg:col-span-5">
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">The Signal — Monthly Briefing</p>
             <h3 className="font-display text-3xl sm:text-4xl font-bold tracking-tighter leading-tight mb-6">
-              One email a month.<br />Zero fluff.
+              {settings.footer_newsletter_title}
             </h3>
             <form onSubmit={subscribe} data-testid="newsletter-form" className="flex max-w-md border border-border rounded-full overflow-hidden focus-within:border-vermilion transition-colors">
               <input
@@ -51,7 +53,7 @@ export default function Footer() {
                 {status === "loading" ? <Loader2 size={16} className="animate-spin" /> : status === "done" ? <Check size={16} /> : "Subscribe"}
               </button>
             </form>
-            <p className="text-xs text-muted-foreground mt-3">Consumer psychology, performance media, brand science. Unsubscribe anytime.</p>
+            <p className="text-xs text-muted-foreground mt-3">{settings.footer_newsletter_desc}</p>
           </div>
 
           <div className="lg:col-span-2">
@@ -76,9 +78,9 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-5">Office</p>
             <address className="not-italic text-sm space-y-3 text-muted-foreground">
-              <p>{OFFICE.address}</p>
-              <p><a href={`mailto:${OFFICE.email}`} className="hover:text-vermilion transition-colors">{OFFICE.email}</a></p>
-              <p>{OFFICE.hours}</p>
+              <p>{settings.office_address}</p>
+              <p><a href={`mailto:${settings.office_email}`} className="hover:text-vermilion transition-colors">{settings.office_email}</a></p>
+              <p>{settings.office_hours}</p>
             </address>
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mt-8 mb-4">Locations</p>
             <ul className="space-y-2 text-xs text-muted-foreground">
@@ -95,11 +97,11 @@ export default function Footer() {
 
         <div className="py-8 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <img
-            src="/media/brand/logo-color-mark.png"
+            src={settings.logo_url}
             alt="MarKendrick"
             className="h-6 w-auto"
           />
-          <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} MarKendrick. Insights that Inform. Strategies that Perform.</p>
+          <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} {settings.footer_copyright}</p>
           <div className="flex gap-5 text-xs text-muted-foreground">
             <Link to="/privacy-policy" className="hover:text-vermilion transition-colors">Privacy Policy</Link>
             <Link to="/terms-of-service" className="hover:text-vermilion transition-colors">Terms</Link>

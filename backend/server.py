@@ -702,6 +702,134 @@ async def admin_delete_testimonial(t_id: str, user: dict = Depends(get_current_u
     return {"status": "deleted"}
 
 
+# ---------- Media library ----------
+
+MEDIA_MIME_TYPES = {
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".gif": "image/gif",
+    ".webp": "image/webp",
+    ".svg": "image/svg+xml",
+}
+
+
+@api_router.get("/media/{filename}")
+async def serve_media(filename: str):
+    from fastapi.responses import FileResponse
+    safe = Path(filename).name
+    path = UPLOAD_DIR / "media" / safe
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="File not found")
+    mime = MEDIA_MIME_TYPES.get(path.suffix.lower(), "application/octet-stream")
+    return FileResponse(path, media_type=mime)
+
+
+@api_router.get("/admin/media")
+async def admin_list_media(user: dict = Depends(get_current_user)):
+    return await db.media.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
+
+
+@api_router.post("/admin/media")
+async def admin_upload_media(request: Request, user: dict = Depends(get_current_user)):
+    form = await request.form()
+    file = form.get("file")
+    if file is None or not getattr(file, "filename", ""):
+        raise HTTPException(status_code=400, detail="Image file is required")
+    ext = Path(file.filename).suffix.lower()
+    if ext not in MEDIA_MIME_TYPES:
+        raise HTTPException(status_code=400, detail="Unsupported file type. Use PNG, JPG, GIF, WEBP or SVG.")
+    content = await file.read()
+    if len(content) > 10 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="File too large (max 10 MB)")
+    media_dir = UPLOAD_DIR / "media"
+    media_dir.mkdir(exist_ok=True, parents=True)
+    stored = f"{uuid.uuid4().hex}{ext}"
+    (media_dir / stored).write_bytes(content)
+    url = f"{api_base_url(request)}/api/media/{stored}"
+    doc = {
+        "id": uuid.uuid4().hex[:12],
+        "filename": file.filename,
+        "stored_file": stored,
+        "url": url,
+        "size": len(content),
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    }
+    await db.media.insert_one(doc)
+    doc.pop("_id", None)
+    return doc
+
+
+@api_router.delete("/admin/media/{media_id}")
+async def admin_delete_media(media_id: str, user: dict = Depends(get_current_user)):
+    m = await db.media.find_one({"id": media_id})
+    if not m:
+        raise HTTPException(status_code=404, detail="Media not found")
+    stored = m.get("stored_file")
+    if stored:
+        try:
+            (UPLOAD_DIR / "media" / stored).unlink(missing_ok=True)
+        except Exception:
+            pass
+    await db.media.delete_one({"id": media_id})
+    return {"status": "deleted"}
+
+
+# ---------- Site settings ----------
+
+DEFAULT_SETTINGS = {
+    "logo_url": "/media/brand/logo-color-mark.png",
+    "footer_newsletter_title": "One email a month. Zero fluff.",
+    "footer_newsletter_desc": "Consumer psychology, performance media, brand science. Unsubscribe anytime.",
+    "footer_copyright": "MarKendrick. Insights that Inform. Strategies that Perform.",
+    "office_address": "Gulberg III, Lahore, Punjab, Pakistan",
+    "office_email": "hello@markendrick.com",
+    "office_hours": "Mon–Fri, 9:00–18:00 PKT",
+    "office_whatsapp": "923339395444",
+}
+
+
+class SiteSettingsIn(BaseModel):
+    logo_url: str = DEFAULT_SETTINGS["logo_url"]
+    footer_newsletter_title: str = DEFAULT_SETTINGS["footer_newsletter_title"]
+    footer_newsletter_desc: str = DEFAULT_SETTINGS["footer_newsletter_desc"]
+    footer_copyright: str = DEFAULT_SETTINGS["footer_copyright"]
+    office_address: str = DEFAULT_SETTINGS["office_address"]
+    office_email: str = DEFAULT_SETTINGS["office_email"]
+    office_hours: str = DEFAULT_SETTINGS["office_hours"]
+    office_whatsapp: str = DEFAULT_SETTINGS["office_whatsapp"]
+
+
+@api_router.get("/settings")
+async def get_settings():
+    doc = await db.site_settings.find_one({"id": "singleton"}, {"_id": 0})
+    merged = dict(DEFAULT_SETTINGS)
+    if doc:
+        doc.pop("id", None)
+        merged.update({k: v for k, v in doc.items() if v})
+    return merged
+
+
+@api_router.get("/admin/settings")
+async def admin_get_settings(user: dict = Depends(get_current_user)):
+    doc = await db.site_settings.find_one({"id": "singleton"}, {"_id": 0})
+    merged = dict(DEFAULT_SETTINGS)
+    if doc:
+        doc.pop("id", None)
+        merged.update(doc)
+    return merged
+
+
+@api_router.put("/admin/settings")
+async def admin_update_settings(body: SiteSettingsIn, user: dict = Depends(get_current_user)):
+    data = body.model_dump()
+    data["id"] = "singleton"
+    data["updated_at"] = datetime.now(timezone.utc).isoformat()
+    await db.site_settings.update_one({"id": "singleton"}, {"$set": data}, upsert=True)
+    data.pop("id", None)
+    return data
+
+
 # ---------- Maturity Quiz ----------
 
 class MaturityIn(BaseModel):
