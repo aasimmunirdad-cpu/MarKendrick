@@ -8,6 +8,7 @@ import logging
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Optional, List
+from urllib.parse import quote
 
 import bcrypt
 import jwt
@@ -61,24 +62,29 @@ async def send_email(to: str, subject: str, html: str, reply_to: Optional[str] =
         return None
 
 
-def email_shell(title: str, body: str) -> str:
+def email_shell(title: str, body: str, unsubscribe_url: str = None) -> str:
+    footer_extra = f' <a href="{unsubscribe_url}" style="color:#8a8a8a;text-decoration:underline;">Unsubscribe</a>' if unsubscribe_url else ""
     return f"""
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0A0A;padding:32px 16px;font-family:Arial,Helvetica,sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F7F5F3;padding:32px 16px;font-family:Arial,Helvetica,sans-serif;">
       <tr><td align="center">
-        <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="background:#141414;border:1px solid #2a2a2a;">
-          <tr><td style="padding:28px 32px;border-bottom:3px solid #FF3B30;">
-            <span style="font-size:22px;font-weight:800;color:#ffffff;letter-spacing:-0.5px;">Mar<span style="color:#FF3B30;">Kendrick</span></span>
+        <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border:1px solid #e5e0da;">
+          <tr><td style="padding:28px 32px;border-bottom:3px solid #E0923D;">
+            <span style="font-size:22px;font-weight:800;color:#1E3245;letter-spacing:-0.5px;">Mar<span style="color:#E0923D;">Kendrick</span></span>
           </td></tr>
-          <tr><td style="padding:32px;color:#e5e5e5;font-size:15px;line-height:1.7;">
-            <h1 style="margin:0 0 16px;font-size:22px;color:#ffffff;">{title}</h1>
+          <tr><td style="padding:32px;color:#2a2a2a;font-size:15px;line-height:1.7;">
+            <h1 style="margin:0 0 16px;font-size:22px;color:#1E3245;">{title}</h1>
             {body}
           </td></tr>
-          <tr><td style="padding:20px 32px;border-top:1px solid #2a2a2a;color:#8a8a8a;font-size:12px;">
-            MarKendrick — Insights that Inform. Strategies that Perform. Lahore, Pakistan.
+          <tr><td style="padding:20px 32px;border-top:1px solid #e5e0da;color:#8a8a8a;font-size:12px;">
+            MarKendrick — Insights that Inform. Strategies that Perform. Lahore, Pakistan.{footer_extra}
           </td></tr>
         </table>
       </td></tr>
     </table>"""
+
+
+def api_base_url(request: Request) -> str:
+    return os.environ.get("BACKEND_URL", "").rstrip("/") or str(request.base_url).rstrip("/")
 
 
 # ---------- Auth ----------
@@ -359,7 +365,7 @@ async def create_lead(body: LeadIn):
         f"Thanks, {doc['name'].split()[0]} — we've got your brief.",
         """<p>Your enquiry just landed with our strategy team. A senior consultant — never a bot —
         will reply within one business day with next steps.</p>
-        <p style="color:#A1A1AA;">Meanwhile, explore our latest thinking on the Insights hub.</p>""",
+        <p style="color:#8a8a8a;">Meanwhile, explore our latest thinking on the Insights hub.</p>""",
     )
     await send_email(doc["email"], "We received your brief — MarKendrick", confirm_html)
     return {"status": "received", "id": doc["id"]}
@@ -370,19 +376,37 @@ class NewsletterIn(BaseModel):
 
 
 @api_router.post("/newsletter")
-async def subscribe(body: NewsletterIn):
+async def subscribe(body: NewsletterIn, request: Request):
     email = body.email.lower()
     existing = await db.subscribers.find_one({"email": email})
     if existing:
         return {"status": "already_subscribed"}
     await db.subscribers.insert_one({"id": uuid.uuid4().hex, "email": email, "created_at": datetime.now(timezone.utc).isoformat()})
+    unsubscribe_url = f"{api_base_url(request)}/api/newsletter/unsubscribe?email={quote(email)}"
     html = email_shell(
         "You're on The Signal list.",
         """<p>Welcome to <strong>The Signal</strong> — MarKendrick's monthly briefing on consumer psychology,
         performance media and brand science. No fluff, no spam. Unsubscribe anytime.</p>""",
+        unsubscribe_url=unsubscribe_url,
     )
     await send_email(email, "Welcome to The Signal — MarKendrick", html)
     return {"status": "subscribed"}
+
+
+@api_router.get("/newsletter/unsubscribe")
+async def unsubscribe(email: EmailStr):
+    await db.subscribers.delete_one({"email": email.lower()})
+    return Response(
+        content=f"""<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Unsubscribed — MarKendrick</title></head>
+        <body style="margin:0;background:#F7F5F3;font-family:Arial,Helvetica,sans-serif;color:#1E3245;">
+          <div style="max-width:480px;margin:80px auto;padding:40px;background:#ffffff;border:1px solid #e5e0da;text-align:center;">
+            <p style="font-size:20px;font-weight:800;margin:0 0 20px;">Mar<span style="color:#E0923D;">Kendrick</span></p>
+            <h1 style="font-size:20px;margin:0 0 12px;">You've been unsubscribed.</h1>
+            <p style="color:#5a5a5a;font-size:14px;line-height:1.6;">{email} will no longer receive The Signal. You can resubscribe anytime from markendrick.com.</p>
+          </div>
+        </body></html>""",
+        media_type="text/html",
+    )
 
 
 class BookingIn(BaseModel):
@@ -523,7 +547,7 @@ class WhitepaperDownloadIn(BaseModel):
 
 
 @api_router.post("/whitepaper-download")
-async def whitepaper_download(body: WhitepaperDownloadIn):
+async def whitepaper_download(body: WhitepaperDownloadIn, request: Request):
     wp = await db.whitepapers.find_one({"id": body.whitepaper_id, "published": True}, {"_id": 0})
     if not wp:
         raise HTTPException(status_code=404, detail="Whitepaper not found")
@@ -543,11 +567,13 @@ async def whitepaper_download(body: WhitepaperDownloadIn):
     })
     if not await db.subscribers.find_one({"email": email}):
         await db.subscribers.insert_one({"id": uuid.uuid4().hex, "email": email, "created_at": datetime.now(timezone.utc).isoformat()})
+    unsubscribe_url = f"{api_base_url(request)}/api/newsletter/unsubscribe?email={quote(email)}"
     html = email_shell(
         f"Your copy of {wp['title']}",
         f"""<p>Thanks, {body.name.split()[0]} — your report is ready:</p>
-        <p><a href="{download_url}" style="color:#FF3B30;font-weight:bold;">Download {wp['title']} (PDF)</a></p>
-        <p style="color:#A1A1AA;">You're also on The Signal list — one insight briefing a month, zero fluff. Unsubscribe anytime.</p>""",
+        <p><a href="{download_url}" style="color:#E0923D;font-weight:bold;">Download {wp['title']} (PDF)</a></p>
+        <p style="color:#8a8a8a;">You're also on The Signal list — one insight briefing a month, zero fluff.</p>""",
+        unsubscribe_url=unsubscribe_url,
     )
     await send_email(email, f"{wp['title']} — your download", html)
     owner_html = email_shell(
@@ -686,7 +712,7 @@ class MaturityIn(BaseModel):
 
 
 @api_router.post("/maturity-report")
-async def maturity_report(body: MaturityIn):
+async def maturity_report(body: MaturityIn, request: Request):
     email = body.email.lower()
     await db.leads.insert_one({
         "id": uuid.uuid4().hex,
@@ -703,12 +729,14 @@ async def maturity_report(body: MaturityIn):
     if not await db.subscribers.find_one({"email": email}):
         await db.subscribers.insert_one({"id": uuid.uuid4().hex, "email": email, "created_at": datetime.now(timezone.utc).isoformat()})
     weakest_html = "".join(f"<li style='margin-bottom:8px;'>{w}</li>" for w in body.weakest) or "<li>None — strong across the board.</li>"
+    unsubscribe_url = f"{api_base_url(request)}/api/newsletter/unsubscribe?email={quote(email)}"
     html = email_shell(
         f"Your Marketing Maturity Grade: {body.grade}",
-        f"""<p>You scored <strong>{body.score}/16</strong> — Grade <strong style="color:#FF3B30;">{body.grade}</strong>.</p>
+        f"""<p>You scored <strong>{body.score}/16</strong> — Grade <strong style="color:#E0923D;">{body.grade}</strong>.</p>
         <p>Your three biggest opportunities:</p>
         <ul style="padding-left:18px;">{weakest_html}</ul>
-        <p style="color:#A1A1AA;">The fastest way to fix them? A Diagnostic Audit — a 1–2 week deep-dive with a prioritised fix-list. Book a free call at markendrick.com to discuss your result.</p>""",
+        <p style="color:#8a8a8a;">The fastest way to fix them? A Diagnostic Audit — a 1–2 week deep-dive with a prioritised fix-list. Book a free call at markendrick.com to discuss your result.</p>""",
+        unsubscribe_url=unsubscribe_url,
     )
     await send_email(email, f"Your Marketing Maturity Report — Grade {body.grade}", html)
     owner_html = email_shell(
@@ -726,7 +754,7 @@ class NewsletterSendIn(BaseModel):
 
 
 @api_router.post("/admin/newsletter/send")
-async def admin_send_newsletter(body: NewsletterSendIn, user: dict = Depends(get_current_user)):
+async def admin_send_newsletter(body: NewsletterSendIn, request: Request, user: dict = Depends(get_current_user)):
     post = await db.posts.find_one({"id": body.post_id}, {"_id": 0})
     if not post:
         raise HTTPException(status_code=404, detail="Post not found")
@@ -735,14 +763,17 @@ async def admin_send_newsletter(body: NewsletterSendIn, user: dict = Depends(get
         raise HTTPException(status_code=400, detail="No subscribers yet")
     frontend = os.environ.get("FRONTEND_URL", "").rstrip("/")
     url = f"{frontend}/insights/{post['slug']}"
-    html = email_shell(
-        post["title"],
-        f"""<p>{post.get('excerpt', '')}</p>
-        <p style="margin:24px 0;"><a href="{url}" style="background:#FF3B30;color:#ffffff;padding:12px 28px;text-decoration:none;font-weight:bold;border-radius:999px;">Read the full article</a></p>
-        <p style="color:#A1A1AA;font-size:13px;">{post.get('category', '')} · {post.get('read_time', '')} · by {post.get('author', 'MarKendrick')}</p>""",
-    )
+    base = api_base_url(request)
     sent = 0
     for s in subs:
+        unsubscribe_url = f"{base}/api/newsletter/unsubscribe?email={quote(s['email'])}"
+        html = email_shell(
+            post["title"],
+            f"""<p>{post.get('excerpt', '')}</p>
+            <p style="margin:24px 0;"><a href="{url}" style="background:#E0923D;color:#ffffff;padding:12px 28px;text-decoration:none;font-weight:bold;border-radius:999px;">Read the full article</a></p>
+            <p style="color:#8a8a8a;font-size:13px;">{post.get('category', '')} · {post.get('read_time', '')} · by {post.get('author', 'MarKendrick')}</p>""",
+            unsubscribe_url=unsubscribe_url,
+        )
         result = await send_email(s["email"], f"The Signal: {post['title']}", html)
         if result:
             sent += 1
