@@ -385,8 +385,9 @@ async def subscribe(body: NewsletterIn, request: Request):
     unsubscribe_url = f"{api_base_url(request)}/api/newsletter/unsubscribe?email={quote(email)}"
     html = email_shell(
         "You're on The Signal list.",
-        """<p>Welcome to <strong>The Signal</strong> — MarKendrick's monthly briefing on consumer psychology,
-        performance media and brand science. No fluff, no spam. Unsubscribe anytime.</p>""",
+        """<p>Welcome to <strong>The Signal</strong> — MarKendrick's monthly briefing.</p>
+        <p>Once a month, you'll get one real campaign teardown, one consumer psychology principle you can apply,
+        and one performance-marketing tactic worth stealing. That's it — no daily noise, no filler, no spam.</p>""",
         unsubscribe_url=unsubscribe_url,
     )
     await send_email(email, "Welcome to The Signal — MarKendrick", html)
@@ -394,8 +395,8 @@ async def subscribe(body: NewsletterIn, request: Request):
 
 
 @api_router.get("/newsletter/unsubscribe")
-async def unsubscribe(email: EmailStr):
-    await db.subscribers.delete_one({"email": email.lower()})
+async def unsubscribe(email: str):
+    await db.subscribers.delete_one({"email": email.lower().strip()})
     return Response(
         content=f"""<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Unsubscribed — MarKendrick</title></head>
         <body style="margin:0;background:#F7F5F3;font-family:Arial,Helvetica,sans-serif;color:#1E3245;">
