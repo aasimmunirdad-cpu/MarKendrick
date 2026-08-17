@@ -41,6 +41,17 @@ export default function AdminDashboard() {
     }
   };
 
+  const removeRecord = async (path, queryKey, id) => {
+    if (!window.confirm("Delete permanently?")) return;
+    try {
+      await api.delete(`/admin/${path}/${id}`);
+      qc.invalidateQueries({ queryKey: [queryKey] });
+      toast.success("Deleted.");
+    } catch (err) {
+      toast.error(formatApiError(err));
+    }
+  };
+
   const save = async (type, data, id) => {
     const path = type === "post" ? "/admin/posts" : "/admin/case-studies";
     const payload = type === "post"
@@ -179,10 +190,10 @@ export default function AdminDashboard() {
 
         {tab === "Leads" && (
           <div className="overflow-x-auto border border-border" data-testid="admin-leads-table">
-            <table className="w-full min-w-[720px]">
-              <thead className="bg-card/60"><tr><th className={th}>Name</th><th className={th}>Service</th><th className={th}>Budget</th><th className={th}>Timeline</th><th className={th}>Received</th></tr></thead>
+            <table className="w-full min-w-[780px]">
+              <thead className="bg-card/60"><tr><th className={th}>Name</th><th className={th}>Service</th><th className={th}>Budget</th><th className={th}>Timeline</th><th className={th}>Received</th><th className={th}>Actions</th></tr></thead>
               <tbody>
-                {leads.length === 0 && <tr><td colSpan={5} className={td}>No leads yet.</td></tr>}
+                {leads.length === 0 && <tr><td colSpan={6} className={td}>No leads yet.</td></tr>}
                 {leads.map((l) => (
                   <tr key={l.id}>
                     <td className={td}><span className="font-semibold">{l.name}</span><span className="block text-xs text-muted-foreground">{l.email} {l.company && `· ${l.company}`}</span>{l.message && <span className="block text-xs text-muted-foreground mt-1 max-w-xs">{l.message}</span>}</td>
@@ -190,6 +201,9 @@ export default function AdminDashboard() {
                     <td className={td}>{l.budget || "—"}</td>
                     <td className={td}>{l.timeline || "—"}</td>
                     <td className={td}><span className="text-xs text-muted-foreground">{new Date(l.created_at).toLocaleDateString("en-GB")}</span></td>
+                    <td className={td}>
+                      <button data-testid={`delete-lead-${l.id}`} onClick={() => removeRecord("leads", "admin-leads", l.id)} className="p-2 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Trash2 size={14} /></button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -199,16 +213,19 @@ export default function AdminDashboard() {
 
         {tab === "Bookings" && (
           <div className="overflow-x-auto border border-border" data-testid="admin-bookings-table">
-            <table className="w-full min-w-[640px]">
-              <thead className="bg-card/60"><tr><th className={th}>Name</th><th className={th}>Service</th><th className={th}>When</th><th className={th}>Notes</th></tr></thead>
+            <table className="w-full min-w-[720px]">
+              <thead className="bg-card/60"><tr><th className={th}>Name</th><th className={th}>Service</th><th className={th}>When</th><th className={th}>Notes</th><th className={th}>Actions</th></tr></thead>
               <tbody>
-                {bookings.length === 0 && <tr><td colSpan={4} className={td}>No bookings yet.</td></tr>}
+                {bookings.length === 0 && <tr><td colSpan={5} className={td}>No bookings yet.</td></tr>}
                 {bookings.map((b) => (
                   <tr key={b.id}>
                     <td className={td}><span className="font-semibold">{b.name}</span><span className="block text-xs text-muted-foreground">{b.email} {b.company && `· ${b.company}`}</span></td>
                     <td className={td}>{b.service || "—"}</td>
                     <td className={td}><span className="font-semibold text-vermilion">{b.date} · {b.slot}</span></td>
                     <td className={td}><span className="text-xs text-muted-foreground max-w-xs block">{b.notes || "—"}</span></td>
+                    <td className={td}>
+                      <button data-testid={`delete-booking-${b.id}`} onClick={() => removeRecord("bookings", "admin-bookings", b.id)} className="p-2 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Trash2 size={14} /></button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -220,7 +237,12 @@ export default function AdminDashboard() {
           <div className="border border-border p-6" data-testid="admin-subscribers-list">
             {subs.length === 0 ? <p className="text-sm text-muted-foreground">No subscribers yet.</p> : (
               <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {subs.map((s) => <li key={s.id} className="text-sm border border-border px-4 py-3">{s.email}</li>)}
+                {subs.map((s) => (
+                  <li key={s.id} className="text-sm border border-border px-4 py-3 flex items-center justify-between gap-3">
+                    <span className="truncate">{s.email}</span>
+                    <button data-testid={`delete-subscriber-${s.id}`} onClick={() => removeRecord("subscribers", "admin-subs", s.id)} className="p-1.5 border border-border hover:border-vermilion hover:text-vermilion transition-colors shrink-0"><Trash2 size={12} /></button>
+                  </li>
+                ))}
               </ul>
             )}
           </div>

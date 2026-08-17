@@ -422,14 +422,38 @@ async def admin_list_leads(user: dict = Depends(get_current_user)):
     return await db.leads.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
 
 
+@api_router.delete("/admin/leads/{lead_id}")
+async def admin_delete_lead(lead_id: str, user: dict = Depends(get_current_user)):
+    result = await db.leads.delete_one({"id": lead_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Lead not found")
+    return {"status": "deleted"}
+
+
 @api_router.get("/admin/bookings")
 async def admin_list_bookings(user: dict = Depends(get_current_user)):
     return await db.bookings.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
 
 
+@api_router.delete("/admin/bookings/{booking_id}")
+async def admin_delete_booking(booking_id: str, user: dict = Depends(get_current_user)):
+    result = await db.bookings.delete_one({"id": booking_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    return {"status": "deleted"}
+
+
 @api_router.get("/admin/subscribers")
 async def admin_list_subscribers(user: dict = Depends(get_current_user)):
     return await db.subscribers.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
+
+
+@api_router.delete("/admin/subscribers/{sub_id}")
+async def admin_delete_subscriber(sub_id: str, user: dict = Depends(get_current_user)):
+    result = await db.subscribers.delete_one({"id": sub_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Subscriber not found")
+    return {"status": "deleted"}
 
 
 # ---------- Search ----------
