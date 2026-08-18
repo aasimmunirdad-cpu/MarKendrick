@@ -753,11 +753,53 @@ async def admin_upload_media(request: Request, user: dict = Depends(get_current_
         "stored_file": stored,
         "url": url,
         "size": len(content),
+        "source": "upload",
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
     await db.media.insert_one(doc)
     doc.pop("_id", None)
     return doc
+
+
+@api_router.post("/admin/media/import-existing")
+async def admin_import_existing_media(user: dict = Depends(get_current_user)):
+    """Registers image URLs already used across site content (case study covers, post covers,
+    industry/location images) into the media library so they're visible and reusable in the CMS,
+    even though the files themselves aren't stored in our own uploads directory."""
+    existing_urls = {m["url"] async for m in db.media.find({}, {"url": 1})}
+    to_insert = []
+
+    async for cs in db.case_studies.find({}, {"cover": 1, "client": 1, "title": 1}):
+        url = (cs.get("cover") or "").strip()
+        if url and url not in existing_urls:
+            existing_urls.add(url)
+            to_insert.append({
+                "id": uuid.uuid4().hex[:12],
+                "filename": f"Case study: {cs.get('client', 'Untitled')}",
+                "stored_file": None,
+                "url": url,
+                "size": None,
+                "source": "case_study",
+                "created_at": datetime.now(timezone.utc).isoformat(),
+            })
+
+    async for p in db.posts.find({}, {"cover": 1, "title": 1}):
+        url = (p.get("cover") or "").strip()
+        if url and url not in existing_urls:
+            existing_urls.add(url)
+            to_insert.append({
+                "id": uuid.uuid4().hex[:12],
+                "filename": f"Post cover: {p.get('title', 'Untitled')}",
+                "stored_file": None,
+                "url": url,
+                "size": None,
+                "source": "post",
+                "created_at": datetime.now(timezone.utc).isoformat(),
+            })
+
+    if to_insert:
+        await db.media.insert_many(to_insert)
+    return {"imported": len(to_insert)}
 
 
 @api_router.delete("/admin/media/{media_id}")

@@ -272,6 +272,74 @@ export default function AdminDashboard() {
   );
 }
 
+function ImagePicker({ value, onChange, testId }) {
+  const [showBrowser, setShowBrowser] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const { data: media = [], isLoading: loadingMedia } = useQuery({
+    queryKey: ["admin-media"],
+    queryFn: async () => (await api.get("/admin/media")).data,
+    enabled: showBrowser,
+  });
+
+  const upload = async (file) => {
+    if (!file) return;
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await api.post("/admin/media", fd);
+      onChange(res.data.url);
+      toast.success("Uploaded.");
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex items-center gap-3 border border-border p-3">
+        <div className="h-14 w-20 bg-background flex items-center justify-center shrink-0 overflow-hidden">
+          {value ? <img src={value} alt="" className="w-full h-full object-cover" /> : <ImageIcon size={18} className="text-muted-foreground" />}
+        </div>
+        <input data-testid={testId} className={inputCls} value={value || ""} onChange={(e) => onChange(e.target.value)} placeholder="Image URL" />
+        <div className="flex gap-2 shrink-0">
+          <button type="button" onClick={() => setShowBrowser(true)} className="text-xs font-semibold border border-border hover:border-vermilion hover:text-vermilion px-3 py-2.5 transition-colors">Browse</button>
+          <label className="text-xs font-semibold border border-border hover:border-vermilion hover:text-vermilion px-3 py-2.5 transition-colors cursor-pointer">
+            {uploading ? <Loader2 size={13} className="animate-spin" /> : "Upload"}
+            <input type="file" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml" className="hidden" disabled={uploading} onChange={(e) => { upload(e.target.files[0]); e.target.value = ""; }} />
+          </label>
+        </div>
+      </div>
+
+      {showBrowser && (
+        <div className="fixed inset-0 z-[80] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-lenis-prevent>
+          <div className="w-full max-w-3xl bg-card border border-border p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-display text-xl font-bold tracking-tighter">Choose an image</h3>
+              <button type="button" onClick={() => setShowBrowser(false)} className="p-2 hover:text-vermilion transition-colors"><X size={18} /></button>
+            </div>
+            {loadingMedia ? (
+              <Loader2 className="animate-spin" size={18} />
+            ) : media.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No images in the library yet. Upload one, or go to the Media tab and import images already used on the site.</p>
+            ) : (
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-[60vh] overflow-y-auto">
+                {media.map((m) => (
+                  <button key={m.id} type="button" onClick={() => { onChange(m.url); setShowBrowser(false); }} className="aspect-square border border-border hover:border-vermilion transition-colors overflow-hidden">
+                    <img src={m.url} alt={m.filename} className="w-full h-full object-cover" loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function EditorModal({ editing, onClose, onSave }) {
   const [data, setData] = useState(editing.data);
   const [saving, setSaving] = useState(false);
@@ -298,9 +366,13 @@ function EditorModal({ editing, onClose, onSave }) {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
           {fields.map(([k, l]) => (
-            <div key={k}>
+            <div key={k} className={k === "cover" ? "sm:col-span-2" : ""}>
               <label className={label}>{l}</label>
-              <input data-testid={`editor-field-${k}`} className={input} value={data[k] || ""} onChange={(e) => set(k, e.target.value)} />
+              {k === "cover" ? (
+                <ImagePicker value={data[k]} onChange={(v) => set(k, v)} testId={`editor-field-${k}`} />
+              ) : (
+                <input data-testid={`editor-field-${k}`} className={input} value={data[k] || ""} onChange={(e) => set(k, e.target.value)} />
+              )}
             </div>
           ))}
         </div>
@@ -658,6 +730,7 @@ function WhitepapersTab({ items, loading, onChanged }) {
 
 function MediaTab({ items, loading, onChanged }) {
   const [uploading, setUploading] = useState(false);
+  const [importing, setImporting] = useState(false);
 
   const handleFile = async (file) => {
     if (!file) return;
@@ -677,6 +750,19 @@ function MediaTab({ items, loading, onChanged }) {
     }
   };
 
+  const importExisting = async () => {
+    setImporting(true);
+    try {
+      const res = await api.post("/admin/media/import-existing");
+      toast.success(res.data.imported > 0 ? `Imported ${res.data.imported} image${res.data.imported === 1 ? "" : "s"} already used on the site.` : "Nothing new to import — everything's already in the library.");
+      onChanged();
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setImporting(false);
+    }
+  };
+
   const remove = async (id) => {
     if (!window.confirm("Delete this image? Anything referencing its URL will break.")) return;
     try {
@@ -692,37 +778,53 @@ function MediaTab({ items, loading, onChanged }) {
     navigator.clipboard?.writeText(url).then(() => toast.success("URL copied."));
   };
 
+  const sourceLabel = { case_study: "Case study", post: "Blog post", upload: "Uploaded" };
+
   return (
     <div data-testid="admin-media-tab">
       <div className="border border-border bg-card/40 p-5 mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
           <p className="font-display font-bold tracking-tight">Media library</p>
-          <p className="text-sm text-muted-foreground">Upload images, then copy the URL into any page field (cover images, logo, etc).</p>
+          <p className="text-sm text-muted-foreground">Upload new images, or import ones already used on the site — then reuse them anywhere via the picker or a copied URL.</p>
         </div>
-        <label className="inline-flex items-center gap-2 bg-vermilion hover:bg-vermilion-hover text-white text-sm font-semibold px-5 py-2.5 transition-colors cursor-pointer">
-          {uploading ? <Loader2 size={15} className="animate-spin" /> : <Upload size={15} />}
-          Upload Image
-          <input
-            data-testid="media-upload-input"
-            type="file"
-            accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml"
-            className="hidden"
-            disabled={uploading}
-            onChange={(e) => { handleFile(e.target.files[0]); e.target.value = ""; }}
-          />
-        </label>
+        <div className="flex flex-wrap gap-2">
+          <button
+            data-testid="media-import-button"
+            onClick={importExisting}
+            disabled={importing}
+            className="inline-flex items-center gap-2 border border-border hover:border-vermilion hover:text-vermilion text-sm font-semibold px-5 py-2.5 transition-colors disabled:opacity-50"
+          >
+            {importing ? <Loader2 size={15} className="animate-spin" /> : <ImageIcon size={15} />}
+            Import Existing Site Images
+          </button>
+          <label className="inline-flex items-center gap-2 bg-vermilion hover:bg-vermilion-hover text-white text-sm font-semibold px-5 py-2.5 transition-colors cursor-pointer">
+            {uploading ? <Loader2 size={15} className="animate-spin" /> : <Upload size={15} />}
+            Upload Image
+            <input
+              data-testid="media-upload-input"
+              type="file"
+              accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml"
+              className="hidden"
+              disabled={uploading}
+              onChange={(e) => { handleFile(e.target.files[0]); e.target.value = ""; }}
+            />
+          </label>
+        </div>
       </div>
 
       {loading ? (
         <Loader2 className="animate-spin" size={18} />
       ) : items.length === 0 ? (
-        <p className="text-sm text-muted-foreground border border-border p-6">No images uploaded yet.</p>
+        <p className="text-sm text-muted-foreground border border-border p-6">No images yet. Upload one, or click "Import Existing Site Images" to pull in covers already used by your posts and case studies.</p>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4" data-testid="media-grid">
           {items.map((m) => (
             <div key={m.id} className="border border-border bg-card/40 group" data-testid={`media-item-${m.id}`}>
-              <div className="aspect-square bg-background/60 flex items-center justify-center overflow-hidden">
+              <div className="aspect-square bg-background/60 flex items-center justify-center overflow-hidden relative">
                 <img src={m.url} alt={m.filename} className="w-full h-full object-contain" loading="lazy" />
+                {m.source && m.source !== "upload" && (
+                  <span className="absolute top-1.5 left-1.5 text-[10px] uppercase tracking-wide bg-background/90 border border-border px-1.5 py-0.5">{sourceLabel[m.source] || m.source}</span>
+                )}
               </div>
               <div className="p-3">
                 <p className="text-xs truncate mb-2" title={m.filename}>{m.filename}</p>
