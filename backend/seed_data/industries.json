@@ -3,13 +3,11 @@
     "slug": "real-estate-property-development",
     "name": "Real Estate & Property Development",
     "tagline": "Sell the dream before the showhouse opens.",
-    "intro": "Property buyers make an emotional decision and justify it rationally - usually online, long before they call an agent. We help developers and agencies own that digital first impression: demand research for new projects in Lahore's DHA, Bahria and Gulberg corridors, launch campaigns that fill registries before a single unit is built, and lead engines that qualify buyers before your sales team picks up the phone. For overseas developers marketing to Gulf-based Pakistani investors, we also run the diaspora-specific research and messaging that domestic-only agencies typically miss.",
+    "intro": "Property buyers make an emotional decision and justify it rationally - usually online, long before they call an agent. We help developers and agencies own that digital first impression: demand research for new projects, launch campaigns that fill registries, and lead engines that qualify buyers before your sales team picks up the phone.",
     "challenges": [
       "Long, research-heavy buying journeys that start on portals and social, not site offices",
       "Off-plan launches that need trust built before a single floor exists",
-      "High-volume, low-quality leads burning out sales teams",
-      "Overseas Pakistani and Gulf-based investors evaluating projects entirely through video and WhatsApp",
-      "Competing launches flooding the same feeds during peak booking seasons"
+      "High-volume, low-quality leads burning out sales teams"
     ],
     "services": [
       "market-research",
@@ -18,7 +16,7 @@
       "content-marketing",
       "branding-identity"
     ],
-    "metaTitle": "Real Estate Marketing Agency in Pakistan | DHA & Bahria Launches",
+    "metaTitle": "Real Estate Marketing Agency in Pakistan",
     "metaDesc": "Marketing for real estate developers and property agencies: project launches, buyer research and qualified lead engines across Pakistan, the Gulf and the UK.",
     "order": 0,
     "published": true,
@@ -28,13 +26,11 @@
     "slug": "education-edtech",
     "name": "Education & EdTech",
     "tagline": "Enrollment is a trust decision. Market it like one.",
-    "intro": "Parents and students don't buy courses - they buy outcomes and credibility. We help schools, universities and EdTech platforms build enrollment funnels grounded in how families actually decide: reputation research, open-day and webinar funnels, and retention programs that protect fee revenue year after year. For Pakistani institutions competing against O-Level and international-curriculum alternatives, and for EdTech platforms selling into both local and diaspora markets, the research question is rarely 'is the product good' - it's 'can this family trust us with three years of tuition'.",
+    "intro": "Parents and students don't buy courses - they buy outcomes and credibility. We help schools, universities and EdTech platforms build enrollment funnels grounded in how families actually decide: reputation research, open-day and webinar funnels, and retention programs that protect fee revenue year after year.",
     "challenges": [
       "Seasonal enrollment peaks with wasted off-peak spend",
       "Decision units that involve students, parents and sponsors at once",
-      "EdTech churn that quietly erases acquisition wins",
-      "Competing against O-Level and international-curriculum schools on trust, not just price",
-      "Sponsor-and-parent decision units where the paying party rarely sees the marketing"
+      "EdTech churn that quietly erases acquisition wins"
     ],
     "services": [
       "market-research",
@@ -43,7 +39,7 @@
       "sem-ppc",
       "email-marketing-automation"
     ],
-    "metaTitle": "Education & EdTech Marketing Agency in Pakistan",
+    "metaTitle": "Education & EdTech Marketing Agency",
     "metaDesc": "Enrollment marketing for schools, universities and EdTech: admissions funnels, reputation building and retention programs that protect fee revenue.",
     "order": 1,
     "published": true,
@@ -53,13 +49,11 @@
     "slug": "finance-banking-fintech",
     "name": "Finance, Banking & Fintech",
     "tagline": "In finance, trust is the product. We market the proof.",
-    "intro": "Financial brands win on credibility and lose on complexity. From banks modernising their acquisition to fintech challengers building pipeline from zero, we combine compliance-aware messaging with behavioural insight - making complex products feel simple, safe and worth switching for. In Pakistan's fast-growing digital banking and remittance space, and for challengers targeting the diaspora corridor between Pakistan, the UK and the Gulf, that trust gap is the single biggest thing standing between a download and an active user.",
+    "intro": "Financial brands win on credibility and lose on complexity. From banks modernising their acquisition to fintech challengers building pipeline from zero, we combine compliance-aware messaging with behavioural insight - making complex products feel simple, safe and worth switching for.",
     "challenges": [
       "Compliance constraints that flatten most agency creativity",
       "Long consideration cycles and deep switching anxiety",
-      "App installs and signups that don't convert to active users",
-      "Building trust for digital-only products in a market that still prefers branch relationships",
-      "Diaspora remittance and fintech products that need to feel credible on both sides of the corridor"
+      "App installs and signups that don't convert to active users"
     ],
     "services": [
       "marketing-strategy-consulting",
@@ -68,7 +62,7 @@
       "content-marketing",
       "marketing-analytics-reporting"
     ],
-    "metaTitle": "Fintech & Banking Marketing Agency in Pakistan",
+    "metaTitle": "Fintech & Banking Marketing Agency",
     "metaDesc": "Marketing for banks and fintechs: trust-first positioning, compliant campaigns, activation funnels and B2B pipeline engines.",
     "order": 2,
     "published": true,
@@ -78,13 +72,11 @@
     "slug": "ecommerce-d2c-retail",
     "name": "E-commerce & D2C Retail",
     "tagline": "Traffic, conversion, retention - in that order of honesty.",
-    "intro": "We grow D2C brands and online retailers across the full funnel: profitable paid acquisition, conversion-optimised storefronts, and email/SMS retention that turns first orders into lifetime value. Beauty, personal care and wellness brands - salons, clinics and skincare lines - live here too: same buyers, same channels, same playbook. For Pakistani D2C brands eyeing UK, US or Gulf expansion, we also handle the cross-border logistics-aware messaging and international payment-trust signals that keep conversion rates from collapsing the moment a customer sees a foreign shipping estimate.",
+    "intro": "We grow D2C brands and online retailers across the full funnel: profitable paid acquisition, conversion-optimised storefronts, and email/SMS retention that turns first orders into lifetime value. Beauty, personal care and wellness brands - salons, clinics and skincare lines - live here too: same buyers, same channels, same playbook.",
     "challenges": [
       "Rising acquisition costs eating already-thin margins",
       "Beautiful stores that convert below one percent",
-      "One-time buyers who never come back",
-      "Cash-on-delivery habits in Pakistan that inflate return rates and cash flow risk",
-      "Cross-border shipping and payment trust gaps when expanding beyond the domestic market"
+      "One-time buyers who never come back"
     ],
     "services": [
       "ecommerce-marketing",
@@ -103,13 +95,11 @@
     "slug": "healthcare-pharmaceuticals",
     "name": "Healthcare & Pharmaceuticals",
     "tagline": "Patients research before they book. Be the answer they find.",
-    "intro": "Healthcare decisions start with a search bar and end with trust. We help hospitals, clinics and pharma brands build patient journeys that inform and reassure - symptom-to-booking SEO, reputation management, doctor and brand storytelling, all delivered with the compliance care the sector demands. In Pakistan's private healthcare market, where word-of-mouth and Google reviews often outweigh advertising entirely, we treat reputation infrastructure as a marketing channel in its own right, not an afterthought bolted onto a media plan.",
+    "intro": "Healthcare decisions start with a search bar and end with trust. We help hospitals, clinics and pharma brands build patient journeys that inform and reassure - symptom-to-booking SEO, reputation management, doctor and brand storytelling, all delivered with the compliance care the sector demands.",
     "challenges": [
       "Strict advertising regulations that vary by platform and market",
       "Patient journeys that span months of quiet research",
-      "Reputation fragility - one bad review thread can move revenue",
-      "Word-of-mouth and doctor-referral networks that traditional digital campaigns rarely capture",
-      "Competing private hospitals and clinics fighting for the same 'near me' searches"
+      "Reputation fragility - one bad review thread can move revenue"
     ],
     "services": [
       "seo",
@@ -118,7 +108,7 @@
       "digital-marketing",
       "branding-identity"
     ],
-    "metaTitle": "Healthcare & Pharma Marketing Agency in Pakistan",
+    "metaTitle": "Healthcare & Pharma Marketing Agency",
     "metaDesc": "Compliant healthcare marketing: patient journey SEO, reputation management and trust-building campaigns for hospitals, clinics and pharma brands.",
     "order": 4,
     "published": true,
@@ -128,13 +118,11 @@
     "slug": "textile-apparel-fashion",
     "name": "Textile, Apparel & Fashion",
     "tagline": "From the mill to the feed - make the brand worth the fabric.",
-    "intro": "Pakistan makes world-class fabric; too few of its brands capture world-class margins. We help textile houses, fashion labels and apparel exporters move up the value chain: brand building for D2C labels, seasonal campaign calendars, export-market positioning, and social commerce that sells the drop before it lands. For Faisalabad and Sialkot exporters selling to European and US buyers, we build the LinkedIn and trade-show-adjacent presence that turns a manufacturing relationship into a brand relationship - the difference between being a supplier and being a partner.",
+    "intro": "Pakistan makes world-class fabric; too few of its brands capture world-class margins. We help textile houses, fashion labels and apparel exporters move up the value chain: brand building for D2C labels, seasonal campaign calendars, export-market positioning, and social commerce that sells the drop before it lands.",
     "challenges": [
       "Commodity pricing pressure that punishes unbranded players",
       "Seasonal launches with make-or-break two-week windows",
-      "Instagram-driven discovery that rewards speed over size",
-      "Export houses stuck as anonymous suppliers instead of recognised brands to international buyers",
-      "Eid and wedding-season demand spikes that need media plans built months in advance"
+      "Instagram-driven discovery that rewards speed over size"
     ],
     "services": [
       "branding-identity",
@@ -143,7 +131,7 @@
       "influencer-marketing",
       "advertising"
     ],
-    "metaTitle": "Fashion & Textile Marketing Agency in Pakistan",
+    "metaTitle": "Fashion & Textile Marketing Agency, Pakistan",
     "metaDesc": "Marketing for textile, apparel and fashion brands: D2C brand building, seasonal campaigns, social commerce and export positioning.",
     "order": 5,
     "published": true,
@@ -153,13 +141,11 @@
     "slug": "food-beverage-restaurants",
     "name": "Food, Beverage & Restaurants",
     "tagline": "Fill tables and baskets with cravings, not coupons.",
-    "intro": "Food is bought with the eyes and justified with the wallet. We work with restaurant groups, cloud kitchens and F&B brands on launch buzz, delivery-platform visibility, menu psychology and loyalty programs - building cravings that survive after the discount ends. Lahore's food scene moves fast: a launch that trends on a Friday can be forgotten by the next, so we plan content and delivery-app optimisation as one connected system, not two teams working from different briefs.",
+    "intro": "Food is bought with the eyes and justified with the wallet. We work with restaurant groups, cloud kitchens and F&B brands on launch buzz, delivery-platform visibility, menu psychology and loyalty programs - building cravings that survive after the discount ends.",
     "challenges": [
       "Delivery-app commissions quietly eating the margin",
       "Launch spikes that fade into empty weekdays",
-      "Discount-dependency that trains customers to wait",
-      "Delivery-app search rankings that determine visibility more than the food itself",
-      "Short attention spans in a market where a new 'it' spot opens every month"
+      "Discount-dependency that trains customers to wait"
     ],
     "services": [
       "social-media-marketing",
@@ -168,7 +154,7 @@
       "digital-marketing",
       "advertising"
     ],
-    "metaTitle": "Restaurant & F&B Marketing Agency in Lahore",
+    "metaTitle": "Restaurant & F&B Marketing Agency",
     "metaDesc": "Marketing for restaurants, cloud kitchens and F&B brands: launch campaigns, delivery-platform growth, menu psychology and loyalty programs.",
     "order": 6,
     "published": true,
@@ -178,13 +164,11 @@
     "slug": "automotive-auto-services",
     "name": "Automotive & Auto Services",
     "tagline": "The test drive now happens on a phone screen.",
-    "intro": "Car buyers complete most of their journey online before ever visiting a showroom. We help dealerships, auto brands and service networks win that digital journey: model launch campaigns, local SEO that owns 'near me' searches, video-first content, and lead systems that book test drives and service slots automatically. Pakistan's auto market has its own rhythm - import policy shifts, new-model announcements and financing changes all move search demand overnight, and we plan campaigns that can react within days, not the following quarter.",
+    "intro": "Car buyers complete most of their journey online before ever visiting a showroom. We help dealerships, auto brands and service networks win that digital journey: model launch campaigns, local SEO that owns 'near me' searches, video-first content, and lead systems that book test drives and service slots automatically.",
     "challenges": [
       "Showroom visits declining as research moves fully online",
       "Fierce 'near me' competition for service and parts revenue",
-      "Launch budgets spent on reach instead of qualified bookings",
-      "Demand spikes tied to import policy and financing changes that most media plans ignore",
-      "Service-centre loyalty that quietly erodes once a car passes warranty"
+      "Launch budgets spent on reach instead of qualified bookings"
     ],
     "services": [
       "digital-marketing",
@@ -203,13 +187,11 @@
     "slug": "travel-tourism-hospitality",
     "name": "Travel, Tourism & Hospitality",
     "tagline": "Sell the feeling. The booking follows.",
-    "intro": "Travel is the ultimate aspiration purchase - and the most comparison-shopped one. We help hotels, airlines, tour operators and destination brands convert wanderlust into bookings: seasonal demand campaigns, direct-booking strategies that dodge OTA commissions, and review-driven reputation systems. For northern Pakistan's tourism boom and for hospitality brands targeting Gulf-based and UK-based Pakistani travellers planning trips home, we build campaigns timed to the exact windows - Eid, summer school holidays, wedding season - when booking intent actually spikes, backed by research into how each traveller segment actually shops before they book.",
+    "intro": "Travel is the ultimate aspiration purchase - and the most comparison-shopped one. We help hotels, airlines, tour operators and destination brands convert wanderlust into bookings: seasonal demand campaigns, direct-booking strategies that dodge OTA commissions, and review-driven reputation systems.",
     "challenges": [
       "OTA commissions taxing every booking",
       "Extreme seasonality with fixed costs year-round",
-      "Travellers comparing dozens of options across weeks",
-      "Diaspora travellers planning trips home around Eid and summer holidays with long lead times",
-      "Northern Pakistan's tourism growth outpacing most operators' digital booking infrastructure"
+      "Travellers comparing dozens of options across weeks"
     ],
     "services": [
       "digital-marketing",
@@ -218,7 +200,7 @@
       "social-media-marketing",
       "email-marketing-automation"
     ],
-    "metaTitle": "Travel & Hospitality Marketing Agency in Pakistan",
+    "metaTitle": "Travel & Hospitality Marketing Agency",
     "metaDesc": "Marketing for hotels, tour operators and travel brands: direct-booking growth, seasonal campaigns and reputation management.",
     "order": 8,
     "published": true,
@@ -228,13 +210,11 @@
     "slug": "it-software-tech-startups",
     "name": "IT, Software & Tech Startups",
     "tagline": "Great code doesn't sell itself. Pipeline does.",
-    "intro": "From SaaS startups chasing their first hundred customers to software houses competing for international contracts, we build the go-to-market engine: sharp positioning against global competitors, founder-led content, ABM and outbound-support programs, and product marketing that translates features into outcomes buyers fund. Pakistan's software export sector is enormous but under-marketed - most houses win work through referrals alone, leaving a huge amount of inbound demand from US and UK buyers completely uncaptured, and a credibility gap that only deliberate positioning and case-study proof can close.",
+    "intro": "From SaaS startups chasing their first hundred customers to software houses competing for international contracts, we build the go-to-market engine: sharp positioning against global competitors, founder-led content, ABM and outbound-support programs, and product marketing that translates features into outcomes buyers fund.",
     "challenges": [
       "Brilliant products with invisible positioning",
       "Founder-led sales that stop scaling",
-      "Competing for global contracts against bigger names",
-      "Referral-only pipelines that leave inbound demand from US and UK buyers uncaptured",
-      "Technical founders who can build the product but not the narrative around it"
+      "Competing for global contracts against bigger names"
     ],
     "services": [
       "b2b-marketing",
@@ -243,7 +223,7 @@
       "seo",
       "performance-marketing"
     ],
-    "metaTitle": "SaaS & Tech Startup Marketing Agency in Pakistan",
+    "metaTitle": "SaaS & Tech Startup Marketing Agency",
     "metaDesc": "Go-to-market marketing for SaaS and tech startups: positioning, pipeline engines, product marketing and founder-led content.",
     "order": 9,
     "published": true,
@@ -253,13 +233,11 @@
     "slug": "fmcg-consumer-goods",
     "name": "FMCG & Consumer Goods",
     "tagline": "Win the two-second decision at the shelf.",
-    "intro": "Our home turf. We help FMCG brands grow through the science of how shoppers actually choose: neuromarketing-tested packaging, brand positioning with memory structures that stick, trade and shopper marketing, and media plans built on category entry points - including beauty and personal care brands whose buyers shop the same aisles and feeds. Pakistan's FMCG landscape is dominated by a handful of legacy giants; we specialise in helping challenger brands win specific category entry points those giants have grown too big to defend.",
+    "intro": "Our home turf. We help FMCG brands grow through the science of how shoppers actually choose: neuromarketing-tested packaging, brand positioning with memory structures that stick, trade and shopper marketing, and media plans built on category entry points - including beauty and personal care brands whose buyers shop the same aisles and feeds.",
     "challenges": [
       "Shelf decisions made in under two seconds",
       "Retail media and modern trade reshaping the route to market",
-      "Brand equity eroding under private-label pressure",
-      "Challenger brands fighting legacy giants with ten times the media budget",
-      "Kiryana-store and modern-trade route-to-market split that most media plans treat as one channel"
+      "Brand equity eroding under private-label pressure"
     ],
     "services": [
       "neuromarketing",
@@ -268,7 +246,7 @@
       "advertising",
       "mystery-shopping"
     ],
-    "metaTitle": "FMCG Marketing & Neuromarketing Agency in Pakistan",
+    "metaTitle": "FMCG Marketing & Neuromarketing Agency",
     "metaDesc": "FMCG and consumer goods marketing - including beauty and personal care: neuromarketing, pack testing, brand positioning and shopper marketing.",
     "order": 10,
     "published": true,
@@ -278,13 +256,11 @@
     "slug": "weddings-events-entertainment",
     "name": "Weddings, Events & Entertainment",
     "tagline": "One day, one chance, one reputation - marketed year-round.",
-    "intro": "The events business runs on peak moments and year-round reputation. We help wedding planners, venues, decorators and entertainment brands stay booked across seasons: portfolio-driven social proof, visual-first content engines, referral systems, and booking funnels that capture enquiries the moment inspiration strikes. In a market as visually competitive as Lahore's wedding industry, a portfolio that isn't actively fed with fresh, well-shot content goes stale within a single season - we treat content production as infrastructure, not a one-off shoot.",
+    "intro": "The events business runs on peak moments and year-round reputation. We help wedding planners, venues, decorators and entertainment brands stay booked across seasons: portfolio-driven social proof, visual-first content engines, referral systems, and booking funnels that capture enquiries the moment inspiration strikes.",
     "challenges": [
       "Extreme seasonality around wedding and festival calendars",
       "High-ticket decisions made entirely on visual proof",
-      "Enquiries leaking to whoever replies fastest on WhatsApp",
-      "Portfolios that go stale within a single wedding season without constant content production",
-      "Word-of-mouth referral chains that are powerful but impossible to scale on their own"
+      "Enquiries leaking to whoever replies fastest on WhatsApp"
     ],
     "services": [
       "social-media-marketing",
@@ -293,7 +269,7 @@
       "content-marketing",
       "influencer-marketing"
     ],
-    "metaTitle": "Wedding & Events Marketing Agency in Lahore, Pakistan",
+    "metaTitle": "Wedding & Events Marketing Agency, Pakistan",
     "metaDesc": "Marketing for wedding planners, venues and entertainment brands: visual-first content, social proof and year-round booking funnels.",
     "order": 11,
     "published": true,
@@ -303,13 +279,11 @@
     "slug": "ngos-development-sector",
     "name": "NGOs & Development Sector",
     "tagline": "Impact deserves an audience. We build both.",
-    "intro": "Development sector work competes for attention, donors and trust like any brand - with higher stakes and tighter budgets. We help NGOs and social enterprises sharpen their story, run donor acquisition and retention campaigns, report impact compellingly, and build the public trust that unlocks funding. For Pakistani NGOs seeking international grant funding and diaspora donations, we build the bilingual, evidence-backed storytelling that satisfies both a local beneficiary community and an overseas donor board reviewing a funding proposal.",
+    "intro": "Development sector work competes for attention, donors and trust like any brand - with higher stakes and tighter budgets. We help NGOs and social enterprises sharpen their story, run donor acquisition and retention campaigns, report impact compellingly, and build the public trust that unlocks funding.",
     "challenges": [
       "Donor fatigue in crowded cause categories",
       "Impact that's real but poorly evidenced and told",
-      "Scrutiny on every rupee spent on 'marketing'",
-      "International grant applications that need evidence-backed storytelling, not just emotional appeals",
-      "Diaspora donor campaigns that require a different trust case than local fundraising"
+      "Scrutiny on every rupee spent on 'marketing'"
     ],
     "services": [
       "marketing-strategy-consulting",
@@ -318,7 +292,7 @@
       "branding-identity",
       "market-research"
     ],
-    "metaTitle": "NGO & Development Sector Marketing Agency, Pakistan",
+    "metaTitle": "NGO & Development Sector Marketing",
     "metaDesc": "Marketing for NGOs and social enterprises: donor acquisition, impact storytelling, campaign strategy and trust building.",
     "order": 12,
     "published": true,
