@@ -17,6 +17,10 @@ export default function AuthorPage() {
 
   if (!author) return <NotFound />;
   const mine = posts.filter((p) => p.author === author.name);
+  const TITLES = new Set(["dr", "mr", "mrs", "ms", "prof", "eng"]);
+  const nameParts = author.name.split(" ").filter((w) => !TITLES.has(w.toLowerCase().replace(/\.$/, "")));
+  const initials = ((nameParts[0]?.[0] || "") + (nameParts[nameParts.length - 1]?.[0] || "")).toUpperCase();
+  const firstName = nameParts[0] || author.name.split(" ")[0];
 
   return (
     <div data-testid="author-page" className="pt-32 sm:pt-40 pb-24">
@@ -27,8 +31,8 @@ export default function AuthorPage() {
             <ArrowLeft size={15} /> All Insights
           </Link>
           <div className="flex flex-col sm:flex-row items-start gap-8">
-            <div className="w-24 h-24 rounded-full bg-vermilion text-white font-display font-extrabold text-3xl flex items-center justify-center shrink-0">
-              {author.name.split(" ").map((w) => w[0]).join("")}
+            <div className="w-24 h-24 rounded-full bg-vermilion text-white font-display font-extrabold text-2xl flex items-center justify-center shrink-0">
+              {initials}
             </div>
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-2">{author.role}</p>
@@ -40,7 +44,7 @@ export default function AuthorPage() {
         </Reveal>
 
         <h2 className="font-display text-2xl font-bold tracking-tight mb-8 border-t border-border pt-12">
-          Articles by {author.name.split(" ")[0]} <span className="text-muted-foreground">({mine.length})</span>
+          Articles by {firstName} <span className="text-muted-foreground">({mine.length})</span>
         </h2>
         {isLoading ? (
           <div className="h-60 animate-pulse bg-card" />

@@ -69,12 +69,12 @@ export default function Home() {
           </motion.p>
           <MaskLines
             lines={["INSIGHTS", "THAT INFORM."]}
-            className="font-display font-extrabold tracking-tight leading-[1.12] text-[11vw] sm:text-[8vw] lg:text-[4.5vw]"
+            className="font-display font-extrabold tracking-tight leading-[1.12] text-[9vw] sm:text-[8vw] lg:text-[4.5vw]"
             delay={0.25}
           />
           <MaskLines
             lines={["STRATEGIES", "THAT PERFORM."]}
-            className="font-display font-extrabold tracking-tight leading-[1.12] text-[11vw] sm:text-[8vw] lg:text-[4.2vw] text-vermilion"
+            className="font-display font-extrabold tracking-tight leading-[1.12] text-[9vw] sm:text-[8vw] lg:text-[4.2vw] text-vermilion"
             delay={0.55}
           />
           <motion.div
@@ -355,7 +355,7 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
           <Reveal>
             <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-6">Ready when you are</p>
-            <h2 className="font-display font-extrabold tracking-tight leading-[1.14] text-[10vw] sm:text-[6.5vw] mb-10">
+            <h2 className="font-display font-extrabold tracking-tight leading-[1.14] text-[9vw] sm:text-[6.5vw] mb-10">
               Let's make your<br />marketing <span className="text-vermilion">perform.</span>
             </h2>
             <Link
