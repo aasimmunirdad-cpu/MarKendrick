@@ -257,27 +257,36 @@ export default function Home() {
 
       {/* TESTIMONIALS */}
       {testimonials.length > 0 && (
-        <section className="py-24 sm:py-36 border-t border-border" data-testid="testimonials-section">
+        <section className="py-24 sm:py-36 border-t border-border overflow-hidden" data-testid="testimonials-section">
           <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
             <SectionHeading index="03" eyebrow="Client Voices" title="Trusted where it counts." className="mb-14" />
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-border border border-border">
-              {testimonials.slice(0, 3).map((t, i) => (
-                <Reveal key={t.id || i} delay={i * 0.06} className="bg-background">
-                  <figure className="p-8 sm:p-10 h-full flex flex-col" data-testid={`testimonial-card-${i}`}>
-                    <span className="font-display text-6xl text-vermilion leading-none mb-6">"</span>
-                    <blockquote className="text-base sm:text-lg leading-relaxed flex-1 mb-8">{t.quote}</blockquote>
-                    {t.metric && (
-                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-vermilion mb-4 border border-vermilion/30 bg-vermilion/5 px-3 py-1.5 w-fit">{t.metric}</p>
-                    )}
-                    <figcaption>
-                      <p className="font-display font-bold tracking-tight">{t.name}</p>
-                      <p className="text-sm text-muted-foreground">{t.role}{t.company ? `, ${t.company}` : ""}</p>
-                    </figcaption>
-                  </figure>
-                </Reveal>
-              ))}
-            </div>
           </div>
+          <Marquee
+            speed={32}
+            pauseOnHover
+            autoFill
+            gradient
+            gradientColor="rgb(250,250,250)"
+            gradientWidth={64}
+          >
+            {testimonials.map((t, i) => (
+              <figure
+                key={t.id || i}
+                className="w-[340px] sm:w-[400px] h-[360px] mx-3 p-8 sm:p-10 border border-border bg-background flex flex-col shrink-0"
+                data-testid={`testimonial-card-${i}`}
+              >
+                <span className="font-display text-6xl text-vermilion leading-none mb-6">"</span>
+                <blockquote className="text-base leading-relaxed flex-1 mb-6 line-clamp-6">{t.quote}</blockquote>
+                {t.metric && (
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-vermilion mb-4 border border-vermilion/30 bg-vermilion/5 px-3 py-1.5 w-fit">{t.metric}</p>
+                )}
+                <figcaption>
+                  <p className="font-display font-bold tracking-tight">{t.name}</p>
+                  <p className="text-sm text-muted-foreground">{t.role}{t.company ? `, ${t.company}` : ""}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </Marquee>
         </section>
       )}
 
