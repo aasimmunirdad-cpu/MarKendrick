@@ -272,15 +272,15 @@ export default function Home() {
             {testimonials.map((t, i) => (
               <figure
                 key={t.id || i}
-                className="w-[340px] sm:w-[400px] h-[360px] mx-3 p-8 sm:p-10 border border-border bg-background flex flex-col shrink-0"
+                className="w-[340px] sm:w-[400px] h-[440px] mx-3 p-8 sm:p-10 border border-border bg-background flex flex-col shrink-0"
                 data-testid={`testimonial-card-${i}`}
               >
                 <span className="font-display text-6xl text-vermilion leading-none mb-6">"</span>
-                <blockquote className="text-base leading-relaxed flex-1 mb-6 line-clamp-6">{t.quote}</blockquote>
+                <blockquote className="text-base leading-relaxed mb-6 line-clamp-6">{t.quote}</blockquote>
                 {t.metric && (
                   <p className="text-xs font-bold uppercase tracking-[0.2em] text-vermilion mb-4 border border-vermilion/30 bg-vermilion/5 px-3 py-1.5 w-fit">{t.metric}</p>
                 )}
-                <figcaption>
+                <figcaption className="mt-auto">
                   <p className="font-display font-bold tracking-tight">{t.name}</p>
                   <p className="text-sm text-muted-foreground">{t.role}{t.company ? `, ${t.company}` : ""}</p>
                 </figcaption>
