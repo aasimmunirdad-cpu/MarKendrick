@@ -8,7 +8,7 @@ import "react-quill-new/dist/quill.snow.css";
 // written as an inline `font-family` style, matching how it's rendered on
 // the public site (no extra CSS classes required).
 const FONT_WHITELIST = [
-  "Syne",
+  "Sora",
   "DM Sans",
   "Arial",
   "Georgia",

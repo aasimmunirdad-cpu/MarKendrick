@@ -5,9 +5,17 @@ import { useSiteSettings } from "../hooks/useSiteSettings";
 // Anything outside this list still works (browser falls back to a generic
 // font), it just won't be pre-loaded.
 export const TYPOGRAPHY_FONT_OPTIONS = [
-  "Syne", "DM Sans", "Inter", "Poppins", "Montserrat", "Playfair Display",
+  "Sora", "DM Sans", "Inter", "Poppins", "Montserrat", "Playfair Display",
   "Lora", "Work Sans", "Space Mono", "Caveat", "Georgia", "Arial",
 ];
+
+// "Syne" was the original heading font but its lowercase "g" is drawn with an
+// open/flat terminal by design (not a bug) which read as broken/clipped text
+// to most readers. Any previously-saved "Syne" setting is transparently
+// upgraded to "Sora" (a bold geometric font with a conventional "g") so
+// existing sites don't need a manual re-save in the admin CMS.
+const FONT_ALIASES = { Syne: "Sora" };
+const resolveFont = (name, fallback) => FONT_ALIASES[name] || name || fallback;
 
 /**
  * Injects a small stylesheet that applies the site-wide typography settings
@@ -19,7 +27,7 @@ export const TYPOGRAPHY_FONT_OPTIONS = [
 export default function GlobalTypography() {
   const settings = useSiteSettings();
   const css = useMemo(() => {
-    const headingFont = settings.typography_heading_font || "Syne";
+    const headingFont = resolveFont(settings.typography_heading_font, "Sora");
     const bodyFont = settings.typography_body_font || "DM Sans";
     const baseSize = parseInt(settings.typography_base_size, 10) || 16;
     const headingColor = settings.typography_heading_color;

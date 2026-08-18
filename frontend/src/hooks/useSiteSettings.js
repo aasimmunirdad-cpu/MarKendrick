@@ -13,7 +13,7 @@ export const DEFAULT_SITE_SETTINGS = {
   studio_video_url: "/media/studio-session.mp4",
   about_office_photo_url: "/media/office/office-1.jpg",
   home_showreel_poster_url: "/media/office/office-2.jpg",
-  typography_heading_font: "Syne",
+  typography_heading_font: "Sora",
   typography_body_font: "DM Sans",
   typography_base_size: "16",
   typography_heading_color: "",
