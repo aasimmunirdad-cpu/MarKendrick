@@ -1803,11 +1803,9 @@ async def expand_industry_content():
     marker = await db.migrations.find_one({"_id": "expand_industry_content_v1"})
     if marker:
         return
-    path = SEED_DATA_DIR / "industries.json"
-    if not path.exists():
+    industries = load_seed_json("industries")
+    if not industries:
         return
-    with open(path) as f:
-        industries = json.load(f)
     updated = 0
     for ind in industries:
         content = {
