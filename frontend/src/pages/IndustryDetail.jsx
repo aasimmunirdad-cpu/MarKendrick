@@ -38,7 +38,7 @@ export default function IndustryDetail() {
             <ArrowLeft size={15} /> All Industries
           </Link>
           <p className="text-xs uppercase tracking-[0.35em] text-vermilion mb-4">Industry Playbook</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-4xl sm:text-6xl leading-[1.02] max-w-4xl mb-4">{ind.name}</h1>
+          <h1 className="font-display font-extrabold tracking-tight text-4xl sm:text-6xl leading-[1.1] max-w-4xl mb-4">{ind.name}</h1>
           <p className="font-display text-xl sm:text-2xl text-muted-foreground tracking-tight mb-8">{ind.tagline}</p>
           <Link to={`/book-consultation`} data-testid="industry-book-button" className="inline-flex items-center gap-2 bg-vermilion hover:bg-vermilion-hover text-white font-semibold px-8 py-4 rounded-full transition-colors">
             Book a Free Audit Call <ArrowUpRight size={18} />

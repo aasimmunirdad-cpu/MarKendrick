@@ -46,7 +46,7 @@ export function SectionHeading({ index, eyebrow, title, className = "" }) {
         {index && <span className="font-display text-vermilion text-sm font-bold tracking-widest">{index}</span>}
         <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">{eyebrow}</span>
       </div>
-      <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tighter leading-[1.05]">{title}</h2>
+      <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.12]">{title}</h2>
     </Reveal>
   );
 }

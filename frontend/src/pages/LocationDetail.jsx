@@ -30,7 +30,7 @@ export default function LocationDetail() {
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-16">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4 flex items-center gap-2"><MapPin size={14} className="text-vermilion" /> {loc.eyebrow}</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-4xl sm:text-6xl leading-[1.02] max-w-4xl mb-8">{loc.h1}</h1>
+          <h1 className="font-display font-extrabold tracking-tight text-4xl sm:text-6xl leading-[1.1] max-w-4xl mb-8">{loc.h1}</h1>
           <Link to="/book-consultation" data-testid="location-book-button" className="inline-flex items-center gap-2 bg-vermilion hover:bg-vermilion-hover text-white font-semibold px-8 py-4 rounded-full transition-colors">
             Book a Free Consultation <ArrowUpRight size={18} />
           </Link>

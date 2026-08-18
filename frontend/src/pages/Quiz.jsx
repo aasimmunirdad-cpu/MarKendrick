@@ -75,7 +75,7 @@ export default function Quiz() {
         {!done && (
           <Reveal className="mb-12">
             <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">The 2-Minute Quiz</p>
-            <h1 className="font-display font-extrabold tracking-tighter text-4xl sm:text-6xl">Which service<br /><span className="text-vermilion">do you need?</span></h1>
+            <h1 className="font-display font-extrabold tracking-tight text-4xl sm:text-6xl">Which service<br /><span className="text-vermilion">do you need?</span></h1>
           </Reveal>
         )}
 
@@ -138,7 +138,7 @@ export default function Quiz() {
           {done && (
             <motion.div key="result" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} data-testid="quiz-result">
               <p className="text-xs uppercase tracking-[0.35em] text-vermilion mb-4">Your Recommendation</p>
-              <h2 className="font-display font-extrabold tracking-tighter text-4xl sm:text-5xl mb-6">Start with a<br />Diagnostic Audit.</h2>
+              <h2 className="font-display font-extrabold tracking-tight text-4xl sm:text-5xl mb-6">Start with a<br />Diagnostic Audit.</h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-4 max-w-2xl">{stage?.note}</p>
               <p className="text-muted-foreground leading-relaxed mb-10 max-w-2xl">{budget?.note}</p>
 

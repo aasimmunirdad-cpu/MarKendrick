@@ -63,7 +63,7 @@ export default function RoiCalculator() {
       <div className="max-w-[1100px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-14">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">ROI Calculator</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-6xl mb-4">What's your bottleneck<br /><span className="text-vermilion">costing you?</span></h1>
+          <h1 className="font-display font-extrabold tracking-tight text-5xl sm:text-6xl mb-4">What's your bottleneck<br /><span className="text-vermilion">costing you?</span></h1>
           <p className="text-muted-foreground max-w-xl text-lg">Three honest inputs. One uncomfortable number. Then we'll show you how to claim it back.</p>
         </Reveal>
 
@@ -126,7 +126,7 @@ export default function RoiCalculator() {
           <div className="lg:col-span-5 bg-coal dark:bg-card text-white p-8 sm:p-12 flex flex-col">
             <p className="text-xs uppercase tracking-[0.3em] text-white/50 mb-8 flex items-center gap-2"><TrendingUp size={14} className="text-vermilion" /> Your upside</p>
             <p className="text-xs uppercase tracking-[0.2em] text-white/50 mb-1">Extra revenue, every month</p>
-            <p className="font-display text-5xl font-extrabold tracking-tighter text-vermilion mb-8" data-testid="roi-monthly-gain">
+            <p className="font-display text-5xl font-extrabold tracking-tight text-vermilion mb-8" data-testid="roi-monthly-gain">
               <CountUp value={result.monthlyGain} />
             </p>
             <div className="space-y-5 text-sm flex-1">

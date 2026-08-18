@@ -69,12 +69,12 @@ export default function Home() {
           </motion.p>
           <MaskLines
             lines={["INSIGHTS", "THAT INFORM."]}
-            className="font-display font-extrabold tracking-tighter leading-[1.02] text-[11vw] sm:text-[8vw] lg:text-[4.5vw]"
+            className="font-display font-extrabold tracking-tight leading-[1.12] text-[11vw] sm:text-[8vw] lg:text-[4.5vw]"
             delay={0.25}
           />
           <MaskLines
             lines={["STRATEGIES", "THAT PERFORM."]}
-            className="font-display font-extrabold tracking-tighter leading-[1.02] text-[11vw] sm:text-[8vw] lg:text-[4.2vw] text-vermilion"
+            className="font-display font-extrabold tracking-tight leading-[1.12] text-[11vw] sm:text-[8vw] lg:text-[4.2vw] text-vermilion"
             delay={0.55}
           />
           <motion.div
@@ -114,7 +114,7 @@ export default function Home() {
       <section className="py-10 sm:py-14 border-y border-border overflow-hidden" data-testid="marquee-section">
         <Marquee speed={30} gradient={false}>
           {["Market Research", "Neuromarketing", "Branding", "Performance Marketing", "SEO", "Consumer Insight", "Advertising", "B2B Growth"].map((t) => (
-            <span key={t} className="mx-8 font-display font-extrabold text-4xl sm:text-6xl tracking-tighter marquee-text whitespace-nowrap">
+            <span key={t} className="mx-8 font-display font-extrabold text-4xl sm:text-6xl tracking-tight marquee-text whitespace-nowrap">
               {t} <span className="text-vermilion">·</span>
             </span>
           ))}
@@ -147,9 +147,9 @@ export default function Home() {
                   className={`grid grid-cols-1 lg:grid-cols-12 gap-6 py-12 sm:py-16 border-t border-border ${i % 2 === 1 ? "" : ""}`}
                 >
                   <div className="lg:col-span-2">
-                    <span className="font-display text-5xl sm:text-7xl font-extrabold text-vermilion tracking-tighter">{m.n}</span>
+                    <span className="font-display text-5xl sm:text-7xl font-extrabold text-vermilion tracking-tight">{m.n}</span>
                   </div>
-                  <h3 className="font-display text-2xl sm:text-4xl font-bold tracking-tighter lg:col-span-4">
+                  <h3 className="font-display text-2xl sm:text-4xl font-bold tracking-tight lg:col-span-4">
                     {m.title}
                   </h3>
                   <p className="text-base sm:text-lg text-muted-foreground leading-relaxed lg:col-span-5 lg:col-start-7">
@@ -197,7 +197,7 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-5 sm:px-8 mb-8 flex items-end justify-between gap-6">
           <Reveal>
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-2">Who We Serve</p>
-            <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tighter">Playbooks for every sector.</h2>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight">Playbooks for every sector.</h2>
           </Reveal>
           <Link to="/industries" data-testid="industries-strip-all-link" className="inline-flex items-center gap-2 text-sm font-semibold text-vermilion hover:gap-3 transition-all shrink-0">
             All industries <ArrowUpRight size={16} />
@@ -205,7 +205,7 @@ export default function Home() {
         </div>
         <Marquee speed={25} gradient={false} pauseOnHover>
           {industries.map((ind) => (
-            <Link key={ind.slug} to={`/industries/${ind.slug}`} className="mx-6 font-display font-bold text-xl sm:text-2xl tracking-tighter text-muted-foreground/60 hover:text-vermilion transition-colors whitespace-nowrap">
+            <Link key={ind.slug} to={`/industries/${ind.slug}`} className="mx-6 font-display font-bold text-xl sm:text-2xl tracking-tight text-muted-foreground/60 hover:text-vermilion transition-colors whitespace-nowrap">
               {ind.name} <span className="text-vermilion">/</span>
             </Link>
           ))}
@@ -237,12 +237,12 @@ export default function Home() {
                   </div>
                   <div className={`lg:col-span-5 ${i % 2 === 1 ? "lg:order-1" : ""}`}>
                     <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-3">{cs.industry} — {cs.client}</p>
-                    <h3 className="font-display text-2xl sm:text-3xl font-bold tracking-tighter mb-4 group-hover:text-vermilion transition-colors">{cs.title}</h3>
+                    <h3 className="font-display text-2xl sm:text-3xl font-bold tracking-tight mb-4 group-hover:text-vermilion transition-colors">{cs.title}</h3>
                     <p className="text-muted-foreground leading-relaxed mb-6">{cs.summary}</p>
                     <div className="flex gap-8">
                       {cs.results.slice(0, 2).map((r) => (
                         <div key={r.label}>
-                          <p className="font-display text-3xl sm:text-4xl font-extrabold text-vermilion tracking-tighter">{r.metric}</p>
+                          <p className="font-display text-3xl sm:text-4xl font-extrabold text-vermilion tracking-tight">{r.metric}</p>
                           <p className="text-xs text-muted-foreground mt-1 max-w-[140px]">{r.label}</p>
                         </div>
                       ))}
@@ -315,7 +315,7 @@ export default function Home() {
                   transition={{ delay: 0.2 + i * 0.15, duration: 0.6 }}
                   className="bg-ink/60 backdrop-blur-md border border-white/15 px-5 py-4"
                 >
-                  <p className="font-display text-2xl sm:text-4xl font-extrabold text-vermilion tracking-tighter">{m.metric}</p>
+                  <p className="font-display text-2xl sm:text-4xl font-extrabold text-vermilion tracking-tight">{m.metric}</p>
                   <p className="text-white/70 text-xs mt-1">{m.label}</p>
                 </motion.div>
               ))}
@@ -355,7 +355,7 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
           <Reveal>
             <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-6">Ready when you are</p>
-            <h2 className="font-display font-extrabold tracking-tighter leading-[1.08] text-[10vw] sm:text-[6.5vw] mb-10">
+            <h2 className="font-display font-extrabold tracking-tight leading-[1.14] text-[10vw] sm:text-[6.5vw] mb-10">
               Let's make your<br />marketing <span className="text-vermilion">perform.</span>
             </h2>
             <Link

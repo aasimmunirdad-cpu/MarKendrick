@@ -32,7 +32,7 @@ export default function AuthorPage() {
             </div>
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-2">{author.role}</p>
-              <h1 className="font-display font-extrabold tracking-tighter text-4xl sm:text-5xl mb-4">{author.name}</h1>
+              <h1 className="font-display font-extrabold tracking-tight text-4xl sm:text-5xl mb-4">{author.name}</h1>
               <p className="text-muted-foreground leading-relaxed max-w-2xl">{author.bio}</p>
               <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mt-4">Focus: {author.focus}</p>
             </div>

@@ -52,7 +52,7 @@ export default function PostDetail() {
             <ArrowLeft size={15} /> All Insights
           </Link>
           <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-5">{post.category} · {post.read_time}</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-4xl sm:text-5xl leading-[1.05] mb-6">{post.title}</h1>
+          <h1 className="font-display font-extrabold tracking-tight text-4xl sm:text-5xl leading-[1.12] mb-6">{post.title}</h1>
           <p className="text-lg text-muted-foreground leading-relaxed mb-4">{post.excerpt}</p>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 pb-10 border-b border-border">
             <p className="text-sm text-muted-foreground">

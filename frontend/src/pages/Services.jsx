@@ -27,7 +27,7 @@ export default function Services() {
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-20">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">The Services Hub</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-7xl mb-6">Every capability.<br /><span className="text-vermilion">One engine.</span></h1>
+          <h1 className="font-display font-extrabold tracking-tight text-5xl sm:text-7xl mb-6">Every capability.<br /><span className="text-vermilion">One engine.</span></h1>
           <p className="text-muted-foreground max-w-xl text-lg">Every service begins with insight and ends with a number you can hold us to. Hire one, or run the full stack.</p>
           <Link to="/quiz" data-testid="services-quiz-banner" className="group mt-8 flex items-center justify-between border border-vermilion/40 bg-vermilion/5 p-6 max-w-xl hover:bg-vermilion/15 transition-colors">
             <div>
@@ -42,7 +42,7 @@ export default function Services() {
           <div key={group.label} className="mb-20">
             <Reveal className="flex items-baseline gap-4 mb-8 border-b border-border pb-4">
               <span className="font-display text-vermilion text-sm font-bold tracking-widest">{String(gi + 1).padStart(2, "0")}</span>
-              <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tighter">{group.label}</h2>
+              <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight">{group.label}</h2>
             </Reveal>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border">
               {group.items.map((s) => {

@@ -42,7 +42,7 @@ export default function Faq() {
       <div className="max-w-[900px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-16">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">FAQ</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-6xl mb-6">Honest answers,<br /><span className="text-vermilion">no agency-speak.</span></h1>
+          <h1 className="font-display font-extrabold tracking-tight text-5xl sm:text-6xl mb-6">Honest answers,<br /><span className="text-vermilion">no agency-speak.</span></h1>
         </Reveal>
 
         {FAQS.map((group, gi) => (
@@ -64,7 +64,7 @@ export default function Faq() {
         ))}
 
         <Reveal className="border border-border bg-card/40 p-10 mt-16">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tighter mb-4">Still have a question?</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight mb-4">Still have a question?</h2>
           <p className="text-muted-foreground mb-6">Book a free 20-minute call — we'll answer honestly, including if we're not the right fit.</p>
           <Link to="/book-consultation" data-testid="faq-book-button" className="inline-flex items-center gap-2 bg-vermilion hover:bg-vermilion-hover text-white font-semibold px-8 py-4 rounded-full transition-colors">
             Book a Free Call <ArrowUpRight size={18} />

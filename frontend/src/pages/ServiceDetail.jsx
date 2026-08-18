@@ -33,7 +33,7 @@ export default function ServiceDetail() {
             <ArrowLeft size={15} /> All Services
           </Link>
           <p className="text-xs uppercase tracking-[0.35em] text-vermilion mb-4">{service.name}</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-4xl sm:text-6xl lg:text-7xl leading-[1.0] max-w-5xl mb-8">{service.hero}</h1>
+          <h1 className="font-display font-extrabold tracking-tight text-4xl sm:text-6xl lg:text-7xl leading-[1.1] max-w-5xl mb-8">{service.hero}</h1>
           <Link
             to={`/book-consultation?service=${service.slug}`}
             data-testid="service-book-button"

@@ -16,7 +16,7 @@ export default function Industries() {
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-16">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">Industries We Serve</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-7xl mb-6">Category-fluent.<br /><span className="text-vermilion">Never generic.</span></h1>
+          <h1 className="font-display font-extrabold tracking-tight text-5xl sm:text-7xl mb-6">Category-fluent.<br /><span className="text-vermilion">Never generic.</span></h1>
           <p className="text-muted-foreground max-w-xl text-lg">Sector playbooks, each built from real category research. The same diagnostic method applies anywhere buyers decide.</p>
         </Reveal>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">

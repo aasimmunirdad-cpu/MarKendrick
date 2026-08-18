@@ -32,7 +32,7 @@ export default function CaseStudyDetail() {
             <ArrowLeft size={15} /> All Work
           </Link>
           <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-4">{cs.industry} — {cs.client}</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-4xl sm:text-6xl leading-[1.02] max-w-4xl mb-8">{cs.title}</h1>
+          <h1 className="font-display font-extrabold tracking-tight text-4xl sm:text-6xl leading-[1.1] max-w-4xl mb-8">{cs.title}</h1>
           <div className="flex flex-wrap gap-2 mb-12">
             {cs.services.map((s) => (
               <span key={s} className="text-xs border border-border rounded-full px-3 py-1.5 text-muted-foreground">{s}</span>
@@ -49,7 +49,7 @@ export default function CaseStudyDetail() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-16 border-y border-border py-12">
           {cs.results.map((r) => (
             <Reveal key={r.label}>
-              <p className="font-display text-5xl font-extrabold text-vermilion tracking-tighter mb-2">{r.metric}</p>
+              <p className="font-display text-5xl font-extrabold text-vermilion tracking-tight mb-2">{r.metric}</p>
               <p className="text-sm text-muted-foreground">{r.label}</p>
             </Reveal>
           ))}
@@ -74,7 +74,7 @@ export default function CaseStudyDetail() {
         </div>
 
         <Reveal className="text-center border-t border-border pt-16">
-          <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tighter mb-6">Want results like these?</h2>
+          <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-6">Want results like these?</h2>
           <Link to="/book-consultation" data-testid="case-cta-button" className="inline-flex items-center gap-2 bg-vermilion hover:bg-vermilion-hover text-white font-semibold px-8 py-4 rounded-full transition-colors">
             Book a Consultation <ArrowUpRight size={18} />
           </Link>

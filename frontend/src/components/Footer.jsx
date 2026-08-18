@@ -35,7 +35,7 @@ export default function Footer() {
         <div className="py-16 sm:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-5">
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">The Signal — Monthly Briefing</p>
-            <h3 className="font-display text-3xl sm:text-4xl font-bold tracking-tighter leading-tight mb-6">
+            <h3 className="font-display text-3xl sm:text-4xl font-bold tracking-tight leading-tight mb-6">
               {settings.footer_newsletter_title}
             </h3>
             <form onSubmit={subscribe} data-testid="newsletter-form" className="flex max-w-md border border-border rounded-full overflow-hidden focus-within:border-vermilion transition-colors">
@@ -96,7 +96,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-border overflow-hidden select-none" aria-hidden="true">
-          <p className="font-display font-extrabold tracking-tighter leading-none text-[clamp(2rem,6.5vw,5.5rem)] outline-text whitespace-nowrap text-center overflow-hidden pb-2">MARKENDRICK</p>
+          <p className="font-display font-extrabold tracking-tight leading-none text-[clamp(2rem,6.5vw,5.5rem)] outline-text whitespace-nowrap text-center overflow-hidden pb-2">MARKENDRICK</p>
         </div>
 
         <div className="py-8 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

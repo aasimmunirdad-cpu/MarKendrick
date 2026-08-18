@@ -21,7 +21,7 @@ export default function Whitepapers() {
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-16">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">Whitepapers & Reports</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-7xl mb-6">Research worth<br /><span className="text-vermilion">an email address.</span></h1>
+          <h1 className="font-display font-extrabold tracking-tight text-5xl sm:text-7xl mb-6">Research worth<br /><span className="text-vermilion">an email address.</span></h1>
           <p className="text-muted-foreground max-w-xl text-lg">Free to download. We ask for your email so The Signal — our monthly briefing — lands in your inbox too. Unsubscribe anytime.</p>
         </Reveal>
 
@@ -36,7 +36,7 @@ export default function Whitepapers() {
                     <FileText size={20} />
                   </div>
                   <p className="text-xs uppercase tracking-[0.25em] text-vermilion mb-3">{p.category} · {p.pages}</p>
-                  <h2 className="font-display text-2xl font-bold tracking-tighter mb-3">{p.title}</h2>
+                  <h2 className="font-display text-2xl font-bold tracking-tight mb-3">{p.title}</h2>
                   <p className="text-sm text-muted-foreground leading-relaxed mb-8 flex-1">{p.description}</p>
                   {unlocked[p.id] ? (
                     <a
@@ -110,7 +110,7 @@ function GateModal({ paper, onClose, onUnlock }) {
         <div className="flex items-start justify-between mb-6">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-vermilion mb-2">Free Download</p>
-            <h3 className="font-display text-2xl font-bold tracking-tighter">{paper.title}</h3>
+            <h3 className="font-display text-2xl font-bold tracking-tight">{paper.title}</h3>
           </div>
           <button type="button" data-testid="gate-close-button" onClick={onClose} className="p-2 hover:text-vermilion transition-colors"><X size={20} /></button>
         </div>

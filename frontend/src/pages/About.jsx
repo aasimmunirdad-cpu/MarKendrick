@@ -41,7 +41,7 @@ export default function About() {
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-20">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">About MarKendrick</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-7xl mb-6">Built on evidence.<br /><span className="text-vermilion">Measured by results.</span></h1>
+          <h1 className="font-display font-extrabold tracking-tight text-5xl sm:text-7xl mb-6">Built on evidence.<br /><span className="text-vermilion">Measured by results.</span></h1>
           <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed">
             MarKendrick is a full-service marketing and media agency built on one premise: strategy should start with evidence, not opinion. Every engagement runs through a diagnostic process rooted in consumer psychology and data before any campaign work begins — a discipline shaped by over a decade of published research in neuromarketing, digital and AI-driven marketing strategy.
             We operate across market research, brand strategy, digital, media and performance marketing — one accountable team, start to finish.
@@ -77,7 +77,7 @@ export default function About() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border">
             {DIFFERENTIATORS.map((d) => (
               <div key={d.n} data-testid={`differentiator-${d.n}`} className="bg-background p-8 hover:bg-card transition-colors duration-300">
-                <span className="font-display text-3xl font-extrabold text-vermilion tracking-tighter mb-4 block">{d.n}</span>
+                <span className="font-display text-3xl font-extrabold text-vermilion tracking-tight mb-4 block">{d.n}</span>
                 <h3 className="font-display text-lg font-bold tracking-tight mb-3">{d.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{d.text}</p>
               </div>
@@ -98,7 +98,7 @@ export default function About() {
 
         <section className="mb-16 text-center border border-border p-10 sm:p-16">
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">Ready When You Are</p>
-          <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tighter mb-6">Let's put your strategy<br />through a diagnostic.</h2>
+          <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight mb-6">Let's put your strategy<br />through a diagnostic.</h2>
           <p className="text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
             Book a consultation and we'll show you exactly where your marketing has room to perform harder.
           </p>
@@ -114,7 +114,7 @@ export default function About() {
         <section id="careers" className="border border-border bg-card/40 p-10 sm:p-16">
           <Reveal>
             <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-4">Careers</p>
-            <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tighter mb-6">Do the best work<br />of your life here.</h2>
+            <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight mb-6">Do the best work<br />of your life here.</h2>
             <p className="text-muted-foreground max-w-xl mb-8 leading-relaxed">
               We're hiring strategists, performance specialists and researchers who'd rather be proven right than sound smart. Karachi, Lahore or remote — the work matters more than the postcode.
             </p>

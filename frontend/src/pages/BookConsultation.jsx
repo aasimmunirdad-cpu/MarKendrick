@@ -68,7 +68,7 @@ export default function BookConsultation() {
       <div className="max-w-[1100px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-14">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">Book a Consultation</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-6xl mb-4">30 minutes.<br /><span className="text-vermilion">Zero pitch.</span></h1>
+          <h1 className="font-display font-extrabold tracking-tight text-5xl sm:text-6xl mb-4">30 minutes.<br /><span className="text-vermilion">Zero pitch.</span></h1>
           <p className="text-muted-foreground max-w-xl text-lg">A working session with a senior consultant. Bring your hardest problem; leave with at least one idea worth stealing.</p>
         </Reveal>
 
@@ -77,7 +77,7 @@ export default function BookConsultation() {
             {status === "done" ? (
               <motion.div {...stepAnim} className="flex-1 flex flex-col items-start justify-center" data-testid="booking-success">
                 <div className="w-14 h-14 rounded-full bg-vermilion text-white flex items-center justify-center mb-6"><Check size={26} /></div>
-                <h2 className="font-display text-3xl font-bold tracking-tighter mb-3">You're in the calendar.</h2>
+                <h2 className="font-display text-3xl font-bold tracking-tight mb-3">You're in the calendar.</h2>
                 <p className="text-muted-foreground max-w-md">
                   <strong className="text-foreground">{form.date} at {form.slot} PKT</strong> — a confirmation and video link are on their way to <strong className="text-foreground">{form.email}</strong>.
                 </p>

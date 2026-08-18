@@ -24,7 +24,7 @@ export function Stat({ value, suffix, label }) {
 
   return (
     <div ref={ref} data-testid={`stat-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>
-      <p className="font-display text-4xl sm:text-5xl font-extrabold tracking-tighter">
+      <p className="font-display text-4xl sm:text-5xl font-extrabold tracking-tight">
         {isNumeric ? display : value}<span className="text-vermilion">{suffix}</span>
       </p>
       <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mt-2">{label}</p>

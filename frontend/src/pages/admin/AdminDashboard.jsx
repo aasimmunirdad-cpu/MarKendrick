@@ -93,7 +93,7 @@ export default function AdminDashboard() {
       <div className="max-w-[1200px] mx-auto px-5 sm:px-8">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="font-display text-3xl font-extrabold tracking-tighter">CMS <span className="text-vermilion">Dashboard</span></h1>
+            <h1 className="font-display text-3xl font-extrabold tracking-tight">CMS <span className="text-vermilion">Dashboard</span></h1>
             <p className="text-sm text-muted-foreground">{user.email}</p>
           </div>
           <div className="flex gap-2">
@@ -364,7 +364,7 @@ function ImagePicker({ value, onChange, testId }) {
         <div className="fixed inset-0 z-[80] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-lenis-prevent>
           <div className="w-full max-w-3xl bg-card border border-border p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-display text-xl font-bold tracking-tighter">Choose an image</h3>
+              <h3 className="font-display text-xl font-bold tracking-tight">Choose an image</h3>
               <button type="button" onClick={() => setShowBrowser(false)} className="p-2 hover:text-vermilion transition-colors"><X size={18} /></button>
             </div>
             {loadingMedia ? (
@@ -409,7 +409,7 @@ function EditorModal({ editing, onClose, onSave }) {
     <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-testid="editor-modal" data-lenis-prevent>
       <div className="w-full max-w-2xl bg-card border border-border p-6 sm:p-8">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="font-display text-2xl font-bold tracking-tighter">{editing.id ? "Edit" : "New"} {isPost ? "Post" : "Case Study"}</h2>
+          <h2 className="font-display text-2xl font-bold tracking-tight">{editing.id ? "Edit" : "New"} {isPost ? "Post" : "Case Study"}</h2>
           <button data-testid="editor-close-button" onClick={onClose} className="p-2 hover:text-vermilion transition-colors"><X size={20} /></button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
@@ -602,7 +602,7 @@ function TestimonialsTab({ items, loading, onChanged }) {
         <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-testid="testimonial-modal" data-lenis-prevent>
           <div className="w-full max-w-xl bg-card border border-border p-6 sm:p-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="font-display text-2xl font-bold tracking-tighter">{editing.id ? "Edit" : "New"} Testimonial</h2>
+              <h2 className="font-display text-2xl font-bold tracking-tight">{editing.id ? "Edit" : "New"} Testimonial</h2>
               <button data-testid="testimonial-modal-close" onClick={() => setEditing(null)} className="p-2 hover:text-vermilion transition-colors"><X size={20} /></button>
             </div>
             <label className={labelCls}>Quote *</label>
@@ -723,7 +723,7 @@ function WhitepapersTab({ items, loading, onChanged }) {
         <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-testid="whitepaper-upload-modal" data-lenis-prevent>
           <div className="w-full max-w-xl bg-card border border-border p-6 sm:p-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="font-display text-2xl font-bold tracking-tighter">Upload New Report</h2>
+              <h2 className="font-display text-2xl font-bold tracking-tight">Upload New Report</h2>
               <button onClick={() => setShowUpload(false)} className="p-2 hover:text-vermilion transition-colors"><X size={20} /></button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
@@ -754,7 +754,7 @@ function WhitepapersTab({ items, loading, onChanged }) {
         <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-testid="whitepaper-edit-modal" data-lenis-prevent>
           <div className="w-full max-w-xl bg-card border border-border p-6 sm:p-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="font-display text-2xl font-bold tracking-tighter">Edit Report</h2>
+              <h2 className="font-display text-2xl font-bold tracking-tight">Edit Report</h2>
               <button onClick={() => setEditing(null)} className="p-2 hover:text-vermilion transition-colors"><X size={20} /></button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
@@ -1089,7 +1089,7 @@ function EditorShell({ title, onClose, onSave, saving, disabled, children, wide 
     <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-lenis-prevent>
       <div className={`w-full ${wide ? "max-w-3xl" : "max-w-2xl"} bg-card border border-border p-6 sm:p-8`}>
         <div className="flex items-center justify-between mb-6">
-          <h2 className="font-display text-2xl font-bold tracking-tighter">{title}</h2>
+          <h2 className="font-display text-2xl font-bold tracking-tight">{title}</h2>
           <button onClick={onClose} className="p-2 hover:text-vermilion transition-colors"><X size={20} /></button>
         </div>
         {children}

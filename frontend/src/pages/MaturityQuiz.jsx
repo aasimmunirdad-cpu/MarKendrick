@@ -78,7 +78,7 @@ export default function MaturityQuiz() {
         {!done && (
           <Reveal className="mb-12">
             <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">The Maturity Assessment</p>
-            <h1 className="font-display font-extrabold tracking-tighter text-4xl sm:text-6xl">How mature is<br /><span className="text-vermilion">your marketing?</span></h1>
+            <h1 className="font-display font-extrabold tracking-tight text-4xl sm:text-6xl">How mature is<br /><span className="text-vermilion">your marketing?</span></h1>
             <p className="text-muted-foreground mt-4 max-w-xl">Eight brutally honest questions. Answer fast — first instinct is the true one.</p>
           </Reveal>
         )}
@@ -125,7 +125,7 @@ export default function MaturityQuiz() {
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.3, type: "spring", stiffness: 200, damping: 14 }}
-                    className={`font-display text-[9rem] leading-none font-extrabold tracking-tighter ${grade.color}`}
+                    className={`font-display text-[9rem] leading-none font-extrabold tracking-tight ${grade.color}`}
                     data-testid="maturity-grade"
                   >
                     {grade.g}

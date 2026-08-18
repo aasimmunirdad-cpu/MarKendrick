@@ -39,7 +39,7 @@ export default function AdminLogin() {
         className="w-full max-w-sm border border-border bg-card/60 p-8"
         data-testid="admin-login-form"
       >
-        <p className="font-display font-extrabold text-xl tracking-tighter mb-1">Mar<span className="text-vermilion">Kendrick</span></p>
+        <p className="font-display font-extrabold text-xl tracking-tight mb-1">Mar<span className="text-vermilion">Kendrick</span></p>
         <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-8 flex items-center gap-2"><Lock size={12} /> CMS Access</p>
         {error && <p data-testid="admin-login-error" className="text-sm text-vermilion mb-4 border border-vermilion/40 bg-vermilion/10 px-3 py-2">{error}</p>}
         <label className="text-xs uppercase tracking-[0.2em] text-muted-foreground block mb-2">Email</label>

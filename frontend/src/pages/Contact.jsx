@@ -70,7 +70,7 @@ export default function Contact() {
         <div className="lg:col-span-5">
           <Reveal>
             <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">Contact</p>
-            <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-6xl mb-6">Tell us the<br /><span className="text-vermilion">real problem.</span></h1>
+            <h1 className="font-display font-extrabold tracking-tight text-5xl sm:text-6xl mb-6">Tell us the<br /><span className="text-vermilion">real problem.</span></h1>
             <p className="text-muted-foreground leading-relaxed mb-10 max-w-md">
               Four quick questions and your brief lands with a senior consultant — never a bot, never a sales rep. Reply within one business day.
             </p>
@@ -88,7 +88,7 @@ export default function Contact() {
               {status === "done" ? (
                 <motion.div {...stepAnim} className="flex-1 flex flex-col items-start justify-center" data-testid="contact-success">
                   <div className="w-14 h-14 rounded-full bg-vermilion text-white flex items-center justify-center mb-6"><Check size={26} /></div>
-                  <h2 className="font-display text-3xl font-bold tracking-tighter mb-3">Brief received.</h2>
+                  <h2 className="font-display text-3xl font-bold tracking-tight mb-3">Brief received.</h2>
                   <p className="text-muted-foreground max-w-md">A senior consultant will reply to <strong className="text-foreground">{form.email}</strong> within one business day. Talk soon.</p>
                 </motion.div>
               ) : (

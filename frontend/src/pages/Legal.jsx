@@ -24,7 +24,7 @@ export default function Legal({ slugOverride }) {
       <div className="max-w-[760px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-14">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">{doc.updated}</p>
-          <h1 className="font-display font-extrabold tracking-tighter text-5xl sm:text-6xl">{doc.title}</h1>
+          <h1 className="font-display font-extrabold tracking-tight text-5xl sm:text-6xl">{doc.title}</h1>
         </Reveal>
         {doc.sections.map((s) => (
           <Reveal key={s.h} className="mb-10">
