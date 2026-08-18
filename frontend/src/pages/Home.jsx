@@ -10,6 +10,7 @@ import { MaskLines, Reveal, SectionHeading } from "../components/motion";
 import NeuralCanvas from "../components/NeuralCanvas";
 import StatsBand from "../components/StatsBand";
 import Seo from "../components/Seo";
+import { useSiteSettings } from "../hooks/useSiteSettings";
 
 const MANIFESTO = [
   { n: "01", title: "Insight before instinct", text: "Every rupee of media, every line of copy, every pixel of design starts from evidence. We study how people actually decide — then build strategy on that truth." },
@@ -19,6 +20,7 @@ const MANIFESTO = [
 ];
 
 export default function Home() {
+  const settings = useSiteSettings();
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
@@ -276,8 +278,8 @@ export default function Home() {
       <section className="relative border-t border-border overflow-hidden" data-testid="showreel-section">
         <div className="relative aspect-[16/9] sm:aspect-[21/9] max-h-[80vh] w-full">
           <video
-            src="/media/studio-session.mp4"
-            poster="/media/office/office-2.jpg"
+            src={settings.studio_video_url}
+            poster={settings.home_showreel_poster_url}
             autoPlay
             muted
             loop

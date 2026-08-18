@@ -3,9 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { INDUSTRIES } from "../data/content";
 import { Reveal, SectionHeading } from "../components/motion";
 import Seo from "../components/Seo";
-
-const TEAM_IMG = "/media/office/office-1.jpg";
-const STUDIO_VIDEO = "/media/studio-session.mp4";
+import { useSiteSettings } from "../hooks/useSiteSettings";
 
 const DIFFERENTIATORS = [
   {
@@ -31,6 +29,7 @@ const DIFFERENTIATORS = [
 ];
 
 export default function About() {
+  const settings = useSiteSettings();
   return (
     <div data-testid="about-page" className="pt-32 sm:pt-40 pb-24">
       <Seo title="About MarKendrick — Full-Service Marketing & Media Agency" description="MarKendrick is a research-led, full-service marketing and media agency. Evidence-based strategy across market research, brand, digital, media and performance marketing." />
@@ -46,7 +45,7 @@ export default function About() {
 
         <Reveal className="mb-24">
           <div className="aspect-[21/9] overflow-hidden">
-            <img src={TEAM_IMG} alt="Inside MarKendrick's Lahore studio" loading="lazy" className="w-full h-full object-cover" />
+            <img src={settings.about_office_photo_url} alt="Inside MarKendrick's Lahore studio" loading="lazy" className="w-full h-full object-cover" />
           </div>
           <p className="text-xs text-muted-foreground mt-3">The strategy floor, Gulberg III, Lahore.</p>
         </Reveal>
@@ -55,8 +54,8 @@ export default function About() {
           <div className="border border-border">
             <video
               data-testid="studio-video"
-              src={STUDIO_VIDEO}
-              poster={TEAM_IMG}
+              src={settings.studio_video_url}
+              poster={settings.about_office_photo_url}
               preload="metadata"
               autoPlay
               muted

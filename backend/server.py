@@ -828,6 +828,9 @@ DEFAULT_SETTINGS = {
     "office_email": "hello@markendrick.com",
     "office_hours": "Mon–Fri, 9:00–18:00 PKT",
     "office_whatsapp": "923339395444",
+    "studio_video_url": "/media/studio-session.mp4",
+    "about_office_photo_url": "/media/office/office-1.jpg",
+    "home_showreel_poster_url": "/media/office/office-2.jpg",
 }
 
 
@@ -840,6 +843,9 @@ class SiteSettingsIn(BaseModel):
     office_email: str = DEFAULT_SETTINGS["office_email"]
     office_hours: str = DEFAULT_SETTINGS["office_hours"]
     office_whatsapp: str = DEFAULT_SETTINGS["office_whatsapp"]
+    studio_video_url: str = DEFAULT_SETTINGS["studio_video_url"]
+    about_office_photo_url: str = DEFAULT_SETTINGS["about_office_photo_url"]
+    home_showreel_poster_url: str = DEFAULT_SETTINGS["home_showreel_poster_url"]
 
 
 @api_router.get("/settings")

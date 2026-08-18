@@ -938,6 +938,22 @@ function SettingsTab({ settings, loading, onChanged }) {
         </div>
       </div>
 
+      <h3 className="font-display text-lg font-bold tracking-tight mb-3">Page imagery</h3>
+      <div className="grid grid-cols-1 gap-4 mb-8">
+        <div>
+          <label className={labelCls}>About page — studio photo (also used as video poster)</label>
+          <ImagePicker value={data.about_office_photo_url} onChange={(v) => set("about_office_photo_url", v)} testId="settings-field-about_office_photo_url" />
+        </div>
+        <div>
+          <label className={labelCls}>Home page — showreel video poster</label>
+          <ImagePicker value={data.home_showreel_poster_url} onChange={(v) => set("home_showreel_poster_url", v)} testId="settings-field-home_showreel_poster_url" />
+        </div>
+        <div>
+          <label className={labelCls}>Studio video URL (shown on Home and About — .mp4 link, not managed by the image library)</label>
+          <input data-testid="settings-field-studio_video_url" className={inputCls} value={data.studio_video_url} onChange={(e) => set("studio_video_url", e.target.value)} placeholder="/media/studio-session.mp4 or a hosted .mp4 URL" />
+        </div>
+      </div>
+
       <button data-testid="settings-save-button" disabled={saving} onClick={save} className="inline-flex items-center gap-2 px-8 py-3 text-sm font-semibold bg-vermilion hover:bg-vermilion-hover text-white transition-colors disabled:opacity-50">
         {saving ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />} Save Settings
       </button>
