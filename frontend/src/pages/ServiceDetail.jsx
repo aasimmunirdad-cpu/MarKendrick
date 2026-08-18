@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowUpRight, Check, Loader2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
+import RichText from "../components/RichText";
 import Seo from "../components/Seo";
 import NotFound from "./NotFound";
 
@@ -45,9 +46,7 @@ export default function ServiceDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24">
           <div className="lg:col-span-7">
             <Reveal>
-              {service.body.split("\n\n").map((p, i) => (
-                <p key={i} className="text-base sm:text-lg text-foreground/90 leading-relaxed mb-6">{p}</p>
-              ))}
+              <RichText html={service.body} className="text-base sm:text-lg text-foreground/90 leading-relaxed" />
             </Reveal>
           </div>
           <div className="lg:col-span-5">

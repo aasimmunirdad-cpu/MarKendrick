@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowUpRight, X, Loader2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
+import RichText from "../components/RichText";
 import Seo from "../components/Seo";
 import NotFound from "./NotFound";
 
@@ -46,7 +47,7 @@ export default function IndustryDetail() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24">
           <Reveal className="lg:col-span-7">
-            <p className="text-base sm:text-lg text-foreground/90 leading-relaxed mb-10">{ind.intro}</p>
+            <RichText html={ind.intro} className="text-base sm:text-lg text-foreground/90 leading-relaxed mb-10" />
             <h2 className="font-display text-2xl font-bold tracking-tight mb-6">Where growth usually gets stuck</h2>
             <ul className="space-y-4">
               {ind.challenges.map((c) => (

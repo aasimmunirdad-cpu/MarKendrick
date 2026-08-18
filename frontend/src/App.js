@@ -14,6 +14,7 @@ import ChatWidget from "@/components/ChatWidget";
 import SearchOverlay from "@/components/SearchOverlay";
 import CookieBanner from "@/components/CookieBanner";
 import ScrollProgress from "@/components/ScrollProgress";
+import GlobalTypography from "@/components/GlobalTypography";
 
 import Home from "@/pages/Home";
 import About from "@/pages/About";
@@ -98,6 +99,7 @@ function Shell() {
     <>
       <div className="grain-overlay" aria-hidden="true" />
       <ScrollTop />
+      {!isAdmin && <GlobalTypography />}
       {!isAdmin && <ScrollProgress />}
       {!isAdmin && <Navbar onSearchOpen={() => setSearchOpen(true)} />}
       <AnimatePresence mode="wait">

@@ -13,6 +13,8 @@ from urllib.parse import quote
 import bcrypt
 import jwt
 import httpx
+import bleach
+from bleach.css_sanitizer import CSSSanitizer
 from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -29,6 +31,46 @@ def load_seed_json(name: str):
     if not path.exists():
         return []
     return json.loads(path.read_text())
+
+
+# ---------- Rich text sanitization ----------
+# Content fields edited through the CMS's WYSIWYG editor are stored as HTML.
+# Sanitize on every write so nothing unsafe (script tags, event handlers,
+# javascript: links, etc.) ever reaches the database or the public site.
+
+RICH_TEXT_TAGS = [
+    "p", "br", "strong", "b", "em", "i", "u", "s", "strike", "span", "a",
+    "ul", "ol", "li", "h1", "h2", "h3", "h4", "blockquote", "sub", "sup", "hr",
+]
+RICH_TEXT_ATTRS = {
+    "*": ["style", "class"],
+    "a": ["href", "target", "rel"],
+}
+RICH_TEXT_CSS_PROPERTIES = [
+    "color", "background-color", "font-family", "font-size",
+    "text-align", "text-decoration", "font-weight", "font-style",
+]
+_rich_text_cleaner = bleach.Cleaner(
+    tags=RICH_TEXT_TAGS,
+    attributes=RICH_TEXT_ATTRS,
+    css_sanitizer=CSSSanitizer(allowed_css_properties=RICH_TEXT_CSS_PROPERTIES),
+    protocols=["http", "https", "mailto"],
+    strip=True,
+)
+
+
+def sanitize_rich_html(value: str) -> str:
+    if not value:
+        return value
+    return _rich_text_cleaner.clean(value)
+
+
+def sanitize_fields(doc: dict, fields: list) -> dict:
+    for f in fields:
+        if doc.get(f):
+            doc[f] = sanitize_rich_html(doc[f])
+    return doc
+
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -247,6 +289,7 @@ async def admin_list_posts(user: dict = Depends(get_current_user)):
 @api_router.post("/admin/posts")
 async def admin_create_post(body: PostIn, user: dict = Depends(get_current_user)):
     doc = body.model_dump()
+    sanitize_fields(doc, ["body"])
     doc["id"] = uuid.uuid4().hex
     slug = slugify(doc["title"])
     if await db.posts.find_one({"slug": slug}):
@@ -263,6 +306,7 @@ async def admin_create_post(body: PostIn, user: dict = Depends(get_current_user)
 @api_router.put("/admin/posts/{post_id}")
 async def admin_update_post(post_id: str, body: PostIn, user: dict = Depends(get_current_user)):
     update = body.model_dump()
+    sanitize_fields(update, ["body"])
     update["updated_at"] = datetime.now(timezone.utc).isoformat()
     result = await db.posts.update_one({"id": post_id}, {"$set": update})
     if result.matched_count == 0:
@@ -316,6 +360,7 @@ async def admin_list_case_studies(user: dict = Depends(get_current_user)):
 @api_router.post("/admin/case-studies")
 async def admin_create_case_study(body: CaseStudyIn, user: dict = Depends(get_current_user)):
     doc = body.model_dump()
+    sanitize_fields(doc, ["challenge", "approach"])
     doc["id"] = uuid.uuid4().hex
     slug = slugify(f"{doc['client']}-{doc['title']}")
     if await db.case_studies.find_one({"slug": slug}):
@@ -329,7 +374,8 @@ async def admin_create_case_study(body: CaseStudyIn, user: dict = Depends(get_cu
 
 @api_router.put("/admin/case-studies/{cs_id}")
 async def admin_update_case_study(cs_id: str, body: CaseStudyIn, user: dict = Depends(get_current_user)):
-    result = await db.case_studies.update_one({"id": cs_id}, {"$set": body.model_dump()})
+    update = sanitize_fields(body.model_dump(), ["challenge", "approach"])
+    result = await db.case_studies.update_one({"id": cs_id}, {"$set": update})
     if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Case study not found")
     return await db.case_studies.find_one({"id": cs_id}, {"_id": 0})
@@ -751,6 +797,7 @@ async def admin_create_service(body: ServiceIn, user: dict = Depends(get_current
     if await db.services.find_one({"slug": body.slug}):
         raise HTTPException(status_code=400, detail="A service with this slug already exists")
     doc = body.model_dump()
+    sanitize_fields(doc, ["body"])
     doc["id"] = body.slug
     doc["created_at"] = datetime.now(timezone.utc).isoformat()
     await db.services.insert_one(doc)
@@ -760,7 +807,8 @@ async def admin_create_service(body: ServiceIn, user: dict = Depends(get_current
 
 @api_router.put("/admin/services/{svc_id}")
 async def admin_update_service(svc_id: str, body: ServiceIn, user: dict = Depends(get_current_user)):
-    result = await db.services.update_one({"id": svc_id}, {"$set": body.model_dump()})
+    update = sanitize_fields(body.model_dump(), ["body"])
+    result = await db.services.update_one({"id": svc_id}, {"$set": update})
     if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Service not found")
     return await db.services.find_one({"id": svc_id}, {"_id": 0})
@@ -812,6 +860,7 @@ async def admin_create_industry(body: IndustryIn, user: dict = Depends(get_curre
     if await db.industries.find_one({"slug": body.slug}):
         raise HTTPException(status_code=400, detail="An industry with this slug already exists")
     doc = body.model_dump()
+    sanitize_fields(doc, ["intro"])
     doc["id"] = body.slug
     doc["created_at"] = datetime.now(timezone.utc).isoformat()
     await db.industries.insert_one(doc)
@@ -821,7 +870,8 @@ async def admin_create_industry(body: IndustryIn, user: dict = Depends(get_curre
 
 @api_router.put("/admin/industries/{ind_id}")
 async def admin_update_industry(ind_id: str, body: IndustryIn, user: dict = Depends(get_current_user)):
-    result = await db.industries.update_one({"id": ind_id}, {"$set": body.model_dump()})
+    update = sanitize_fields(body.model_dump(), ["intro"])
+    result = await db.industries.update_one({"id": ind_id}, {"$set": update})
     if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Industry not found")
     return await db.industries.find_one({"id": ind_id}, {"_id": 0})
@@ -874,6 +924,7 @@ async def admin_create_location(body: LocationIn, user: dict = Depends(get_curre
     if await db.locations.find_one({"slug": body.slug}):
         raise HTTPException(status_code=400, detail="A location with this slug already exists")
     doc = body.model_dump()
+    sanitize_fields(doc, ["intro", "body2"])
     doc["id"] = body.slug
     doc["created_at"] = datetime.now(timezone.utc).isoformat()
     await db.locations.insert_one(doc)
@@ -883,7 +934,8 @@ async def admin_create_location(body: LocationIn, user: dict = Depends(get_curre
 
 @api_router.put("/admin/locations/{loc_id}")
 async def admin_update_location(loc_id: str, body: LocationIn, user: dict = Depends(get_current_user)):
-    result = await db.locations.update_one({"id": loc_id}, {"$set": body.model_dump()})
+    update = sanitize_fields(body.model_dump(), ["intro", "body2"])
+    result = await db.locations.update_one({"id": loc_id}, {"$set": update})
     if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Location not found")
     return await db.locations.find_one({"id": loc_id}, {"_id": 0})
@@ -920,6 +972,7 @@ async def admin_list_faqs(user: dict = Depends(get_current_user)):
 @api_router.post("/admin/faqs")
 async def admin_create_faq(body: FaqIn, user: dict = Depends(get_current_user)):
     doc = body.model_dump()
+    sanitize_fields(doc, ["answer"])
     doc["id"] = uuid.uuid4().hex[:12]
     doc["created_at"] = datetime.now(timezone.utc).isoformat()
     await db.faqs.insert_one(doc)
@@ -929,7 +982,8 @@ async def admin_create_faq(body: FaqIn, user: dict = Depends(get_current_user)):
 
 @api_router.put("/admin/faqs/{faq_id}")
 async def admin_update_faq(faq_id: str, body: FaqIn, user: dict = Depends(get_current_user)):
-    result = await db.faqs.update_one({"id": faq_id}, {"$set": body.model_dump()})
+    update = sanitize_fields(body.model_dump(), ["answer"])
+    result = await db.faqs.update_one({"id": faq_id}, {"$set": update})
     if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="FAQ not found")
     return await db.faqs.find_one({"id": faq_id}, {"_id": 0})
@@ -1111,6 +1165,12 @@ DEFAULT_SETTINGS = {
     "studio_video_url": "/media/studio-session.mp4",
     "about_office_photo_url": "/media/office/office-1.jpg",
     "home_showreel_poster_url": "/media/office/office-2.jpg",
+    "typography_heading_font": "Syne",
+    "typography_body_font": "DM Sans",
+    "typography_base_size": "16",
+    "typography_heading_color": "",
+    "typography_body_color": "",
+    "typography_link_color": "",
 }
 
 
@@ -1126,6 +1186,12 @@ class SiteSettingsIn(BaseModel):
     studio_video_url: str = DEFAULT_SETTINGS["studio_video_url"]
     about_office_photo_url: str = DEFAULT_SETTINGS["about_office_photo_url"]
     home_showreel_poster_url: str = DEFAULT_SETTINGS["home_showreel_poster_url"]
+    typography_heading_font: str = DEFAULT_SETTINGS["typography_heading_font"]
+    typography_body_font: str = DEFAULT_SETTINGS["typography_body_font"]
+    typography_base_size: str = DEFAULT_SETTINGS["typography_base_size"]
+    typography_heading_color: str = DEFAULT_SETTINGS["typography_heading_color"]
+    typography_body_color: str = DEFAULT_SETTINGS["typography_body_color"]
+    typography_link_color: str = DEFAULT_SETTINGS["typography_link_color"]
 
 
 @api_router.get("/settings")

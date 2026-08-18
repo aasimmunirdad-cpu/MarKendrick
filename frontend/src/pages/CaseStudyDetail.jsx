@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, ArrowUpRight, Quote } from "lucide-react";
 import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
+import RichText from "../components/RichText";
 import Seo from "../components/Seo";
 
 export default function CaseStudyDetail() {
@@ -57,11 +58,11 @@ export default function CaseStudyDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
           <div className="lg:col-span-4">
             <h2 className="font-display text-2xl font-bold tracking-tight mb-4">The Challenge</h2>
-            <p className="text-foreground/85 leading-relaxed">{cs.challenge}</p>
+            <RichText html={cs.challenge} className="text-foreground/85 leading-relaxed" />
           </div>
           <div className="lg:col-span-4">
             <h2 className="font-display text-2xl font-bold tracking-tight mb-4">The Approach</h2>
-            <p className="text-foreground/85 leading-relaxed">{cs.approach}</p>
+            <RichText html={cs.approach} className="text-foreground/85 leading-relaxed" />
           </div>
           {cs.quote && (
             <div className="lg:col-span-4 bg-card/40 border border-border p-8">

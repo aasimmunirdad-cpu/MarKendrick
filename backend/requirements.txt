@@ -16,6 +16,9 @@ PyJWT==2.13.0
 httpx==0.28.1
 python-dotenv==1.2.2
 python-multipart==0.0.32
+certifi==2024.8.30
+bleach==6.2.0
+tinycss2==1.4.0
 
 # Used by scripts/gen_whitepapers.py to (re)generate the branded PDF reports.
 # Not required for the API server itself, kept for convenience.
@@ -27,4 +30,3 @@ reportlab==5.0.0
 # headshots are already saved as static files in frontend/public/media/team/,
 # so this script does not need to run again unless you want new photos
 # through Emergent specifically.
-certifi==2024.8.30

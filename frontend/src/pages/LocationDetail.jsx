@@ -3,6 +3,7 @@ import { ArrowUpRight, Check, MapPin, Loader2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
+import RichText from "../components/RichText";
 import Seo from "../components/Seo";
 import NotFound from "./NotFound";
 
@@ -37,8 +38,8 @@ export default function LocationDetail() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24">
           <Reveal className="lg:col-span-7">
-            <p className="text-base sm:text-lg text-foreground/90 leading-relaxed mb-6">{loc.intro}</p>
-            <p className="text-base sm:text-lg text-foreground/90 leading-relaxed">{loc.body2}</p>
+            <RichText html={loc.intro} className="text-base sm:text-lg text-foreground/90 leading-relaxed mb-6" />
+            <RichText html={loc.body2} className="text-base sm:text-lg text-foreground/90 leading-relaxed" />
           </Reveal>
           <Reveal delay={0.1} className="lg:col-span-5">
             <div className="border border-border bg-card/40 p-8">

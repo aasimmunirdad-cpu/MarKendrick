@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../components/ui/accordion";
 import { Reveal } from "../components/motion";
+import RichText from "../components/RichText";
 import JsonLd from "../components/JsonLd";
 import Seo from "../components/Seo";
 
@@ -30,7 +31,7 @@ export default function Faq() {
       g.items.map((i) => ({
         "@type": "Question",
         name: i.q,
-        acceptedAnswer: { "@type": "Answer", text: i.a },
+        acceptedAnswer: { "@type": "Answer", text: (i.a || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() },
       }))
     ),
   };
@@ -54,7 +55,7 @@ export default function Faq() {
                     {item.q}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed text-base pb-6">
-                    {item.a}
+                    <RichText html={item.a} />
                   </AccordionContent>
                 </AccordionItem>
               ))}

@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { api, formatApiError } from "../../lib/api";
 import { useAuth } from "../../context/AuthContext";
 import Seo from "../../components/Seo";
+import RichTextEditor from "../../components/admin/RichTextEditor";
+import { TYPOGRAPHY_FONT_OPTIONS } from "../../components/GlobalTypography";
 
 const TABS = ["Posts", "Case Studies", "Services", "Industries", "Locations", "FAQ", "Legal", "Testimonials", "Whitepapers", "Media", "Settings", "Newsletter", "Leads", "Bookings", "Subscribers"];
 const EMPTY_POST = { title: "", category: "Strategy", excerpt: "", body: "", author: "Dr Aasim Munir Dad", tags: "", cover: "", read_time: "5 min read", published: true };
@@ -399,8 +401,9 @@ function EditorModal({ editing, onClose, onSave }) {
     : [["client", "Client *"], ["title", "Title *"], ["industry", "Industry"], ["services", "Services (comma separated)"], ["quote_author", "Quote Author"], ["cover", "Cover Image URL"]];
 
   const areas = isPost
-    ? [["excerpt", "Excerpt", 2], ["body", "Body (blank line between paragraphs)", 10]]
+    ? [["excerpt", "Excerpt", 2], ["body", "Body", 10]]
     : [["summary", "Summary", 2], ["challenge", "Challenge", 4], ["approach", "Approach", 4], ["results", "Results — one per line: +212% | ROAS in 6 months", 3], ["quote", "Client Quote", 2]];
+  const richKeys = isPost ? ["body"] : ["challenge", "approach"];
 
   return (
     <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-testid="editor-modal" data-lenis-prevent>
@@ -424,7 +427,11 @@ function EditorModal({ editing, onClose, onSave }) {
         {areas.map(([k, l, rows]) => (
           <div key={k} className="mb-4">
             <label className={label}>{l}</label>
-            <textarea data-testid={`editor-field-${k}`} className={`${input} resize-y`} rows={rows} value={data[k] || ""} onChange={(e) => set(k, e.target.value)} />
+            {richKeys.includes(k) ? (
+              <RichTextEditor testId={`editor-field-${k}`} value={data[k]} onChange={(v) => set(k, v)} minHeight={rows * 32} />
+            ) : (
+              <textarea data-testid={`editor-field-${k}`} className={`${input} resize-y`} rows={rows} value={data[k] || ""} onChange={(e) => set(k, e.target.value)} />
+            )}
           </div>
         ))}
         <label className="flex items-center gap-2 text-sm mb-6 cursor-pointer">
@@ -999,6 +1006,51 @@ function SettingsTab({ settings, loading, onChanged }) {
         </div>
       </div>
 
+      <h3 className="font-display text-lg font-bold tracking-tight mb-3">Typography</h3>
+      <div className="border border-border bg-card/40 p-4 mb-4">
+        <p className="text-sm text-muted-foreground">Controls font family, base text size and colors across the live site (not the CMS dashboard itself). Individual content fields with the rich text editor can still override these per block.</p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+        <div>
+          <label className={labelCls}>Heading font</label>
+          <select data-testid="settings-field-typography_heading_font" className={inputCls} value={data.typography_heading_font} onChange={(e) => set("typography_heading_font", e.target.value)}>
+            {TYPOGRAPHY_FONT_OPTIONS.map((f) => <option key={f} value={f}>{f}</option>)}
+          </select>
+        </div>
+        <div>
+          <label className={labelCls}>Body font</label>
+          <select data-testid="settings-field-typography_body_font" className={inputCls} value={data.typography_body_font} onChange={(e) => set("typography_body_font", e.target.value)}>
+            {TYPOGRAPHY_FONT_OPTIONS.map((f) => <option key={f} value={f}>{f}</option>)}
+          </select>
+        </div>
+        <div>
+          <label className={labelCls}>Base font size ({data.typography_base_size || 16}px)</label>
+          <input data-testid="settings-field-typography_base_size" type="range" min="14" max="20" step="1" className="w-full accent-vermilion" value={data.typography_base_size || 16} onChange={(e) => set("typography_base_size", e.target.value)} />
+        </div>
+        <div />
+        <div>
+          <label className={labelCls}>Heading color</label>
+          <div className="flex items-center gap-2">
+            <input data-testid="settings-field-typography_heading_color" type="color" className="h-10 w-14 border border-border bg-background cursor-pointer" value={data.typography_heading_color || "#0A0A0A"} onChange={(e) => set("typography_heading_color", e.target.value)} />
+            <button type="button" onClick={() => set("typography_heading_color", "")} className="text-xs text-muted-foreground hover:text-vermilion transition-colors">Reset to default</button>
+          </div>
+        </div>
+        <div>
+          <label className={labelCls}>Body text color</label>
+          <div className="flex items-center gap-2">
+            <input data-testid="settings-field-typography_body_color" type="color" className="h-10 w-14 border border-border bg-background cursor-pointer" value={data.typography_body_color || "#0A0A0A"} onChange={(e) => set("typography_body_color", e.target.value)} />
+            <button type="button" onClick={() => set("typography_body_color", "")} className="text-xs text-muted-foreground hover:text-vermilion transition-colors">Reset to default</button>
+          </div>
+        </div>
+        <div>
+          <label className={labelCls}>Link color (in article content)</label>
+          <div className="flex items-center gap-2">
+            <input data-testid="settings-field-typography_link_color" type="color" className="h-10 w-14 border border-border bg-background cursor-pointer" value={data.typography_link_color || "#E0923D"} onChange={(e) => set("typography_link_color", e.target.value)} />
+            <button type="button" onClick={() => set("typography_link_color", "")} className="text-xs text-muted-foreground hover:text-vermilion transition-colors">Reset to default</button>
+          </div>
+        </div>
+      </div>
+
       <button data-testid="settings-save-button" disabled={saving} onClick={save} className="inline-flex items-center gap-2 px-8 py-3 text-sm font-semibold bg-vermilion hover:bg-vermilion-hover text-white transition-colors disabled:opacity-50">
         {saving ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />} Save Settings
       </button>
@@ -1131,7 +1183,7 @@ function ServicesTab({ items, loading, onChanged }) {
             ))}
           </div>
           <div className="mb-4"><label className={labelCls}>Short description (used on cards)</label><textarea rows={2} className={`${inputCls} resize-y`} value={editing.data.short || ""} onChange={(e) => set("short", e.target.value)} /></div>
-          <div className="mb-4"><label className={labelCls}>Body (blank line between paragraphs)</label><textarea rows={6} className={`${inputCls} resize-y`} value={editing.data.body || ""} onChange={(e) => set("body", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Body</label><RichTextEditor testId="service-field-body" value={editing.data.body} onChange={(v) => set("body", v)} minHeight={220} /></div>
           <div className="mb-4"><label className={labelCls}>Deliverables — one per line</label><textarea rows={5} className={`${inputCls} resize-y`} value={editing.data.deliverables || ""} onChange={(e) => set("deliverables", e.target.value)} /></div>
           <PublishedToggle checked={editing.data.published} onChange={(v) => set("published", v)} />
         </EditorShell>
@@ -1214,7 +1266,7 @@ function IndustriesTab({ items, loading, onChanged }) {
               <div key={k} className={k === "metaDesc" ? "sm:col-span-2" : ""}><label className={labelCls}>{l}</label><input className={inputCls} value={editing.data[k] || ""} onChange={(e) => set(k, e.target.value)} /></div>
             ))}
           </div>
-          <div className="mb-4"><label className={labelCls}>Intro paragraph</label><textarea rows={3} className={`${inputCls} resize-y`} value={editing.data.intro || ""} onChange={(e) => set("intro", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Intro paragraph</label><RichTextEditor testId="industry-field-intro" value={editing.data.intro} onChange={(v) => set("intro", v)} minHeight={140} /></div>
           <div className="mb-4"><label className={labelCls}>Challenges — one per line</label><textarea rows={4} className={`${inputCls} resize-y`} value={editing.data.challenges || ""} onChange={(e) => set("challenges", e.target.value)} /></div>
           <div className="mb-4"><label className={labelCls}>Related service slugs (comma separated, e.g. market-research, seo)</label><input className={inputCls} value={editing.data.services || ""} onChange={(e) => set("services", e.target.value)} /></div>
           <PublishedToggle checked={editing.data.published} onChange={(v) => set("published", v)} />
@@ -1292,8 +1344,8 @@ function LocationsTab({ items, loading, onChanged }) {
               <div key={k}><label className={labelCls}>{l}</label><input className={inputCls} value={editing.data[k] || ""} onChange={(e) => set(k, e.target.value)} /></div>
             ))}
           </div>
-          <div className="mb-4"><label className={labelCls}>Intro paragraph</label><textarea rows={3} className={`${inputCls} resize-y`} value={editing.data.intro || ""} onChange={(e) => set("intro", e.target.value)} /></div>
-          <div className="mb-4"><label className={labelCls}>Second paragraph</label><textarea rows={3} className={`${inputCls} resize-y`} value={editing.data.body2 || ""} onChange={(e) => set("body2", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Intro paragraph</label><RichTextEditor testId="location-field-intro" value={editing.data.intro} onChange={(v) => set("intro", v)} minHeight={140} /></div>
+          <div className="mb-4"><label className={labelCls}>Second paragraph</label><RichTextEditor testId="location-field-body2" value={editing.data.body2} onChange={(v) => set("body2", v)} minHeight={140} /></div>
           <div className="mb-4"><label className={labelCls}>Why brands here choose us — one point per line</label><textarea rows={4} className={`${inputCls} resize-y`} value={editing.data.points || ""} onChange={(e) => set("points", e.target.value)} /></div>
           <PublishedToggle checked={editing.data.published} onChange={(v) => set("published", v)} />
         </EditorShell>
@@ -1372,7 +1424,7 @@ function FaqTab({ items, loading, onChanged }) {
             <div><label className={labelCls}>Order (lower = earlier)</label><input type="number" className={inputCls} value={editing.data.order} onChange={(e) => set("order", e.target.value)} /></div>
           </div>
           <div className="mb-4"><label className={labelCls}>Question *</label><input className={inputCls} value={editing.data.question || ""} onChange={(e) => set("question", e.target.value)} /></div>
-          <div className="mb-4"><label className={labelCls}>Answer</label><textarea rows={4} className={`${inputCls} resize-y`} value={editing.data.answer || ""} onChange={(e) => set("answer", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Answer</label><RichTextEditor testId="faq-field-answer" value={editing.data.answer} onChange={(v) => set("answer", v)} minHeight={160} /></div>
           <PublishedToggle checked={editing.data.published} onChange={(v) => set("published", v)} />
         </EditorShell>
       )}

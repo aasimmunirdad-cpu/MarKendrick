@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
 import ShareButtons from "../components/ShareButtons";
+import RichText from "../components/RichText";
 import { AUTHORS } from "../data/content";
 import JsonLd from "../components/JsonLd";
 import Seo from "../components/Seo";
@@ -74,9 +75,7 @@ export default function PostDetail() {
           </Reveal>
         )}
         <Reveal className="prose-custom">
-          {post.body.split("\n\n").map((para, i) => (
-            <p key={i} className="text-base sm:text-lg leading-relaxed text-foreground/90 mb-6">{para}</p>
-          ))}
+          <RichText html={post.body} className="text-base sm:text-lg leading-relaxed text-foreground/90" />
         </Reveal>
         {post.tags?.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-10 pt-8 border-t border-border">
