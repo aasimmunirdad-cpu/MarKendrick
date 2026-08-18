@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Menu, X, ArrowUpRight, ChevronDown, Calculator, Gauge, Sparkles, FileText, HelpCircle, MessageSquarePlus } from "lucide-react";
 import { useSiteSettings } from "../hooks/useSiteSettings";
+import ServiceWheel from "./ServiceWheel";
 
 const LINKS = [
   { to: "/services", label: "Services" },
@@ -154,6 +155,7 @@ export default function Navbar({ onSearchOpen }) {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          <ServiceWheel />
           <button
             data-testid="nav-search-button"
             onClick={onSearchOpen}
