@@ -22,7 +22,7 @@ export default function Whitepapers() {
         <Reveal className="mb-16">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">Whitepapers & Reports</p>
           <h1 className="font-display font-extrabold tracking-tight text-5xl sm:text-7xl mb-6">Research worth<br /><span className="text-vermilion">an email address.</span></h1>
-          <p className="text-muted-foreground max-w-xl text-lg">Free to download. We ask for your email so The Signal — our monthly briefing — lands in your inbox too. Unsubscribe anytime.</p>
+          <p className="text-muted-foreground max-w-xl text-lg">Free to download. We ask for your email so The Signal - our monthly briefing - lands in your inbox too. Unsubscribe anytime.</p>
         </Reveal>
 
         {isLoading ? (
@@ -81,7 +81,7 @@ function GateModal({ paper, onClose, onUnlock }) {
     setLoading(true);
     try {
       const res = await api.post("/whitepaper-download", { whitepaper_id: paper.id, name, email });
-      toast.success("Unlocked — the download link is also on its way to your inbox.");
+      toast.success("Unlocked - the download link is also on its way to your inbox.");
       onUnlock(res.data.download_url);
     } catch (err) {
       toast.error(formatApiError(err));
@@ -139,7 +139,7 @@ function GateModal({ paper, onClose, onUnlock }) {
         >
           {loading ? <Loader2 size={16} className="animate-spin" /> : <><Check size={16} /> Unlock the Report</>}
         </button>
-        <p className="text-xs text-muted-foreground mt-4 text-center">You'll also join The Signal — one email a month. Unsubscribe anytime.</p>
+        <p className="text-xs text-muted-foreground mt-4 text-center">You'll also join The Signal - one email a month. Unsubscribe anytime.</p>
       </motion.form>
     </motion.div>
   );

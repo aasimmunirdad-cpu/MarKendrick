@@ -34,7 +34,7 @@ export default function Footer() {
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <div className="py-16 sm:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-5">
-            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">The Signal — Monthly Briefing</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">The Signal - Monthly Briefing</p>
             <h3 className="font-display text-3xl sm:text-4xl font-bold tracking-tight leading-tight mb-6">
               {settings.footer_newsletter_title}
             </h3>

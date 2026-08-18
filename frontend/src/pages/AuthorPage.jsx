@@ -24,7 +24,7 @@ export default function AuthorPage() {
 
   return (
     <div data-testid="author-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title={`${author.name} — ${author.role}`} description={author.bio} />
+      <Seo title={`${author.name} - ${author.role}`} description={author.bio} />
       <div className="max-w-[1100px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-16">
           <Link to="/insights" data-testid="author-back-link" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-vermilion transition-colors mb-10">
@@ -49,7 +49,7 @@ export default function AuthorPage() {
         {isLoading ? (
           <div className="h-60 animate-pulse bg-card" />
         ) : mine.length === 0 ? (
-          <p className="text-muted-foreground">No published articles yet — check back soon.</p>
+          <p className="text-muted-foreground">No published articles yet - check back soon.</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border">
             {mine.map((p) => (

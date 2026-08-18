@@ -17,14 +17,14 @@ const GOALS = [
 ];
 
 const STAGES = [
-  { id: "none", label: "No real marketing yet", note: "You need strategy before spend — a Diagnostic Audit is the safest first move." },
-  { id: "stuck", label: "Marketing runs, but results disappoint", note: "Something in the system is broken — diagnose before you spend more." },
-  { id: "scale", label: "Marketing works — time to scale", note: "You have proof; now add fuel with discipline." },
+  { id: "none", label: "No real marketing yet", note: "You need strategy before spend - a Diagnostic Audit is the safest first move." },
+  { id: "stuck", label: "Marketing runs, but results disappoint", note: "Something in the system is broken - diagnose before you spend more." },
+  { id: "scale", label: "Marketing works - time to scale", note: "You have proof; now add fuel with discipline." },
 ];
 
 const BUDGETS = [
-  { id: "audit", label: "Under PKR 150k / month", note: "Start with a one-time Diagnostic Audit (from PKR 60,000) — maximum clarity per rupee." },
-  { id: "growth", label: "PKR 150k – 400k / month", note: "A Growth Retainer fits — research-led strategy plus execution, monthly." },
+  { id: "audit", label: "Under PKR 150k / month", note: "Start with a one-time Diagnostic Audit (from PKR 60,000) - maximum clarity per rupee." },
+  { id: "growth", label: "PKR 150k – 400k / month", note: "A Growth Retainer fits - research-led strategy plus execution, monthly." },
   { id: "scale", label: "PKR 400k+ / month", note: "Full-stack engagement: research, brand and performance under one senior team." },
 ];
 
@@ -70,7 +70,7 @@ export default function Quiz() {
 
   return (
     <div data-testid="quiz-page" className="pt-32 sm:pt-40 pb-24 min-h-screen">
-      <Seo title="Which Marketing Service Do You Need? — 2-Minute Quiz" description="Answer four questions and get a research-led recommendation: the right MarKendrick services and playbook for your business." />
+      <Seo title="Which Marketing Service Do You Need? - 2-Minute Quiz" description="Answer four questions and get a research-led recommendation: the right MarKendrick services and playbook for your business." />
       <div className="max-w-[900px] mx-auto px-5 sm:px-8">
         {!done && (
           <Reveal className="mb-12">
@@ -101,7 +101,7 @@ export default function Quiz() {
           )}
           {step === 1 && (
             <motion.div key="q1" {...stepAnim}>
-              <Q title="What's the #1 goal right now?" sub="Be honest — the one that keeps you up at night.">
+              <Q title="What's the #1 goal right now?" sub="Be honest - the one that keeps you up at night.">
                 <div className="grid grid-cols-1 gap-3">
                   {GOALS.map((g) => (
                     <Opt key={g.id} testId={`quiz-goal-${g.id}`} label={g.label} desc={g.desc} active={answers.goal === g.id} onClick={() => pick("goal", g.id)} />
@@ -113,7 +113,7 @@ export default function Quiz() {
           )}
           {step === 2 && (
             <motion.div key="q2" {...stepAnim}>
-              <Q title="Where are you starting from?" sub="No judgment — every starting point has a path.">
+              <Q title="Where are you starting from?" sub="No judgment - every starting point has a path.">
                 <div className="grid grid-cols-1 gap-3">
                   {STAGES.map((s) => (
                     <Opt key={s.id} testId={`quiz-stage-${s.id}`} label={s.label} active={answers.stage === s.id} onClick={() => pick("stage", s.id)} />
@@ -125,7 +125,7 @@ export default function Quiz() {
           )}
           {step === 3 && (
             <motion.div key="q3" {...stepAnim}>
-              <Q title="What's the monthly budget?" sub="A rough range — it shapes the recommendation, not the price.">
+              <Q title="What's the monthly budget?" sub="A rough range - it shapes the recommendation, not the price.">
                 <div className="grid grid-cols-1 gap-3">
                   {BUDGETS.map((b) => (
                     <Opt key={b.id} testId={`quiz-budget-${b.id}`} label={b.label} active={answers.budget === b.id} onClick={() => pick("budget", b.id)} />

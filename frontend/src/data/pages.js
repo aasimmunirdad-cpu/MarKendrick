@@ -3,7 +3,7 @@ export const INDUSTRIES_DETAILED = [
     slug: "real-estate-property-development",
     name: "Real Estate & Property Development",
     tagline: "Sell the dream before the showhouse opens.",
-    intro: "Property buyers make an emotional decision and justify it rationally — usually online, long before they call an agent. We help developers and agencies own that digital first impression: demand research for new projects, launch campaigns that fill registries, and lead engines that qualify buyers before your sales team picks up the phone.",
+    intro: "Property buyers make an emotional decision and justify it rationally - usually online, long before they call an agent. We help developers and agencies own that digital first impression: demand research for new projects, launch campaigns that fill registries, and lead engines that qualify buyers before your sales team picks up the phone.",
     challenges: [
       "Long, research-heavy buying journeys that start on portals and social, not site offices",
       "Off-plan launches that need trust built before a single floor exists",
@@ -17,7 +17,7 @@ export const INDUSTRIES_DETAILED = [
     slug: "education-edtech",
     name: "Education & EdTech",
     tagline: "Enrollment is a trust decision. Market it like one.",
-    intro: "Parents and students don't buy courses — they buy outcomes and credibility. We help schools, universities and EdTech platforms build enrollment funnels grounded in how families actually decide: reputation research, open-day and webinar funnels, and retention programs that protect fee revenue year after year.",
+    intro: "Parents and students don't buy courses - they buy outcomes and credibility. We help schools, universities and EdTech platforms build enrollment funnels grounded in how families actually decide: reputation research, open-day and webinar funnels, and retention programs that protect fee revenue year after year.",
     challenges: [
       "Seasonal enrollment peaks with wasted off-peak spend",
       "Decision units that involve students, parents and sponsors at once",
@@ -31,7 +31,7 @@ export const INDUSTRIES_DETAILED = [
     slug: "finance-banking-fintech",
     name: "Finance, Banking & Fintech",
     tagline: "In finance, trust is the product. We market the proof.",
-    intro: "Financial brands win on credibility and lose on complexity. From banks modernising their acquisition to fintech challengers building pipeline from zero, we combine compliance-aware messaging with behavioural insight — making complex products feel simple, safe and worth switching for.",
+    intro: "Financial brands win on credibility and lose on complexity. From banks modernising their acquisition to fintech challengers building pipeline from zero, we combine compliance-aware messaging with behavioural insight - making complex products feel simple, safe and worth switching for.",
     challenges: [
       "Compliance constraints that flatten most agency creativity",
       "Long consideration cycles and deep switching anxiety",
@@ -44,8 +44,8 @@ export const INDUSTRIES_DETAILED = [
   {
     slug: "ecommerce-d2c-retail",
     name: "E-commerce & D2C Retail",
-    tagline: "Traffic, conversion, retention — in that order of honesty.",
-    intro: "We grow D2C brands and online retailers across the full funnel: profitable paid acquisition, conversion-optimised storefronts, and email/SMS retention that turns first orders into lifetime value. Beauty, personal care and wellness brands — salons, clinics and skincare lines — live here too: same buyers, same channels, same playbook.",
+    tagline: "Traffic, conversion, retention - in that order of honesty.",
+    intro: "We grow D2C brands and online retailers across the full funnel: profitable paid acquisition, conversion-optimised storefronts, and email/SMS retention that turns first orders into lifetime value. Beauty, personal care and wellness brands - salons, clinics and skincare lines - live here too: same buyers, same channels, same playbook.",
     challenges: [
       "Rising acquisition costs eating already-thin margins",
       "Beautiful stores that convert below one percent",
@@ -53,17 +53,17 @@ export const INDUSTRIES_DETAILED = [
     ],
     services: ["ecommerce-marketing", "performance-marketing", "seo", "email-marketing-automation", "influencer-marketing"],
     metaTitle: "E-commerce & D2C Marketing Agency in Pakistan",
-    metaDesc: "Full-funnel e-commerce and D2C growth — including beauty, personal care and wellness brands: paid acquisition, CRO, retention and marketplace strategy.",
+    metaDesc: "Full-funnel e-commerce and D2C growth - including beauty, personal care and wellness brands: paid acquisition, CRO, retention and marketplace strategy.",
   },
   {
     slug: "healthcare-pharmaceuticals",
     name: "Healthcare & Pharmaceuticals",
     tagline: "Patients research before they book. Be the answer they find.",
-    intro: "Healthcare decisions start with a search bar and end with trust. We help hospitals, clinics and pharma brands build patient journeys that inform and reassure — symptom-to-booking SEO, reputation management, doctor and brand storytelling, all delivered with the compliance care the sector demands.",
+    intro: "Healthcare decisions start with a search bar and end with trust. We help hospitals, clinics and pharma brands build patient journeys that inform and reassure - symptom-to-booking SEO, reputation management, doctor and brand storytelling, all delivered with the compliance care the sector demands.",
     challenges: [
       "Strict advertising regulations that vary by platform and market",
       "Patient journeys that span months of quiet research",
-      "Reputation fragility — one bad review thread can move revenue",
+      "Reputation fragility - one bad review thread can move revenue",
     ],
     services: ["seo", "content-marketing", "market-research", "digital-marketing", "branding-identity"],
     metaTitle: "Healthcare & Pharma Marketing Agency",
@@ -72,7 +72,7 @@ export const INDUSTRIES_DETAILED = [
   {
     slug: "textile-apparel-fashion",
     name: "Textile, Apparel & Fashion",
-    tagline: "From the mill to the feed — make the brand worth the fabric.",
+    tagline: "From the mill to the feed - make the brand worth the fabric.",
     intro: "Pakistan makes world-class fabric; too few of its brands capture world-class margins. We help textile houses, fashion labels and apparel exporters move up the value chain: brand building for D2C labels, seasonal campaign calendars, export-market positioning, and social commerce that sells the drop before it lands.",
     challenges: [
       "Commodity pricing pressure that punishes unbranded players",
@@ -87,7 +87,7 @@ export const INDUSTRIES_DETAILED = [
     slug: "food-beverage-restaurants",
     name: "Food, Beverage & Restaurants",
     tagline: "Fill tables and baskets with cravings, not coupons.",
-    intro: "Food is bought with the eyes and justified with the wallet. We work with restaurant groups, cloud kitchens and F&B brands on launch buzz, delivery-platform visibility, menu psychology and loyalty programs — building cravings that survive after the discount ends.",
+    intro: "Food is bought with the eyes and justified with the wallet. We work with restaurant groups, cloud kitchens and F&B brands on launch buzz, delivery-platform visibility, menu psychology and loyalty programs - building cravings that survive after the discount ends.",
     challenges: [
       "Delivery-app commissions quietly eating the margin",
       "Launch spikes that fade into empty weekdays",
@@ -115,7 +115,7 @@ export const INDUSTRIES_DETAILED = [
     slug: "travel-tourism-hospitality",
     name: "Travel, Tourism & Hospitality",
     tagline: "Sell the feeling. The booking follows.",
-    intro: "Travel is the ultimate aspiration purchase — and the most comparison-shopped one. We help hotels, airlines, tour operators and destination brands convert wanderlust into bookings: seasonal demand campaigns, direct-booking strategies that dodge OTA commissions, and review-driven reputation systems.",
+    intro: "Travel is the ultimate aspiration purchase - and the most comparison-shopped one. We help hotels, airlines, tour operators and destination brands convert wanderlust into bookings: seasonal demand campaigns, direct-booking strategies that dodge OTA commissions, and review-driven reputation systems.",
     challenges: [
       "OTA commissions taxing every booking",
       "Extreme seasonality with fixed costs year-round",
@@ -143,7 +143,7 @@ export const INDUSTRIES_DETAILED = [
     slug: "fmcg-consumer-goods",
     name: "FMCG & Consumer Goods",
     tagline: "Win the two-second decision at the shelf.",
-    intro: "Our home turf. We help FMCG brands grow through the science of how shoppers actually choose: neuromarketing-tested packaging, brand positioning with memory structures that stick, trade and shopper marketing, and media plans built on category entry points — including beauty and personal care brands whose buyers shop the same aisles and feeds.",
+    intro: "Our home turf. We help FMCG brands grow through the science of how shoppers actually choose: neuromarketing-tested packaging, brand positioning with memory structures that stick, trade and shopper marketing, and media plans built on category entry points - including beauty and personal care brands whose buyers shop the same aisles and feeds.",
     challenges: [
       "Shelf decisions made in under two seconds",
       "Retail media and modern trade reshaping the route to market",
@@ -151,12 +151,12 @@ export const INDUSTRIES_DETAILED = [
     ],
     services: ["neuromarketing", "market-research", "branding-identity", "advertising", "mystery-shopping"],
     metaTitle: "FMCG Marketing & Neuromarketing Agency",
-    metaDesc: "FMCG and consumer goods marketing — including beauty and personal care: neuromarketing, pack testing, brand positioning and shopper marketing.",
+    metaDesc: "FMCG and consumer goods marketing - including beauty and personal care: neuromarketing, pack testing, brand positioning and shopper marketing.",
   },
   {
     slug: "weddings-events-entertainment",
     name: "Weddings, Events & Entertainment",
-    tagline: "One day, one chance, one reputation — marketed year-round.",
+    tagline: "One day, one chance, one reputation - marketed year-round.",
     intro: "The events business runs on peak moments and year-round reputation. We help wedding planners, venues, decorators and entertainment brands stay booked across seasons: portfolio-driven social proof, visual-first content engines, referral systems, and booking funnels that capture enquiries the moment inspiration strikes.",
     challenges: [
       "Extreme seasonality around wedding and festival calendars",
@@ -171,7 +171,7 @@ export const INDUSTRIES_DETAILED = [
     slug: "ngos-development-sector",
     name: "NGOs & Development Sector",
     tagline: "Impact deserves an audience. We build both.",
-    intro: "Development sector work competes for attention, donors and trust like any brand — with higher stakes and tighter budgets. We help NGOs and social enterprises sharpen their story, run donor acquisition and retention campaigns, report impact compellingly, and build the public trust that unlocks funding.",
+    intro: "Development sector work competes for attention, donors and trust like any brand - with higher stakes and tighter budgets. We help NGOs and social enterprises sharpen their story, run donor acquisition and retention campaigns, report impact compellingly, and build the public trust that unlocks funding.",
     challenges: [
       "Donor fatigue in crowded cause categories",
       "Impact that's real but poorly evidenced and told",
@@ -189,15 +189,15 @@ export const LOCATIONS = [
     name: "Marketing Agency in Lahore",
     eyebrow: "Our Home",
     h1: "Lahore's research-led marketing agency.",
-    intro: "MarKendrick is headquartered in Gulberg III, Lahore — and this city is our laboratory. Every framework we sell globally was pressure-tested here first, against the most demanding shoppers, the noisiest bazaars and the fastest-moving feeds in the region.",
+    intro: "MarKendrick is headquartered in Gulberg III, Lahore - and this city is our laboratory. Every framework we sell globally was pressure-tested here first, against the most demanding shoppers, the noisiest bazaars and the fastest-moving feeds in the region.",
     body2: "If you're a Lahore business tired of agencies that jump straight to boosting posts, we'll start differently: a Diagnostic Audit of your marketing, delivered by senior consultants who sit fifteen minutes from your office.",
     points: [
       "Face-to-face strategy sessions at our Gulberg III studio",
       "Deep networks across Lahore's retail, media and production landscape",
       "Mystery shopping and field research executed city-wide",
-      "Diagnostic Audits from PKR 60,000 — results in 1–2 weeks",
+      "Diagnostic Audits from PKR 60,000 - results in 1–2 weeks",
     ],
-    metaTitle: "Marketing Agency in Lahore — MarKendrick",
+    metaTitle: "Marketing Agency in Lahore - MarKendrick",
     metaDesc: "Lahore's research-led marketing agency. Diagnostic audits, brand strategy and performance marketing from Gulberg III. Book a free consultation.",
   },
   {
@@ -205,15 +205,15 @@ export const LOCATIONS = [
     name: "Marketing Agency in Pakistan",
     eyebrow: "Nationwide",
     h1: "One agency. Every Pakistani market.",
-    intro: "From Karachi's corporate towers to Islamabad's startups and Faisalabad's textile houses, we serve brands across Pakistan with the same research-first discipline. Different cities buy differently — our field research spans all of them.",
+    intro: "From Karachi's corporate towers to Islamabad's startups and Faisalabad's textile houses, we serve brands across Pakistan with the same research-first discipline. Different cities buy differently - our field research spans all of them.",
     body2: "Remote-first delivery with on-ground research capability means Karachi, Islamabad, Multan or Peshawar get the same senior team and the same rigour as our Lahore neighbours.",
     points: [
       "Field research and mystery shopping across major cities",
       "Urdu and English campaign capability",
-      "National media relationships — TV, print, outdoor and digital",
+      "National media relationships - TV, print, outdoor and digital",
       "Monthly retainers from PKR 150,000 with no long lock-in",
     ],
-    metaTitle: "Marketing Agency in Pakistan — MarKendrick",
+    metaTitle: "Marketing Agency in Pakistan - MarKendrick",
     metaDesc: "A research-led marketing agency serving Karachi, Lahore, Islamabad and all of Pakistan. Strategy, branding, digital and performance marketing.",
   },
   {
@@ -221,15 +221,15 @@ export const LOCATIONS = [
     name: "Serving the Middle East",
     eyebrow: "Regional",
     h1: "Research-led marketing for the Gulf.",
-    intro: "The Gulf's consumers are among the world's most researched — and most misunderstood. We help brands across the UAE, Saudi Arabia and the wider GCC with consumer insight, brand strategy and performance campaigns built for the region's unique cultural and commercial rhythm.",
-    body2: "Our Lahore base gives Gulf clients a senior, insight-led team at a fraction of Dubai agency rates — with timezone overlap that makes collaboration effortless.",
+    intro: "The Gulf's consumers are among the world's most researched - and most misunderstood. We help brands across the UAE, Saudi Arabia and the wider GCC with consumer insight, brand strategy and performance campaigns built for the region's unique cultural and commercial rhythm.",
+    body2: "Our Lahore base gives Gulf clients a senior, insight-led team at a fraction of Dubai agency rates - with timezone overlap that makes collaboration effortless.",
     points: [
       "Consumer research across GCC markets",
       "Ramadan and seasonal campaign planning",
       "Arabic-market cultural fluency in brand work",
       "Timezone-aligned delivery, Gulf-hours availability",
     ],
-    metaTitle: "Marketing Agency for the Middle East — MarKendrick",
+    metaTitle: "Marketing Agency for the Middle East - MarKendrick",
     metaDesc: "Research-led marketing for UAE, Saudi and GCC brands: consumer insight, brand strategy and performance campaigns from MarKendrick.",
   },
   {
@@ -243,9 +243,9 @@ export const LOCATIONS = [
       "UK-hours collaboration and weekly senior-led reporting",
       "SEO and content programs for competitive UK SERPs",
       "Research and neuromarketing capability most UK boutiques lack",
-      "Senior team at offshore rates — typically 40–60% below UK agency fees",
+      "Senior team at offshore rates - typically 40–60% below UK agency fees",
     ],
-    metaTitle: "Marketing Agency for UK Brands — MarKendrick",
+    metaTitle: "Marketing Agency for UK Brands - MarKendrick",
     metaDesc: "Research-led marketing partner for UK businesses: insight, brand strategy, SEO and performance marketing at offshore economics.",
   },
   {
@@ -254,14 +254,14 @@ export const LOCATIONS = [
     eyebrow: "Regional",
     h1: "Offshore insight. Onshore standards.",
     intro: "US brands and startups work with us when they want senior thinking without senior-agency overhead: market research, positioning, B2B pipeline programs and performance marketing delivered by a team that treats your budget like its own money.",
-    body2: "Async-friendly delivery with structured weekly syncs means the timezone gap works for you — work progresses while you sleep.",
+    body2: "Async-friendly delivery with structured weekly syncs means the timezone gap works for you - work progresses while you sleep.",
     points: [
       "B2B pipeline and ABM programs for US markets",
       "Positioning and messaging sprints for funded startups",
       "Performance marketing with incrementality-first measurement",
-      "Progress overnight — async delivery with weekly syncs",
+      "Progress overnight - async delivery with weekly syncs",
     ],
-    metaTitle: "Marketing Agency for US Brands — MarKendrick",
+    metaTitle: "Marketing Agency for US Brands - MarKendrick",
     metaDesc: "Offshore, senior-led marketing for US startups and brands: research, positioning, B2B pipeline and performance marketing.",
   },
   {
@@ -270,14 +270,14 @@ export const LOCATIONS = [
     eyebrow: "Regional",
     h1: "Research-led marketing, European discipline.",
     intro: "European brands need partners who respect both craft and compliance. We deliver insight studies, brand strategy and digital campaigns for European markets with GDPR-aware data practices and the cultural sensitivity multilingual markets demand.",
-    body2: "From D2C brands in Germany to hospitality groups in Spain, we bring the same diagnostic method — adapted to your market's language, law and buyer psychology.",
+    body2: "From D2C brands in Germany to hospitality groups in Spain, we bring the same diagnostic method - adapted to your market's language, law and buyer psychology.",
     points: [
       "GDPR-compliant data handling and consent-first campaigns",
       "Multi-market consumer research capability",
       "Brand and content work across European languages",
       "CET-friendly collaboration hours",
     ],
-    metaTitle: "Marketing Agency for Europe — MarKendrick",
+    metaTitle: "Marketing Agency for Europe - MarKendrick",
     metaDesc: "GDPR-aware, research-led marketing for European brands: insight, brand strategy and digital campaigns from MarKendrick.",
   },
 ];
@@ -288,11 +288,11 @@ export const FAQS = [
     items: [
       {
         q: "What does MarKendrick actually do?",
-        a: "MarKendrick is a research-led, full-service marketing agency. We diagnose the real bottleneck stopping a business's growth through research and consumer psychology, then design and deliver the strategy, campaigns, and digital execution to fix it — instead of jumping straight to ads.",
+        a: "MarKendrick is a research-led, full-service marketing agency. We diagnose the real bottleneck stopping a business's growth through research and consumer psychology, then design and deliver the strategy, campaigns, and digital execution to fix it - instead of jumping straight to ads.",
       },
       {
         q: "How is MarKendrick different from a typical agency?",
-        a: "Most agencies start with execution — ads, content, social — and skip the research step entirely. MarKendrick starts every engagement with a diagnostic process grounded in real consumer research and psychology, run by a founder with a PhD in consumer behaviour, before any campaign work begins.",
+        a: "Most agencies start with execution - ads, content, social - and skip the research step entirely. MarKendrick starts every engagement with a diagnostic process grounded in real consumer research and psychology, run by a founder with a PhD in consumer behaviour, before any campaign work begins.",
       },
       {
         q: "What industries do you work with?",
@@ -300,11 +300,11 @@ export const FAQS = [
       },
       {
         q: "What is a Diagnostic Audit?",
-        a: "A structured review of your current marketing — website, positioning, ads, competitor gap — delivered as a report with a prioritised fix-list. It is the fastest, lowest-cost way to see exactly where your marketing bottleneck is.",
+        a: "A structured review of your current marketing - website, positioning, ads, competitor gap - delivered as a report with a prioritised fix-list. It is the fastest, lowest-cost way to see exactly where your marketing bottleneck is.",
       },
       {
         q: "Do you build websites and apps too?",
-        a: "Yes. Simpler builds — landing pages, funnels, e-commerce sites — are delivered directly by our team. Complex web and app builds go through a vetted delivery-partner network that we scope, manage, and quality-control, so every build still starts with the same diagnostic process as our marketing work. You get one accountable relationship, not a handoff to a separate software house.",
+        a: "Yes. Simpler builds - landing pages, funnels, e-commerce sites - are delivered directly by our team. Complex web and app builds go through a vetted delivery-partner network that we scope, manage, and quality-control, so every build still starts with the same diagnostic process as our marketing work. You get one accountable relationship, not a handoff to a separate software house.",
       },
     ],
   },

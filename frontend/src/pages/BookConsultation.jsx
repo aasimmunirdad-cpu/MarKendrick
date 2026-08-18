@@ -79,7 +79,7 @@ export default function BookConsultation() {
                 <div className="w-14 h-14 rounded-full bg-vermilion text-white flex items-center justify-center mb-6"><Check size={26} /></div>
                 <h2 className="font-display text-3xl font-bold tracking-tight mb-3">You're in the calendar.</h2>
                 <p className="text-muted-foreground max-w-md">
-                  <strong className="text-foreground">{form.date} at {form.slot} PKT</strong> — a confirmation and video link are on their way to <strong className="text-foreground">{form.email}</strong>.
+                  <strong className="text-foreground">{form.date} at {form.slot} PKT</strong> - a confirmation and video link are on their way to <strong className="text-foreground">{form.email}</strong>.
                 </p>
               </motion.div>
             ) : (

@@ -25,13 +25,13 @@ export default function CaseStudyDetail() {
 
   return (
     <article data-testid="case-study-detail-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title={`${cs.client} — ${cs.title}`} description={cs.summary} />
+      <Seo title={`${cs.client} - ${cs.title}`} description={cs.summary} />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal>
           <Link to="/work" data-testid="case-back-link" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-vermilion transition-colors mb-10">
             <ArrowLeft size={15} /> All Work
           </Link>
-          <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-4">{cs.industry} — {cs.client}</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-4">{cs.industry} - {cs.client}</p>
           <h1 className="font-display font-extrabold tracking-tight text-4xl sm:text-6xl leading-[1.1] max-w-4xl mb-8">{cs.title}</h1>
           <div className="flex flex-wrap gap-2 mb-12">
             {cs.services.map((s) => (
@@ -68,7 +68,7 @@ export default function CaseStudyDetail() {
             <div className="lg:col-span-4 bg-card/40 border border-border p-8">
               <Quote size={24} className="text-vermilion mb-4" />
               <p className="text-lg leading-relaxed mb-4">"{cs.quote}"</p>
-              <p className="text-sm text-muted-foreground">— {cs.quote_author}</p>
+              <p className="text-sm text-muted-foreground">- {cs.quote_author}</p>
             </div>
           )}
         </div>

@@ -262,9 +262,9 @@ export default function AdminDashboard() {
                 {leads.map((l) => (
                   <tr key={l.id}>
                     <td className={td}><span className="font-semibold">{l.name}</span><span className="block text-xs text-muted-foreground">{l.email} {l.company && `· ${l.company}`}</span>{l.message && <span className="block text-xs text-muted-foreground mt-1 max-w-xs">{l.message}</span>}</td>
-                    <td className={td}>{l.service || "—"}</td>
-                    <td className={td}>{l.budget || "—"}</td>
-                    <td className={td}>{l.timeline || "—"}</td>
+                    <td className={td}>{l.service || "-"}</td>
+                    <td className={td}>{l.budget || "-"}</td>
+                    <td className={td}>{l.timeline || "-"}</td>
                     <td className={td}><span className="text-xs text-muted-foreground">{new Date(l.created_at).toLocaleDateString("en-GB")}</span></td>
                     <td className={td}>
                       <button data-testid={`delete-lead-${l.id}`} onClick={() => removeRecord("leads", "admin-leads", l.id)} className="p-2 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Trash2 size={14} /></button>
@@ -285,9 +285,9 @@ export default function AdminDashboard() {
                 {bookings.map((b) => (
                   <tr key={b.id}>
                     <td className={td}><span className="font-semibold">{b.name}</span><span className="block text-xs text-muted-foreground">{b.email} {b.company && `· ${b.company}`}</span></td>
-                    <td className={td}>{b.service || "—"}</td>
+                    <td className={td}>{b.service || "-"}</td>
                     <td className={td}><span className="font-semibold text-vermilion">{b.date} · {b.slot}</span></td>
-                    <td className={td}><span className="text-xs text-muted-foreground max-w-xs block">{b.notes || "—"}</span></td>
+                    <td className={td}><span className="text-xs text-muted-foreground max-w-xs block">{b.notes || "-"}</span></td>
                     <td className={td}>
                       <button data-testid={`delete-booking-${b.id}`} onClick={() => removeRecord("bookings", "admin-bookings", b.id)} className="p-2 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Trash2 size={14} /></button>
                     </td>
@@ -402,7 +402,7 @@ function EditorModal({ editing, onClose, onSave }) {
 
   const areas = isPost
     ? [["excerpt", "Excerpt", 2], ["body", "Body", 10]]
-    : [["summary", "Summary", 2], ["challenge", "Challenge", 4], ["approach", "Approach", 4], ["results", "Results — one per line: +212% | ROAS in 6 months", 3], ["quote", "Client Quote", 2]];
+    : [["summary", "Summary", 2], ["challenge", "Challenge", 4], ["approach", "Approach", 4], ["results", "Results - one per line: +212% | ROAS in 6 months", 3], ["quote", "Client Quote", 2]];
   const richKeys = isPost ? ["body"] : ["challenge", "approach"];
 
   return (
@@ -486,7 +486,7 @@ function NewsletterTab({ posts }) {
     <div data-testid="admin-newsletter-tab">
       <div className="border border-border bg-card/40 p-5 mb-6 flex items-center justify-between">
         <div>
-          <p className="font-display font-bold tracking-tight">The Signal — one click, every inbox.</p>
+          <p className="font-display font-bold tracking-tight">The Signal - one click, every inbox.</p>
           <p className="text-sm text-muted-foreground">Pick a published article. We email it to <strong className="text-vermilion">{subs.length} subscriber{subs.length === 1 ? "" : "s"}</strong> with your branding.</p>
         </div>
       </div>
@@ -584,7 +584,7 @@ function TestimonialsTab({ items, loading, onChanged }) {
               <tr key={t.id}>
                 <td className={td}><span className="line-clamp-2 max-w-sm">{t.quote}</span></td>
                 <td className={td}><span className="font-semibold">{t.name}</span><span className="block text-xs text-muted-foreground">{t.role}{t.company ? `, ${t.company}` : ""}</span></td>
-                <td className={td}>{t.metric || "—"}</td>
+                <td className={td}>{t.metric || "-"}</td>
                 <td className={td}><span className={`text-xs px-2 py-1 ${t.published ? "bg-emerald-500/15 text-emerald-500" : "bg-muted text-muted-foreground"}`}>{t.published ? "Live" : "Draft"}</span></td>
                 <td className={td}>
                   <div className="flex gap-2">
@@ -806,7 +806,7 @@ function MediaTab({ items, loading, onChanged }) {
     setImporting(true);
     try {
       const res = await api.post("/admin/media/import-existing");
-      toast.success(res.data.imported > 0 ? `Imported ${res.data.imported} image${res.data.imported === 1 ? "" : "s"} already used on the site.` : "Nothing new to import — everything's already in the library.");
+      toast.success(res.data.imported > 0 ? `Imported ${res.data.imported} image${res.data.imported === 1 ? "" : "s"} already used on the site.` : "Nothing new to import - everything's already in the library.");
       onChanged();
     } catch (err) {
       toast.error(formatApiError(err));
@@ -837,7 +837,7 @@ function MediaTab({ items, loading, onChanged }) {
       <div className="border border-border bg-card/40 p-5 mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
           <p className="font-display font-bold tracking-tight">Media library</p>
-          <p className="text-sm text-muted-foreground">Upload new images, or import ones already used on the site — then reuse them anywhere via the picker or a copied URL.</p>
+          <p className="text-sm text-muted-foreground">Upload new images, or import ones already used on the site - then reuse them anywhere via the picker or a copied URL.</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <button
@@ -993,15 +993,15 @@ function SettingsTab({ settings, loading, onChanged }) {
       <h3 className="font-display text-lg font-bold tracking-tight mb-3">Page imagery</h3>
       <div className="grid grid-cols-1 gap-4 mb-8">
         <div>
-          <label className={labelCls}>About page — studio photo (also used as video poster)</label>
+          <label className={labelCls}>About page - studio photo (also used as video poster)</label>
           <ImagePicker value={data.about_office_photo_url} onChange={(v) => set("about_office_photo_url", v)} testId="settings-field-about_office_photo_url" />
         </div>
         <div>
-          <label className={labelCls}>Home page — showreel video poster</label>
+          <label className={labelCls}>Home page - showreel video poster</label>
           <ImagePicker value={data.home_showreel_poster_url} onChange={(v) => set("home_showreel_poster_url", v)} testId="settings-field-home_showreel_poster_url" />
         </div>
         <div>
-          <label className={labelCls}>Studio video URL (shown on Home and About — .mp4 link, not managed by the image library)</label>
+          <label className={labelCls}>Studio video URL (shown on Home and About - .mp4 link, not managed by the image library)</label>
           <input data-testid="settings-field-studio_video_url" className={inputCls} value={data.studio_video_url} onChange={(e) => set("studio_video_url", e.target.value)} placeholder="/media/studio-session.mp4 or a hosted .mp4 URL" />
         </div>
       </div>
@@ -1184,7 +1184,7 @@ function ServicesTab({ items, loading, onChanged }) {
           </div>
           <div className="mb-4"><label className={labelCls}>Short description (used on cards)</label><textarea rows={2} className={`${inputCls} resize-y`} value={editing.data.short || ""} onChange={(e) => set("short", e.target.value)} /></div>
           <div className="mb-4"><label className={labelCls}>Body</label><RichTextEditor testId="service-field-body" value={editing.data.body} onChange={(v) => set("body", v)} minHeight={220} /></div>
-          <div className="mb-4"><label className={labelCls}>Deliverables — one per line</label><textarea rows={5} className={`${inputCls} resize-y`} value={editing.data.deliverables || ""} onChange={(e) => set("deliverables", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Deliverables - one per line</label><textarea rows={5} className={`${inputCls} resize-y`} value={editing.data.deliverables || ""} onChange={(e) => set("deliverables", e.target.value)} /></div>
           <PublishedToggle checked={editing.data.published} onChange={(v) => set("published", v)} />
         </EditorShell>
       )}
@@ -1267,7 +1267,7 @@ function IndustriesTab({ items, loading, onChanged }) {
             ))}
           </div>
           <div className="mb-4"><label className={labelCls}>Intro paragraph</label><RichTextEditor testId="industry-field-intro" value={editing.data.intro} onChange={(v) => set("intro", v)} minHeight={140} /></div>
-          <div className="mb-4"><label className={labelCls}>Challenges — one per line</label><textarea rows={4} className={`${inputCls} resize-y`} value={editing.data.challenges || ""} onChange={(e) => set("challenges", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Challenges - one per line</label><textarea rows={4} className={`${inputCls} resize-y`} value={editing.data.challenges || ""} onChange={(e) => set("challenges", e.target.value)} /></div>
           <div className="mb-4"><label className={labelCls}>Related service slugs (comma separated, e.g. market-research, seo)</label><input className={inputCls} value={editing.data.services || ""} onChange={(e) => set("services", e.target.value)} /></div>
           <PublishedToggle checked={editing.data.published} onChange={(v) => set("published", v)} />
         </EditorShell>
@@ -1346,7 +1346,7 @@ function LocationsTab({ items, loading, onChanged }) {
           </div>
           <div className="mb-4"><label className={labelCls}>Intro paragraph</label><RichTextEditor testId="location-field-intro" value={editing.data.intro} onChange={(v) => set("intro", v)} minHeight={140} /></div>
           <div className="mb-4"><label className={labelCls}>Second paragraph</label><RichTextEditor testId="location-field-body2" value={editing.data.body2} onChange={(v) => set("body2", v)} minHeight={140} /></div>
-          <div className="mb-4"><label className={labelCls}>Why brands here choose us — one point per line</label><textarea rows={4} className={`${inputCls} resize-y`} value={editing.data.points || ""} onChange={(e) => set("points", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Why brands here choose us - one point per line</label><textarea rows={4} className={`${inputCls} resize-y`} value={editing.data.points || ""} onChange={(e) => set("points", e.target.value)} /></div>
           <PublishedToggle checked={editing.data.published} onChange={(v) => set("published", v)} />
         </EditorShell>
       )}
@@ -1489,7 +1489,7 @@ function LegalTab({ items, loading, onChanged }) {
             <div className="sm:col-span-2"><label className={labelCls}>SEO Description</label><input className={inputCls} value={editing.data.metaDesc || ""} onChange={(e) => set("metaDesc", e.target.value)} /></div>
           </div>
           <div className="mb-4">
-            <label className={labelCls}>Sections — one per line, format: Heading | Paragraph text</label>
+            <label className={labelCls}>Sections - one per line, format: Heading | Paragraph text</label>
             <textarea rows={14} className={`${inputCls} resize-y font-mono text-xs`} value={editing.data.sectionsText || ""} onChange={(e) => set("sectionsText", e.target.value)} />
           </div>
         </EditorShell>

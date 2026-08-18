@@ -25,7 +25,7 @@ export default function ShareTestimonial() {
       if (!payload.email) delete payload.email;
       await api.post("/testimonials/submit", payload);
       setStatus("done");
-      toast.success("Thank you — your testimonial has been submitted.");
+      toast.success("Thank you - your testimonial has been submitted.");
     } catch (err) {
       setStatus("idle");
       toast.error(formatApiError(err));
@@ -36,7 +36,7 @@ export default function ShareTestimonial() {
     <div data-testid="share-testimonial-page" className="pt-32 sm:pt-40 pb-24">
       <Seo
         title="Share Your Experience"
-        description="Worked with MarKendrick? Tell us how it went — your testimonial helps other brands decide with confidence."
+        description="Worked with MarKendrick? Tell us how it went - your testimonial helps other brands decide with confidence."
       />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-16">
         <div className="lg:col-span-5">
@@ -46,11 +46,11 @@ export default function ShareTestimonial() {
               Tell us how<br /><span className="text-vermilion">it went.</span>
             </h1>
             <p className="text-muted-foreground leading-relaxed mb-10 max-w-md">
-              Worked with us on a project? A few honest sentences help other brands decide with confidence —
+              Worked with us on a project? A few honest sentences help other brands decide with confidence -
               and help us know what's actually working. We read every one.
             </p>
             <div className="text-sm text-muted-foreground border-t border-border pt-8 space-y-3 max-w-md">
-              <p>Submissions are reviewed before publishing — nothing goes live automatically.</p>
+              <p>Submissions are reviewed before publishing - nothing goes live automatically.</p>
               <p>Sharing your email is optional. It's only used if we want to follow up, and is never published.</p>
             </div>
           </Reveal>
@@ -66,7 +66,7 @@ export default function ShareTestimonial() {
                   </div>
                   <h2 className="font-display text-3xl font-bold tracking-tight mb-3">Thank you.</h2>
                   <p className="text-muted-foreground max-w-md">
-                    Your testimonial is in for review. Once approved, it'll appear on our site — we appreciate you taking the time.
+                    Your testimonial is in for review. Once approved, it'll appear on our site - we appreciate you taking the time.
                   </p>
                 </motion.div>
               ) : (

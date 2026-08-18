@@ -12,7 +12,7 @@ export default function Industries() {
   });
   return (
     <div data-testid="industries-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title="Industries We Serve — Sector Playbooks" description="Marketing playbooks across every sector: real estate, education, fintech, e-commerce, healthcare, fashion, F&B, automotive, travel, tech, FMCG, events and NGOs." />
+      <Seo title="Industries We Serve - Sector Playbooks" description="Marketing playbooks across every sector: real estate, education, fintech, e-commerce, healthcare, fashion, F&B, automotive, travel, tech, FMCG, events and NGOs." />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-16">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">Industries We Serve</p>

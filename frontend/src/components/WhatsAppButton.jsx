@@ -6,7 +6,7 @@ export default function WhatsAppButton() {
   return (
     <motion.a
       data-testid="whatsapp-float-button"
-      href={`https://wa.me/${OFFICE.whatsapp}?text=${encodeURIComponent("Hi MarKendrick — I'd like to discuss a project.")}`}
+      href={`https://wa.me/${OFFICE.whatsapp}?text=${encodeURIComponent("Hi MarKendrick - I'd like to discuss a project.")}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"

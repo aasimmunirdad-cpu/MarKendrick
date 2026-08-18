@@ -143,7 +143,7 @@ export default function RoiCalculator() {
                 <span className="font-display font-bold" data-testid="roi-multiple">{result.roiMultiple.toFixed(1)}x</span>
               </div>
             </div>
-            <p className="text-xs text-white/40 mt-6 mb-6">Estimates only — your real number comes from a Diagnostic Audit, not a slider.</p>
+            <p className="text-xs text-white/40 mt-6 mb-6">Estimates only - your real number comes from a Diagnostic Audit, not a slider.</p>
             <Link
               to="/book-consultation"
               data-testid="roi-book-button"

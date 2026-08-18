@@ -15,12 +15,12 @@ export default function Insights() {
 
   return (
     <div data-testid="insights-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title="Insights — Marketing Strategy, Research & Trends" description="Marketing insight from MarKendrick: consumer psychology, neuromarketing, performance media and brand science from Lahore to the world." />
+      <Seo title="Insights - Marketing Strategy, Research & Trends" description="Marketing insight from MarKendrick: consumer psychology, neuromarketing, performance media and brand science from Lahore to the world." />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal>
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">The Insights Hub</p>
           <h1 className="font-display font-extrabold tracking-tight text-5xl sm:text-7xl mb-6">Thinking that<br /><span className="text-vermilion">travels.</span></h1>
-          <p className="text-muted-foreground max-w-xl text-lg mb-14">Field notes from research labs, media accounts and brand war rooms. No fluff — publishable evidence only.</p>
+          <p className="text-muted-foreground max-w-xl text-lg mb-14">Field notes from research labs, media accounts and brand war rooms. No fluff - publishable evidence only.</p>
         </Reveal>
 
         {isLoading ? (
@@ -51,7 +51,7 @@ export default function Insights() {
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-2">Go Deeper</p>
             <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight mb-2">Free research reports.</h2>
-            <p className="text-sm text-muted-foreground max-w-md">The Pakistan Consumer Report 2026, Neuromarketing at the Shelf, and the CMO's Diagnostic Toolkit — free with your email.</p>
+            <p className="text-sm text-muted-foreground max-w-md">The Pakistan Consumer Report 2026, Neuromarketing at the Shelf, and the CMO's Diagnostic Toolkit - free with your email.</p>
           </div>
           <Link to="/whitepapers" data-testid="insights-whitepapers-link" className="inline-flex items-center gap-2 bg-vermilion hover:bg-vermilion-hover text-white font-semibold px-7 py-3.5 rounded-full transition-colors shrink-0">
             Browse Whitepapers <ArrowUpRight size={16} />

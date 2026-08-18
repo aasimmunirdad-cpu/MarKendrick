@@ -21,7 +21,7 @@ export default function ShareButtons({ title }) {
       toast.success("Link copied.");
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      toast.error("Couldn't copy — copy the URL from your address bar.");
+      toast.error("Couldn't copy - copy the URL from your address bar.");
     }
   };
 

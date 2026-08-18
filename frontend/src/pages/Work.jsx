@@ -33,7 +33,7 @@ export default function Work() {
                     </div>
                   </div>
                   <div className={`lg:col-span-5 ${i % 2 === 1 ? "lg:order-1" : ""}`}>
-                    <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-3">{cs.industry} — {cs.client}</p>
+                    <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-3">{cs.industry} - {cs.client}</p>
                     <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight mb-4 group-hover:text-vermilion transition-colors">{cs.title}</h2>
                     <p className="text-muted-foreground leading-relaxed mb-6">{cs.summary}</p>
                     <div className="flex flex-wrap gap-8">

@@ -3,7 +3,7 @@
     "slug": "real-estate-property-development",
     "name": "Real Estate & Property Development",
     "tagline": "Sell the dream before the showhouse opens.",
-    "intro": "Property buyers make an emotional decision and justify it rationally — usually online, long before they call an agent. We help developers and agencies own that digital first impression: demand research for new projects, launch campaigns that fill registries, and lead engines that qualify buyers before your sales team picks up the phone.",
+    "intro": "Property buyers make an emotional decision and justify it rationally - usually online, long before they call an agent. We help developers and agencies own that digital first impression: demand research for new projects, launch campaigns that fill registries, and lead engines that qualify buyers before your sales team picks up the phone.",
     "challenges": [
       "Long, research-heavy buying journeys that start on portals and social, not site offices",
       "Off-plan launches that need trust built before a single floor exists",
@@ -26,7 +26,7 @@
     "slug": "education-edtech",
     "name": "Education & EdTech",
     "tagline": "Enrollment is a trust decision. Market it like one.",
-    "intro": "Parents and students don't buy courses — they buy outcomes and credibility. We help schools, universities and EdTech platforms build enrollment funnels grounded in how families actually decide: reputation research, open-day and webinar funnels, and retention programs that protect fee revenue year after year.",
+    "intro": "Parents and students don't buy courses - they buy outcomes and credibility. We help schools, universities and EdTech platforms build enrollment funnels grounded in how families actually decide: reputation research, open-day and webinar funnels, and retention programs that protect fee revenue year after year.",
     "challenges": [
       "Seasonal enrollment peaks with wasted off-peak spend",
       "Decision units that involve students, parents and sponsors at once",
@@ -49,7 +49,7 @@
     "slug": "finance-banking-fintech",
     "name": "Finance, Banking & Fintech",
     "tagline": "In finance, trust is the product. We market the proof.",
-    "intro": "Financial brands win on credibility and lose on complexity. From banks modernising their acquisition to fintech challengers building pipeline from zero, we combine compliance-aware messaging with behavioural insight — making complex products feel simple, safe and worth switching for.",
+    "intro": "Financial brands win on credibility and lose on complexity. From banks modernising their acquisition to fintech challengers building pipeline from zero, we combine compliance-aware messaging with behavioural insight - making complex products feel simple, safe and worth switching for.",
     "challenges": [
       "Compliance constraints that flatten most agency creativity",
       "Long consideration cycles and deep switching anxiety",
@@ -71,8 +71,8 @@
   {
     "slug": "ecommerce-d2c-retail",
     "name": "E-commerce & D2C Retail",
-    "tagline": "Traffic, conversion, retention — in that order of honesty.",
-    "intro": "We grow D2C brands and online retailers across the full funnel: profitable paid acquisition, conversion-optimised storefronts, and email/SMS retention that turns first orders into lifetime value. Beauty, personal care and wellness brands — salons, clinics and skincare lines — live here too: same buyers, same channels, same playbook.",
+    "tagline": "Traffic, conversion, retention - in that order of honesty.",
+    "intro": "We grow D2C brands and online retailers across the full funnel: profitable paid acquisition, conversion-optimised storefronts, and email/SMS retention that turns first orders into lifetime value. Beauty, personal care and wellness brands - salons, clinics and skincare lines - live here too: same buyers, same channels, same playbook.",
     "challenges": [
       "Rising acquisition costs eating already-thin margins",
       "Beautiful stores that convert below one percent",
@@ -86,7 +86,7 @@
       "influencer-marketing"
     ],
     "metaTitle": "E-commerce & D2C Marketing Agency in Pakistan",
-    "metaDesc": "Full-funnel e-commerce and D2C growth — including beauty, personal care and wellness brands: paid acquisition, CRO, retention and marketplace strategy.",
+    "metaDesc": "Full-funnel e-commerce and D2C growth - including beauty, personal care and wellness brands: paid acquisition, CRO, retention and marketplace strategy.",
     "order": 3,
     "published": true,
     "id": "ecommerce-d2c-retail"
@@ -95,11 +95,11 @@
     "slug": "healthcare-pharmaceuticals",
     "name": "Healthcare & Pharmaceuticals",
     "tagline": "Patients research before they book. Be the answer they find.",
-    "intro": "Healthcare decisions start with a search bar and end with trust. We help hospitals, clinics and pharma brands build patient journeys that inform and reassure — symptom-to-booking SEO, reputation management, doctor and brand storytelling, all delivered with the compliance care the sector demands.",
+    "intro": "Healthcare decisions start with a search bar and end with trust. We help hospitals, clinics and pharma brands build patient journeys that inform and reassure - symptom-to-booking SEO, reputation management, doctor and brand storytelling, all delivered with the compliance care the sector demands.",
     "challenges": [
       "Strict advertising regulations that vary by platform and market",
       "Patient journeys that span months of quiet research",
-      "Reputation fragility — one bad review thread can move revenue"
+      "Reputation fragility - one bad review thread can move revenue"
     ],
     "services": [
       "seo",
@@ -117,7 +117,7 @@
   {
     "slug": "textile-apparel-fashion",
     "name": "Textile, Apparel & Fashion",
-    "tagline": "From the mill to the feed — make the brand worth the fabric.",
+    "tagline": "From the mill to the feed - make the brand worth the fabric.",
     "intro": "Pakistan makes world-class fabric; too few of its brands capture world-class margins. We help textile houses, fashion labels and apparel exporters move up the value chain: brand building for D2C labels, seasonal campaign calendars, export-market positioning, and social commerce that sells the drop before it lands.",
     "challenges": [
       "Commodity pricing pressure that punishes unbranded players",
@@ -141,7 +141,7 @@
     "slug": "food-beverage-restaurants",
     "name": "Food, Beverage & Restaurants",
     "tagline": "Fill tables and baskets with cravings, not coupons.",
-    "intro": "Food is bought with the eyes and justified with the wallet. We work with restaurant groups, cloud kitchens and F&B brands on launch buzz, delivery-platform visibility, menu psychology and loyalty programs — building cravings that survive after the discount ends.",
+    "intro": "Food is bought with the eyes and justified with the wallet. We work with restaurant groups, cloud kitchens and F&B brands on launch buzz, delivery-platform visibility, menu psychology and loyalty programs - building cravings that survive after the discount ends.",
     "challenges": [
       "Delivery-app commissions quietly eating the margin",
       "Launch spikes that fade into empty weekdays",
@@ -187,7 +187,7 @@
     "slug": "travel-tourism-hospitality",
     "name": "Travel, Tourism & Hospitality",
     "tagline": "Sell the feeling. The booking follows.",
-    "intro": "Travel is the ultimate aspiration purchase — and the most comparison-shopped one. We help hotels, airlines, tour operators and destination brands convert wanderlust into bookings: seasonal demand campaigns, direct-booking strategies that dodge OTA commissions, and review-driven reputation systems.",
+    "intro": "Travel is the ultimate aspiration purchase - and the most comparison-shopped one. We help hotels, airlines, tour operators and destination brands convert wanderlust into bookings: seasonal demand campaigns, direct-booking strategies that dodge OTA commissions, and review-driven reputation systems.",
     "challenges": [
       "OTA commissions taxing every booking",
       "Extreme seasonality with fixed costs year-round",
@@ -233,7 +233,7 @@
     "slug": "fmcg-consumer-goods",
     "name": "FMCG & Consumer Goods",
     "tagline": "Win the two-second decision at the shelf.",
-    "intro": "Our home turf. We help FMCG brands grow through the science of how shoppers actually choose: neuromarketing-tested packaging, brand positioning with memory structures that stick, trade and shopper marketing, and media plans built on category entry points — including beauty and personal care brands whose buyers shop the same aisles and feeds.",
+    "intro": "Our home turf. We help FMCG brands grow through the science of how shoppers actually choose: neuromarketing-tested packaging, brand positioning with memory structures that stick, trade and shopper marketing, and media plans built on category entry points - including beauty and personal care brands whose buyers shop the same aisles and feeds.",
     "challenges": [
       "Shelf decisions made in under two seconds",
       "Retail media and modern trade reshaping the route to market",
@@ -247,7 +247,7 @@
       "mystery-shopping"
     ],
     "metaTitle": "FMCG Marketing & Neuromarketing Agency",
-    "metaDesc": "FMCG and consumer goods marketing — including beauty and personal care: neuromarketing, pack testing, brand positioning and shopper marketing.",
+    "metaDesc": "FMCG and consumer goods marketing - including beauty and personal care: neuromarketing, pack testing, brand positioning and shopper marketing.",
     "order": 10,
     "published": true,
     "id": "fmcg-consumer-goods"
@@ -255,7 +255,7 @@
   {
     "slug": "weddings-events-entertainment",
     "name": "Weddings, Events & Entertainment",
-    "tagline": "One day, one chance, one reputation — marketed year-round.",
+    "tagline": "One day, one chance, one reputation - marketed year-round.",
     "intro": "The events business runs on peak moments and year-round reputation. We help wedding planners, venues, decorators and entertainment brands stay booked across seasons: portfolio-driven social proof, visual-first content engines, referral systems, and booking funnels that capture enquiries the moment inspiration strikes.",
     "challenges": [
       "Extreme seasonality around wedding and festival calendars",
@@ -279,7 +279,7 @@
     "slug": "ngos-development-sector",
     "name": "NGOs & Development Sector",
     "tagline": "Impact deserves an audience. We build both.",
-    "intro": "Development sector work competes for attention, donors and trust like any brand — with higher stakes and tighter budgets. We help NGOs and social enterprises sharpen their story, run donor acquisition and retention campaigns, report impact compellingly, and build the public trust that unlocks funding.",
+    "intro": "Development sector work competes for attention, donors and trust like any brand - with higher stakes and tighter budgets. We help NGOs and social enterprises sharpen their story, run donor acquisition and retention campaigns, report impact compellingly, and build the public trust that unlocks funding.",
     "challenges": [
       "Donor fatigue in crowded cause categories",
       "Impact that's real but poorly evidenced and told",

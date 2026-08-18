@@ -12,9 +12,9 @@ import Seo from "../components/Seo";
 import { useSiteSettings } from "../hooks/useSiteSettings";
 
 const MANIFESTO = [
-  { n: "01", title: "Insight before instinct", text: "Every rupee of media, every line of copy, every pixel of design starts from evidence. We study how people actually decide — then build strategy on that truth." },
+  { n: "01", title: "Insight before instinct", text: "Every rupee of media, every line of copy, every pixel of design starts from evidence. We study how people actually decide - then build strategy on that truth." },
   { n: "02", title: "Science with soul", text: "Behavioural science, neuromarketing and hard data give us the map. Craft, taste and storytelling make the journey worth taking. You need both." },
-  { n: "03", title: "Accountable to outcomes", text: "We report on revenue, pipeline and market share — never impressions dressed up as impact. If it doesn't move your business, we don't do it." },
+  { n: "03", title: "Accountable to outcomes", text: "We report on revenue, pipeline and market share - never impressions dressed up as impact. If it doesn't move your business, we don't do it." },
   { n: "04", title: "Rooted in Lahore. Built for the world.", text: "Deep fluency in South Asian consumers, delivered with global-agency discipline. We serve brands across Pakistan, the Middle East, the UK and the US." },
 ];
 
@@ -236,7 +236,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className={`lg:col-span-5 ${i % 2 === 1 ? "lg:order-1" : ""}`}>
-                    <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-3">{cs.industry} — {cs.client}</p>
+                    <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-3">{cs.industry} - {cs.client}</p>
                     <h3 className="font-display text-2xl sm:text-3xl font-bold tracking-tight mb-4 group-hover:text-vermilion transition-colors">{cs.title}</h3>
                     <p className="text-muted-foreground leading-relaxed mb-6">{cs.summary}</p>
                     <div className="flex gap-8">
@@ -305,16 +305,16 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-ink/40" />
           <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-12">
             <div className="flex justify-between items-start">
-              <p className="text-white/90 text-xs uppercase tracking-[0.35em] border border-white/30 px-4 py-2 backdrop-blur-sm">Showreel — Inside MarKendrick</p>
+              <p className="text-white/90 text-xs uppercase tracking-[0.35em] border border-white/30 px-4 py-2 backdrop-blur-sm">Showreel - Inside MarKendrick</p>
               <Link to="/about" className="hidden sm:inline-flex items-center gap-2 text-white/90 text-xs uppercase tracking-[0.25em] hover:text-vermilion transition-colors">
                 Meet the team <ArrowUpRight size={14} />
               </Link>
             </div>
             <div className="flex flex-wrap gap-3 sm:gap-4">
               {[
-                { metric: "+212%", label: "ROAS — Velora Beauty" },
-                { metric: "3.4x", label: "Pipeline — NimbusPay" },
-                { metric: "+61%", label: "Recall — Khaas Foods" },
+                { metric: "+212%", label: "ROAS - Velora Beauty" },
+                { metric: "3.4x", label: "Pipeline - NimbusPay" },
+                { metric: "+61%", label: "Recall - Khaas Foods" },
               ].map((m, i) => (
                 <motion.div
                   key={m.label}

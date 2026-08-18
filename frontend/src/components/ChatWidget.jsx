@@ -18,7 +18,7 @@ export default function ChatWidget() {
     try {
       await api.post("/leads", { ...form, company: "", service: "", budget: "", timeline: "", source: "chat-widget" });
       setMode("done");
-      toast.success("Message sent — we reply within one business day.");
+      toast.success("Message sent - we reply within one business day.");
     } catch (err) {
       toast.error(formatApiError(err));
     } finally {
@@ -61,12 +61,12 @@ export default function ChatWidget() {
             {mode === "menu" && (
               <div className="p-5">
                 <div className="bg-secondary/60 text-sm px-4 py-3 rounded-lg rounded-tl-none mb-5 max-w-[90%]">
-                  Salaam! Looking for research, branding or performance help? Pick a lane —
+                  Salaam! Looking for research, branding or performance help? Pick a lane -
                 </div>
                 <div className="space-y-2">
                   <a
                     data-testid="chat-whatsapp-option"
-                    href={`https://wa.me/${OFFICE.whatsapp}?text=${encodeURIComponent("Hi MarKendrick — I'd like to discuss a project.")}`}
+                    href={`https://wa.me/${OFFICE.whatsapp}?text=${encodeURIComponent("Hi MarKendrick - I'd like to discuss a project.")}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 border border-border hover:border-[#25D366] px-4 py-3.5 transition-colors group"

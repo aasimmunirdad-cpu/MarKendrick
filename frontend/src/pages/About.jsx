@@ -10,7 +10,7 @@ const DIFFERENTIATORS = [
   {
     n: "01",
     title: "Diagnosis before delivery",
-    text: "Every engagement opens with a research-led audit — consumer psychology, market data and competitor signal — before a single campaign is built.",
+    text: "Every engagement opens with a research-led audit - consumer psychology, market data and competitor signal - before a single campaign is built.",
   },
   {
     n: "02",
@@ -20,7 +20,7 @@ const DIFFERENTIATORS = [
   {
     n: "03",
     title: "Evidence, not templates",
-    text: "Our methods draw on published research in neuromarketing and data- and AI-driven marketing strategy — not repurposed playbooks.",
+    text: "Our methods draw on published research in neuromarketing and data- and AI-driven marketing strategy - not repurposed playbooks.",
   },
   {
     n: "04",
@@ -37,14 +37,14 @@ export default function About() {
   });
   return (
     <div data-testid="about-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title="About MarKendrick — Full-Service Marketing & Media Agency" description="MarKendrick is a research-led, full-service marketing and media agency. Evidence-based strategy across market research, brand, digital, media and performance marketing." />
+      <Seo title="About MarKendrick - Full-Service Marketing & Media Agency" description="MarKendrick is a research-led, full-service marketing and media agency. Evidence-based strategy across market research, brand, digital, media and performance marketing." />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-20">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">About MarKendrick</p>
           <h1 className="font-display font-extrabold tracking-tight text-5xl sm:text-7xl mb-6">Built on evidence.<br /><span className="text-vermilion">Measured by results.</span></h1>
           <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed">
-            MarKendrick is a full-service marketing and media agency built on one premise: strategy should start with evidence, not opinion. Every engagement runs through a diagnostic process rooted in consumer psychology and data before any campaign work begins — a discipline shaped by over a decade of published research in neuromarketing, digital and AI-driven marketing strategy.
-            We operate across market research, brand strategy, digital, media and performance marketing — one accountable team, start to finish.
+            MarKendrick is a full-service marketing and media agency built on one premise: strategy should start with evidence, not opinion. Every engagement runs through a diagnostic process rooted in consumer psychology and data before any campaign work begins - a discipline shaped by over a decade of published research in neuromarketing, digital and AI-driven marketing strategy.
+            We operate across market research, brand strategy, digital, media and performance marketing - one accountable team, start to finish.
           </p>
         </Reveal>
 
@@ -69,7 +69,7 @@ export default function About() {
               className="w-full aspect-video object-cover"
             />
           </div>
-          <p className="text-xs text-muted-foreground mt-3">Inside the studio — a working session with a client growth team.</p>
+          <p className="text-xs text-muted-foreground mt-3">Inside the studio - a working session with a client growth team.</p>
         </Reveal>
 
         <section className="mb-24">
@@ -116,10 +116,10 @@ export default function About() {
             <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-4">Careers</p>
             <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight mb-6">Do the best work<br />of your life here.</h2>
             <p className="text-muted-foreground max-w-xl mb-8 leading-relaxed">
-              We're hiring strategists, performance specialists and researchers who'd rather be proven right than sound smart. Karachi, Lahore or remote — the work matters more than the postcode.
+              We're hiring strategists, performance specialists and researchers who'd rather be proven right than sound smart. Karachi, Lahore or remote - the work matters more than the postcode.
             </p>
             <a
-              href={`mailto:careers@markendrick.co?subject=${encodeURIComponent("Careers — MarKendrick")}`}
+              href={`mailto:careers@markendrick.co?subject=${encodeURIComponent("Careers - MarKendrick")}`}
               data-testid="careers-apply-button"
               className="inline-flex items-center gap-2 bg-vermilion hover:bg-vermilion-hover text-white font-semibold px-8 py-4 rounded-full transition-colors"
             >

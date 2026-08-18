@@ -127,7 +127,7 @@ def email_shell(title: str, body: str, unsubscribe_url: str = None) -> str:
             {body}
           </td></tr>
           <tr><td style="padding:20px 32px;border-top:1px solid #e5e0da;color:#8a8a8a;font-size:12px;">
-            MarKendrick — Insights that Inform. Strategies that Perform. Lahore, Pakistan.{footer_extra}
+            MarKendrick - Insights that Inform. Strategies that Perform. Lahore, Pakistan.{footer_extra}
           </td></tr>
         </table>
       </td></tr>
@@ -411,18 +411,18 @@ async def create_lead(body: LeadIn):
     owner_html = email_shell(
         "New lead received",
         f"""<p><strong>Name:</strong> {doc['name']}<br/><strong>Email:</strong> {doc['email']}<br/>
-        <strong>Company:</strong> {doc['company'] or '—'}<br/><strong>Service:</strong> {doc['service'] or '—'}<br/>
-        <strong>Budget:</strong> {doc['budget'] or '—'}<br/><strong>Timeline:</strong> {doc['timeline'] or '—'}<br/>
+        <strong>Company:</strong> {doc['company'] or '-'}<br/><strong>Service:</strong> {doc['service'] or '-'}<br/>
+        <strong>Budget:</strong> {doc['budget'] or '-'}<br/><strong>Timeline:</strong> {doc['timeline'] or '-'}<br/>
         <strong>Source:</strong> {doc['source']}</p><p>{doc['message'] or ''}</p>""",
     )
     await send_email(OWNER_EMAIL, f"New MarKendrick lead: {doc['name']}", owner_html, reply_to=doc["email"])
     confirm_html = email_shell(
-        f"Thanks, {doc['name'].split()[0]} — we've got your brief.",
-        """<p>Your enquiry just landed with our strategy team. A senior consultant — never a bot —
+        f"Thanks, {doc['name'].split()[0]} - we've got your brief.",
+        """<p>Your enquiry just landed with our strategy team. A senior consultant - never a bot -
         will reply within one business day with next steps.</p>
         <p style="color:#8a8a8a;">Meanwhile, explore our latest thinking on the Insights hub.</p>""",
     )
-    await send_email(doc["email"], "We received your brief — MarKendrick", confirm_html)
+    await send_email(doc["email"], "We received your brief - MarKendrick", confirm_html)
     return {"status": "received", "id": doc["id"]}
 
 
@@ -440,12 +440,12 @@ async def subscribe(body: NewsletterIn, request: Request):
     unsubscribe_url = f"{api_base_url(request)}/api/newsletter/unsubscribe?email={quote(email)}"
     html = email_shell(
         "You're on The Signal list.",
-        """<p>Welcome to <strong>The Signal</strong> — MarKendrick's monthly briefing.</p>
+        """<p>Welcome to <strong>The Signal</strong> - MarKendrick's monthly briefing.</p>
         <p>Once a month, you'll get one real campaign teardown, one consumer psychology principle you can apply,
-        and one performance-marketing tactic worth stealing. That's it — no daily noise, no filler, no spam.</p>""",
+        and one performance-marketing tactic worth stealing. That's it - no daily noise, no filler, no spam.</p>""",
         unsubscribe_url=unsubscribe_url,
     )
-    await send_email(email, "Welcome to The Signal — MarKendrick", html)
+    await send_email(email, "Welcome to The Signal - MarKendrick", html)
     return {"status": "subscribed"}
 
 
@@ -453,7 +453,7 @@ async def subscribe(body: NewsletterIn, request: Request):
 async def unsubscribe(email: str):
     await db.subscribers.delete_one({"email": email.lower().strip()})
     return Response(
-        content=f"""<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Unsubscribed — MarKendrick</title></head>
+        content=f"""<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Unsubscribed - MarKendrick</title></head>
         <body style="margin:0;background:#F7F5F3;font-family:Arial,Helvetica,sans-serif;color:#1E3245;">
           <div style="max-width:480px;margin:80px auto;padding:40px;background:#ffffff;border:1px solid #e5e0da;text-align:center;">
             <p style="font-size:20px;font-weight:800;margin:0 0 20px;">Mar<span style="color:#E0923D;">Kendrick</span></p>
@@ -483,17 +483,17 @@ async def create_booking(body: BookingIn):
     await db.bookings.insert_one(doc)
     confirm_html = email_shell(
         "Consultation request received",
-        f"""<p><strong>{doc['date']} at {doc['slot']} (PKT)</strong> — {doc['service'] or 'General consultation'}.</p>
+        f"""<p><strong>{doc['date']} at {doc['slot']} (PKT)</strong> - {doc['service'] or 'General consultation'}.</p>
         <p>Our team will confirm your slot by email within a few hours and share a video-call link.</p>""",
     )
-    await send_email(doc["email"], f"Consultation requested for {doc['date']} — MarKendrick", confirm_html)
+    await send_email(doc["email"], f"Consultation requested for {doc['date']} - MarKendrick", confirm_html)
     owner_html = email_shell(
         "New consultation booking",
-        f"""<p><strong>{doc['name']}</strong> ({doc['email']}, {doc['company'] or '—'})<br/>
-        <strong>When:</strong> {doc['date']} at {doc['slot']}<br/><strong>Service:</strong> {doc['service'] or '—'}<br/>
-        <strong>Notes:</strong> {doc['notes'] or '—'}</p>""",
+        f"""<p><strong>{doc['name']}</strong> ({doc['email']}, {doc['company'] or '-'})<br/>
+        <strong>When:</strong> {doc['date']} at {doc['slot']}<br/><strong>Service:</strong> {doc['service'] or '-'}<br/>
+        <strong>Notes:</strong> {doc['notes'] or '-'}</p>""",
     )
-    await send_email(OWNER_EMAIL, f"Booking: {doc['name']} — {doc['date']} {doc['slot']}", owner_html, reply_to=doc["email"])
+    await send_email(OWNER_EMAIL, f"Booking: {doc['name']} - {doc['date']} {doc['slot']}", owner_html, reply_to=doc["email"])
     return {"status": "booked", "id": doc["id"]}
 
 
@@ -558,7 +558,7 @@ SEED_WHITEPAPERS = [
         "id": "pakistan-consumer-report-2026",
         "title": "The Pakistan Consumer Report 2026",
         "category": "Research Report",
-        "description": "Five structural shifts in how Pakistan's shoppers discover, decide and buy — with implications for every consumer brand.",
+        "description": "Five structural shifts in how Pakistan's shoppers discover, decide and buy - with implications for every consumer brand.",
         "pages": "8 pages",
         "file": "pakistan-consumer-report-2026.pdf",
     },
@@ -566,7 +566,7 @@ SEED_WHITEPAPERS = [
         "id": "neuromarketing-shelf-field-guide",
         "title": "Neuromarketing at the Shelf",
         "category": "Field Guide",
-        "description": "How the shopper brain actually chooses — and how to design packaging, pricing and placement for it.",
+        "description": "How the shopper brain actually chooses - and how to design packaging, pricing and placement for it.",
         "pages": "8 pages",
         "file": "neuromarketing-shelf-field-guide.pdf",
     },
@@ -574,7 +574,7 @@ SEED_WHITEPAPERS = [
         "id": "cmo-diagnostic-toolkit",
         "title": "The CMO's Diagnostic Toolkit",
         "category": "Strategy Toolkit",
-        "description": "Five frameworks to find your real growth bottleneck — before spending another rupee on the wrong fix.",
+        "description": "Five frameworks to find your real growth bottleneck - before spending another rupee on the wrong fix.",
         "pages": "8 pages",
         "file": "cmo-diagnostic-toolkit.pdf",
     },
@@ -626,17 +626,17 @@ async def whitepaper_download(body: WhitepaperDownloadIn, request: Request):
     unsubscribe_url = f"{api_base_url(request)}/api/newsletter/unsubscribe?email={quote(email)}"
     html = email_shell(
         f"Your copy of {wp['title']}",
-        f"""<p>Thanks, {body.name.split()[0]} — your report is ready:</p>
+        f"""<p>Thanks, {body.name.split()[0]} - your report is ready:</p>
         <p><a href="{download_url}" style="color:#E0923D;font-weight:bold;">Download {wp['title']} (PDF)</a></p>
-        <p style="color:#8a8a8a;">You're also on The Signal list — one insight briefing a month, zero fluff.</p>""",
+        <p style="color:#8a8a8a;">You're also on The Signal list - one insight briefing a month, zero fluff.</p>""",
         unsubscribe_url=unsubscribe_url,
     )
-    await send_email(email, f"{wp['title']} — your download", html)
+    await send_email(email, f"{wp['title']} - your download", html)
     owner_html = email_shell(
         "Whitepaper download",
         f"<p><strong>{body.name}</strong> ({email}) downloaded <strong>{wp['title']}</strong>.</p>",
     )
-    await send_email(OWNER_EMAIL, f"Whitepaper lead: {body.name} — {wp['title']}", owner_html, reply_to=email)
+    await send_email(OWNER_EMAIL, f"Whitepaper lead: {body.name} - {wp['title']}", owner_html, reply_to=email)
     return {"status": "unlocked", "download_url": download_url}
 
 
@@ -773,9 +773,9 @@ async def submit_testimonial(body: TestimonialSubmitIn):
     if not name:
         raise HTTPException(status_code=422, detail="Please tell us your name.")
     if len(quote) < 20:
-        raise HTTPException(status_code=422, detail="Please share a bit more detail — a sentence or two.")
+        raise HTTPException(status_code=422, detail="Please share a bit more detail - a sentence or two.")
     if len(quote) > 2000:
-        raise HTTPException(status_code=422, detail="That's a bit long — please keep it under 2000 characters.")
+        raise HTTPException(status_code=422, detail="That's a bit long - please keep it under 2000 characters.")
 
     doc = {
         "id": uuid.uuid4().hex[:12],
@@ -801,7 +801,7 @@ async def submit_testimonial(body: TestimonialSubmitIn):
         <strong>Role / Company:</strong> {doc['role']}{', ' + doc['company'] if doc['company'] else ''}<br/>
         {contact_line}{metric_line}</p>
         <blockquote style="border-left:3px solid #E0923D;padding-left:16px;margin:16px 0;color:#2a2a2a;">{doc['quote']}</blockquote>
-        <p style="color:#8a8a8a;font-size:13px;">Saved as a draft — review and publish it from the Testimonials tab in your admin dashboard.</p>""",
+        <p style="color:#8a8a8a;font-size:13px;">Saved as a draft - review and publish it from the Testimonials tab in your admin dashboard.</p>""",
     )
     await send_email(OWNER_EMAIL, f"New testimonial from {doc['name']}", owner_html, reply_to=doc["submitter_email"] or None)
     return {"status": "received"}
@@ -1295,28 +1295,28 @@ async def maturity_report(body: MaturityIn, request: Request):
         "service": "Marketing Maturity Assessment",
         "budget": "",
         "timeline": "",
-        "message": f"Scored {body.score}/16 (Grade {body.grade}). Weakest areas: {', '.join(body.weakest) or '—'}",
+        "message": f"Scored {body.score}/16 (Grade {body.grade}). Weakest areas: {', '.join(body.weakest) or '-'}",
         "source": "maturity-quiz",
         "created_at": datetime.now(timezone.utc).isoformat(),
     })
     if not await db.subscribers.find_one({"email": email}):
         await db.subscribers.insert_one({"id": uuid.uuid4().hex, "email": email, "created_at": datetime.now(timezone.utc).isoformat()})
-    weakest_html = "".join(f"<li style='margin-bottom:8px;'>{w}</li>" for w in body.weakest) or "<li>None — strong across the board.</li>"
+    weakest_html = "".join(f"<li style='margin-bottom:8px;'>{w}</li>" for w in body.weakest) or "<li>None - strong across the board.</li>"
     unsubscribe_url = f"{api_base_url(request)}/api/newsletter/unsubscribe?email={quote(email)}"
     html = email_shell(
         f"Your Marketing Maturity Grade: {body.grade}",
-        f"""<p>You scored <strong>{body.score}/16</strong> — Grade <strong style="color:#E0923D;">{body.grade}</strong>.</p>
+        f"""<p>You scored <strong>{body.score}/16</strong> - Grade <strong style="color:#E0923D;">{body.grade}</strong>.</p>
         <p>Your three biggest opportunities:</p>
         <ul style="padding-left:18px;">{weakest_html}</ul>
-        <p style="color:#8a8a8a;">The fastest way to fix them? A Diagnostic Audit — a 1–2 week deep-dive with a prioritised fix-list. Book a free call at markendrick.com to discuss your result.</p>""",
+        <p style="color:#8a8a8a;">The fastest way to fix them? A Diagnostic Audit - a 1–2 week deep-dive with a prioritised fix-list. Book a free call at markendrick.com to discuss your result.</p>""",
         unsubscribe_url=unsubscribe_url,
     )
-    await send_email(email, f"Your Marketing Maturity Report — Grade {body.grade}", html)
+    await send_email(email, f"Your Marketing Maturity Report - Grade {body.grade}", html)
     owner_html = email_shell(
         "Maturity quiz completed",
-        f"<p><strong>{body.name}</strong> ({email}) scored <strong>{body.score}/16</strong> — Grade <strong>{body.grade}</strong>.<br/>Weakest: {', '.join(body.weakest) or '—'}</p>",
+        f"<p><strong>{body.name}</strong> ({email}) scored <strong>{body.score}/16</strong> - Grade <strong>{body.grade}</strong>.<br/>Weakest: {', '.join(body.weakest) or '-'}</p>",
     )
-    await send_email(OWNER_EMAIL, f"Maturity lead: {body.name} — Grade {body.grade}", owner_html, reply_to=email)
+    await send_email(OWNER_EMAIL, f"Maturity lead: {body.name} - Grade {body.grade}", owner_html, reply_to=email)
     return {"status": "sent"}
 
 
@@ -1427,8 +1427,8 @@ SEED_POSTS = [
     {
         "title": "Why Most Market Research Fails Before It Begins",
         "category": "Research",
-        "excerpt": "Bad questions produce confident, wrong answers. The failure point of most research is not the sample size — it is the brief.",
-        "body": "Every year, brands commission studies that cost six figures and change nothing. The deck arrives, the room nods, and the strategy stays exactly where it was. The failure rarely happens in the fieldwork. It happens in the first meeting, when nobody asks what decision this research is supposed to make.\n\nResearch that performs starts from the decision, not the questionnaire. If the answer cannot change your pricing, your positioning or your media plan, you are buying expensive reassurance. At MarKendrick we write the decision statement before we write a single question: 'If we learn X, we will do Y.'\n\nThe second failure point is asking people what they will do. Humans are terrible predictors of their own behaviour. Stated intent overstates purchase by 30 to 60 percent in most categories. Behavioural observation, in-context interviews and implicit testing consistently outperform the focus group monologue.\n\nThird: sampling theatre. A perfectly balanced national sample means little if your category is driven by 12 percent of buyers. Heavy buyers, lapsed buyers and rejectors each need their own lens — averaging them into one 'consumer' erases the signal you paid to find.\n\nThe fix is unglamorous: sharper briefs, behavioural methods, and analysis that ends in a recommendation, not a chart. Insight is not what people said. It is what you now know that your competitor does not.",
+        "excerpt": "Bad questions produce confident, wrong answers. The failure point of most research is not the sample size - it is the brief.",
+        "body": "Every year, brands commission studies that cost six figures and change nothing. The deck arrives, the room nods, and the strategy stays exactly where it was. The failure rarely happens in the fieldwork. It happens in the first meeting, when nobody asks what decision this research is supposed to make.\n\nResearch that performs starts from the decision, not the questionnaire. If the answer cannot change your pricing, your positioning or your media plan, you are buying expensive reassurance. At MarKendrick we write the decision statement before we write a single question: 'If we learn X, we will do Y.'\n\nThe second failure point is asking people what they will do. Humans are terrible predictors of their own behaviour. Stated intent overstates purchase by 30 to 60 percent in most categories. Behavioural observation, in-context interviews and implicit testing consistently outperform the focus group monologue.\n\nThird: sampling theatre. A perfectly balanced national sample means little if your category is driven by 12 percent of buyers. Heavy buyers, lapsed buyers and rejectors each need their own lens - averaging them into one 'consumer' erases the signal you paid to find.\n\nThe fix is unglamorous: sharper briefs, behavioural methods, and analysis that ends in a recommendation, not a chart. Insight is not what people said. It is what you now know that your competitor does not.",
         "author": "Ayesha Rahman",
         "tags": ["market research", "methodology", "consumer insight"],
         "read_time": "6 min read",
@@ -1437,7 +1437,7 @@ SEED_POSTS = [
         "title": "The Neuromarketing Playbook for FMCG Brands",
         "category": "Research",
         "excerpt": "Shelf decisions happen in under two seconds, mostly below conscious awareness. Here is how to design for the brain that is actually shopping.",
-        "body": "The average supermarket carries 30,000 SKUs. Your shopper is not comparing them — their brain is filtering them, using shortcuts built long before your brand existed. Neuromarketing is the discipline of designing for those shortcuts instead of against them.\n\nStart with attention. Eye-tracking studies show that pack placement within the first visual sweep — roughly the top-left to centre path on a shelf — captures 70 percent of initial fixations. If your packaging blends into category codes, you are paying shelf fees to be invisible.\n\nSecond, fluency beats novelty at shelf. The brain rewards what it can process quickly. Familiar structures with one distinctive disruption — a colour break, a shape, a face — outperform radical redesigns in almost every repeat-purchase category. Revolution is for launch campaigns; evolution is for packs.\n\nThird, price is a perception, not a number. Anchoring, decoy options and unit framing routinely move willingness-to-pay by double digits without changing the product at all. We have watched a premium tier lift total category revenue simply by making the mid tier feel sensible.\n\nThe playbook: measure attention before recall, test packs in shelf context not isolation, and treat every touchpoint as a nudge. The subconscious is not a mystery to fear. It is a design brief.",
+        "body": "The average supermarket carries 30,000 SKUs. Your shopper is not comparing them - their brain is filtering them, using shortcuts built long before your brand existed. Neuromarketing is the discipline of designing for those shortcuts instead of against them.\n\nStart with attention. Eye-tracking studies show that pack placement within the first visual sweep - roughly the top-left to centre path on a shelf - captures 70 percent of initial fixations. If your packaging blends into category codes, you are paying shelf fees to be invisible.\n\nSecond, fluency beats novelty at shelf. The brain rewards what it can process quickly. Familiar structures with one distinctive disruption - a colour break, a shape, a face - outperform radical redesigns in almost every repeat-purchase category. Revolution is for launch campaigns; evolution is for packs.\n\nThird, price is a perception, not a number. Anchoring, decoy options and unit framing routinely move willingness-to-pay by double digits without changing the product at all. We have watched a premium tier lift total category revenue simply by making the mid tier feel sensible.\n\nThe playbook: measure attention before recall, test packs in shelf context not isolation, and treat every touchpoint as a nudge. The subconscious is not a mystery to fear. It is a design brief.",
         "author": "Marcus Wynne",
         "tags": ["neuromarketing", "FMCG", "packaging", "behavioural science"],
         "read_time": "7 min read",
@@ -1446,7 +1446,7 @@ SEED_POSTS = [
         "title": "Performance Marketing in 2026: Signal Over Noise",
         "category": "Trends",
         "excerpt": "Privacy shifts killed lazy targeting. The winners now compete on creative velocity, first-party data and measurement discipline.",
-        "body": "The golden age of duct-taped attribution is over. Between signal loss, consent frameworks and platform black boxes, the media buyer who wins in 2026 is not the one with the cleverest audience hack — it is the one with the strongest inputs.\n\nInput one: creative. Platforms now optimise delivery better than any human. What they cannot do is make people care. Accounts running 15 to 20 creative variants per month consistently see 25 to 40 percent lower CPAs than accounts resting three ads per quarter. Creative is the new targeting.\n\nInput two: first-party data. Your CRM, your purchase history, your churned users — this is the fuel algorithms learn from. Brands feeding clean conversion signals back into platforms outperform those optimising toward a pixel by every meaningful margin.\n\nInput three: measurement you can defend. Last-click flatters the bottom of the funnel and starves the top. Triangulate: platform reporting for direction, geo-experiments for truth, and a simple MMM for budget allocation. Perfect attribution is dead; confident incrementality is the replacement.\n\nThe agencies still selling dashboard screenshots are selling noise. Performance in 2026 is a system: signal in, creative out, incrementality checked. Build the system and the platforms work for you.",
+        "body": "The golden age of duct-taped attribution is over. Between signal loss, consent frameworks and platform black boxes, the media buyer who wins in 2026 is not the one with the cleverest audience hack - it is the one with the strongest inputs.\n\nInput one: creative. Platforms now optimise delivery better than any human. What they cannot do is make people care. Accounts running 15 to 20 creative variants per month consistently see 25 to 40 percent lower CPAs than accounts resting three ads per quarter. Creative is the new targeting.\n\nInput two: first-party data. Your CRM, your purchase history, your churned users - this is the fuel algorithms learn from. Brands feeding clean conversion signals back into platforms outperform those optimising toward a pixel by every meaningful margin.\n\nInput three: measurement you can defend. Last-click flatters the bottom of the funnel and starves the top. Triangulate: platform reporting for direction, geo-experiments for truth, and a simple MMM for budget allocation. Perfect attribution is dead; confident incrementality is the replacement.\n\nThe agencies still selling dashboard screenshots are selling noise. Performance in 2026 is a system: signal in, creative out, incrementality checked. Build the system and the platforms work for you.",
         "author": "Sana Qureshi",
         "tags": ["performance marketing", "paid media", "measurement"],
         "read_time": "5 min read",
@@ -1454,8 +1454,8 @@ SEED_POSTS = [
     {
         "title": "The Founder's Guide to Brand Positioning",
         "category": "Guides",
-        "excerpt": "Positioning is not your tagline. It is the single decision about who you are for and why you win — and it compounds like capital.",
-        "body": "Ask ten founders what their positioning is and eight will recite their mission statement. Mission is what you tell yourself. Positioning is what the market believes when you are not in the room.\n\nA working positioning answers three questions in plain language: Who is this for, specifically? What do they use it for? Why you instead of the alternative — including the alternative of doing nothing? If any answer is 'everyone', 'everything' or 'because we care more', you have a slogan, not a position.\n\nThe test we run with clients is brutal and simple: the enemy test. Strong positioning has a visible enemy — the bloated incumbent, the spreadsheet workflow, the category's dirty secret. If no one would ever disagree with your positioning, it carries no information.\n\nPositioning also compounds. Every campaign, sales deck and product decision either reinforces the position or spends it. Brands that hold one position for three years build memory structures; brands that reposition every quarter rent attention.\n\nStart with the segment you can dominate, not the market you dream of. Own a narrow hill completely. Expansion is a strategy; dilution is a panic.",
+        "excerpt": "Positioning is not your tagline. It is the single decision about who you are for and why you win - and it compounds like capital.",
+        "body": "Ask ten founders what their positioning is and eight will recite their mission statement. Mission is what you tell yourself. Positioning is what the market believes when you are not in the room.\n\nA working positioning answers three questions in plain language: Who is this for, specifically? What do they use it for? Why you instead of the alternative - including the alternative of doing nothing? If any answer is 'everyone', 'everything' or 'because we care more', you have a slogan, not a position.\n\nThe test we run with clients is brutal and simple: the enemy test. Strong positioning has a visible enemy - the bloated incumbent, the spreadsheet workflow, the category's dirty secret. If no one would ever disagree with your positioning, it carries no information.\n\nPositioning also compounds. Every campaign, sales deck and product decision either reinforces the position or spends it. Brands that hold one position for three years build memory structures; brands that reposition every quarter rent attention.\n\nStart with the segment you can dominate, not the market you dream of. Own a narrow hill completely. Expansion is a strategy; dilution is a panic.",
         "author": "Ayesha Rahman",
         "tags": ["positioning", "brand strategy", "founders"],
         "read_time": "6 min read",
@@ -1464,7 +1464,7 @@ SEED_POSTS = [
         "title": "Diagnosing a Sales Decline: A 5-Step Framework",
         "category": "Strategy",
         "excerpt": "When revenue slides, teams cut spend or blame the market. The right first move is a structured diagnosis, not a reaction.",
-        "body": "Sales declines are medical, not moral. Panic cost-cutting and motivational off-sites treat the mood; they do not treat the cause. Here is the framework we run before recommending a single rupee of spend.\n\nStep one: decompose the number. Revenue is traffic times conversion times value. A 20 percent decline with stable traffic is a conversion problem. Stable conversion with falling traffic is a distribution problem. The decomposition tells you which building to enter.\n\nStep two: segment the fall. Aggregate curves hide the truth. Is the decline uniform, or concentrated in one region, channel or cohort? Most 'company-wide' declines are one broken engine dragging the average.\n\nStep three: listen to the market, not the meeting. Win-loss interviews, review mining, sales call recordings. When we ran this for a retail client, the board believed price was the issue; the calls said availability. The shelf was empty, not the wallet.\n\nStep four: stress-test the basics — pricing integrity, distribution coverage, share of search. Boring metrics, but declines are boring problems wearing dramatic costumes.\n\nStep five: one hypothesis, one intervention, one measurement window. Recovery plans with twelve initiatives credit nothing and teach less. Diagnose narrowly, act decisively, measure honestly.",
+        "body": "Sales declines are medical, not moral. Panic cost-cutting and motivational off-sites treat the mood; they do not treat the cause. Here is the framework we run before recommending a single rupee of spend.\n\nStep one: decompose the number. Revenue is traffic times conversion times value. A 20 percent decline with stable traffic is a conversion problem. Stable conversion with falling traffic is a distribution problem. The decomposition tells you which building to enter.\n\nStep two: segment the fall. Aggregate curves hide the truth. Is the decline uniform, or concentrated in one region, channel or cohort? Most 'company-wide' declines are one broken engine dragging the average.\n\nStep three: listen to the market, not the meeting. Win-loss interviews, review mining, sales call recordings. When we ran this for a retail client, the board believed price was the issue; the calls said availability. The shelf was empty, not the wallet.\n\nStep four: stress-test the basics - pricing integrity, distribution coverage, share of search. Boring metrics, but declines are boring problems wearing dramatic costumes.\n\nStep five: one hypothesis, one intervention, one measurement window. Recovery plans with twelve initiatives credit nothing and teach less. Diagnose narrowly, act decisively, measure honestly.",
         "author": "Marcus Wynne",
         "tags": ["sales recovery", "diagnosis", "strategy"],
         "read_time": "6 min read",
@@ -1473,7 +1473,7 @@ SEED_POSTS = [
         "title": "Consumer Behaviour Shifts Reshaping South Asian Retail",
         "category": "Trends",
         "excerpt": "From sachet economics to social commerce, five structural shifts every brand selling in South Asia must design for.",
-        "body": "South Asia is not one market, but its shoppers are moving in shared directions. Five shifts keep surfacing in our fieldwork across Pakistan and the wider region.\n\nOne: the basket is fragmenting. Households are trading bulk trips for frequent small baskets, pressuring pack architecture. Brands that win own the small-format occasion instead of discounting the big one.\n\nTwo: discovery has moved to the feed. For under-35 urban shoppers, the first aisle is TikTok and Instagram, not the shelf. The implication is not 'do social media' — it is that packaging and point-of-sale must now photograph well enough to survive a repost.\n\nThree: trust is the real currency. Counterfeits and inconsistent quality have made verification behaviour routine — checking seals, asking the shopkeeper, scanning QR codes. Visible quality signals convert better than claims.\n\nFour: social commerce is infrastructure. WhatsApp ordering and COD logistics are not a workaround; for millions of shoppers they are the preferred channel. Meeting that behaviour beats trying to retrain it.\n\nFive: value is being redefined. Shoppers are not buying the cheapest option; they are buying the option that best justifies its price to the household. Brands that arm buyers with that justification — per-use cost, durability, status — defend margin.\n\nThe brands that treat these as structural, not seasonal, will take the decade.",
+        "body": "South Asia is not one market, but its shoppers are moving in shared directions. Five shifts keep surfacing in our fieldwork across Pakistan and the wider region.\n\nOne: the basket is fragmenting. Households are trading bulk trips for frequent small baskets, pressuring pack architecture. Brands that win own the small-format occasion instead of discounting the big one.\n\nTwo: discovery has moved to the feed. For under-35 urban shoppers, the first aisle is TikTok and Instagram, not the shelf. The implication is not 'do social media' - it is that packaging and point-of-sale must now photograph well enough to survive a repost.\n\nThree: trust is the real currency. Counterfeits and inconsistent quality have made verification behaviour routine - checking seals, asking the shopkeeper, scanning QR codes. Visible quality signals convert better than claims.\n\nFour: social commerce is infrastructure. WhatsApp ordering and COD logistics are not a workaround; for millions of shoppers they are the preferred channel. Meeting that behaviour beats trying to retrain it.\n\nFive: value is being redefined. Shoppers are not buying the cheapest option; they are buying the option that best justifies its price to the household. Brands that arm buyers with that justification - per-use cost, durability, status - defend margin.\n\nThe brands that treat these as structural, not seasonal, will take the decade.",
         "author": "Sana Qureshi",
         "tags": ["consumer behaviour", "South Asia", "retail"],
         "read_time": "7 min read",
@@ -1486,7 +1486,7 @@ SEED_CASE_STUDIES = [
         "title": "Turning a leaking ad account into a 212% ROAS engine",
         "industry": "E-commerce",
         "services": ["Performance Marketing", "Marketing Analytics"],
-        "summary": "A direct-to-consumer skincare brand was scaling spend and shrinking profit. We rebuilt creative, feed signals and measurement — and made every rupee accountable.",
+        "summary": "A direct-to-consumer skincare brand was scaling spend and shrinking profit. We rebuilt creative, feed signals and measurement - and made every rupee accountable.",
         "challenge": "Velora Beauty had grown fast on paid social, but by the time they reached us, CAC had doubled in nine months and the founder could no longer tell which campaigns were actually profitable. Attribution disagreed with the bank account.",
         "approach": "We ran a full-funnel audit, killed 60 percent of legacy campaigns, and rebuilt the account around creative velocity: 18 new ad concepts per month, structured testing, and server-side conversion signals fed back to the platforms. A simple incrementality framework replaced last-click dashboards, and landing pages were rebuilt around the objections we mined from reviews.",
         "results": [
@@ -1504,8 +1504,8 @@ SEED_CASE_STUDIES = [
         "industry": "SaaS / Fintech",
         "services": ["B2B Marketing", "Content Marketing", "Marketing Strategy"],
         "summary": "A payments startup with a great product and an empty funnel. Twelve months later: a compounding pipeline machine the sales team actually trusts.",
-        "challenge": "NimbusPay's sales team was closing everything marketing produced — the problem was that marketing produced almost nothing. No defined ICP, no content engine, and paid spend scattered across five channels with no shared definition of a qualified lead.",
-        "approach": "We started with win-loss research to sharpen the ICP down to two verticals, then built a narrative: the hidden cost of payment friction for mid-market finance teams. Around that narrative we launched a monthly insight report, targeted LinkedIn and search programs, and a lead-scoring model agreed jointly with sales — so 'qualified' finally meant the same thing to everyone.",
+        "challenge": "NimbusPay's sales team was closing everything marketing produced - the problem was that marketing produced almost nothing. No defined ICP, no content engine, and paid spend scattered across five channels with no shared definition of a qualified lead.",
+        "approach": "We started with win-loss research to sharpen the ICP down to two verticals, then built a narrative: the hidden cost of payment friction for mid-market finance teams. Around that narrative we launched a monthly insight report, targeted LinkedIn and search programs, and a lead-scoring model agreed jointly with sales - so 'qualified' finally meant the same thing to everyone.",
         "results": [
             {"metric": "3.4x", "label": "Qualified pipeline in 12 months"},
             {"metric": "-47%", "label": "Cost per qualified opportunity"},
@@ -1520,7 +1520,7 @@ SEED_CASE_STUDIES = [
         "title": "Repositioning a heritage FMCG brand for a new generation",
         "industry": "FMCG",
         "services": ["Branding & Identity", "Neuromarketing", "Market Research"],
-        "summary": "A beloved food brand was ageing with its audience. Behavioural research and a shelf-first redesign brought a new generation to the table — without losing the old one.",
+        "summary": "A beloved food brand was ageing with its audience. Behavioural research and a shelf-first redesign brought a new generation to the table - without losing the old one.",
         "challenge": "Khaas Foods owned the hearts of buyers over 45 and was invisible to buyers under 30. Category share was eroding a point a year, and a previous rebrand attempt had spooked loyalists. The brief: modernise without detonating brand equity.",
         "approach": "We mapped the brand's memory structures through implicit association testing, identified which assets were untouchable (the name device, the red) and which were invisible (everything else). Shelf-context eye-tracking drove an evolutionary pack redesign, and a new campaign rebuilt the brand's story around the modern family table rather than nostalgia alone.",
         "results": [
@@ -1537,7 +1537,7 @@ SEED_CASE_STUDIES = [
 
 SEED_TESTIMONIALS = [
     {
-        "quote": "For the first time, our marketing numbers and our bank statement tell the same story. MarKendrick found the leaks in our ad account within two weeks — and fixed them.",
+        "quote": "For the first time, our marketing numbers and our bank statement tell the same story. MarKendrick found the leaks in our ad account within two weeks - and fixed them.",
         "name": "Maira Siddiqui",
         "role": "Founder",
         "company": "Velora Beauty",
@@ -1553,7 +1553,7 @@ SEED_TESTIMONIALS = [
         "metric": "3.4x qualified pipeline",
     },
     {
-        "quote": "They protected what our customers loved and fixed what shoppers never saw. Our under-30 buyers are finally growing — and our loyalists never noticed a disruption.",
+        "quote": "They protected what our customers loved and fixed what shoppers never saw. Our under-30 buyers are finally growing - and our loyalists never noticed a disruption.",
         "name": "Rabia Chaudhry",
         "role": "Chief Marketing Officer",
         "company": "Khaas Foods",
@@ -1660,6 +1660,41 @@ async def seed_content():
             logger.info("Seeded %d legal pages", len(items))
 
 
+def _strip_em_dashes(value):
+    """Recursively replace em dashes ('—') with plain hyphens in strings,
+    lists and dicts, leaving every other value untouched."""
+    if isinstance(value, str):
+        return value.replace("—", "-")
+    if isinstance(value, list):
+        return [_strip_em_dashes(v) for v in value]
+    if isinstance(value, dict):
+        return {k: _strip_em_dashes(v) for k, v in value.items()}
+    return value
+
+
+async def migrate_em_dashes():
+    """One-time (idempotent, safe to re-run) content fix: replace every
+    em dash already stored in the database with a plain hyphen, across all
+    text-bearing collections. Source/seed files were already fixed in code;
+    this covers content inserted before that fix, or edited later via the
+    admin CMS."""
+    collections = [
+        "posts", "case_studies", "testimonials", "services", "industries",
+        "locations", "faqs", "legal_pages", "whitepapers", "site_settings",
+    ]
+    updated = 0
+    for name in collections:
+        coll = db[name]
+        async for doc in coll.find({}):
+            _id = doc.pop("_id", None)
+            new_doc = _strip_em_dashes(doc)
+            if new_doc != doc:
+                await coll.update_one({"_id": _id}, {"$set": new_doc})
+                updated += 1
+    if updated:
+        logger.info("Em-dash migration: cleaned %d document(s)", updated)
+
+
 @app.on_event("startup")
 async def startup():
     await db.users.create_index("email", unique=True)
@@ -1672,6 +1707,7 @@ async def startup():
     await db.legal_pages.create_index("slug", unique=True)
     await seed_admin()
     await seed_content()
+    await migrate_em_dashes()
 
 
 app.include_router(api_router)

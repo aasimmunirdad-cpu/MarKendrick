@@ -65,14 +65,14 @@ export default function Contact() {
 
   return (
     <div data-testid="contact-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title="Contact — Start a Project" description="Tell MarKendrick about your project. A senior consultant replies within one business day." />
+      <Seo title="Contact - Start a Project" description="Tell MarKendrick about your project. A senior consultant replies within one business day." />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-16">
         <div className="lg:col-span-5">
           <Reveal>
             <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4">Contact</p>
             <h1 className="font-display font-extrabold tracking-tight text-5xl sm:text-6xl mb-6">Tell us the<br /><span className="text-vermilion">real problem.</span></h1>
             <p className="text-muted-foreground leading-relaxed mb-10 max-w-md">
-              Four quick questions and your brief lands with a senior consultant — never a bot, never a sales rep. Reply within one business day.
+              Four quick questions and your brief lands with a senior consultant - never a bot, never a sales rep. Reply within one business day.
             </p>
             <address className="not-italic space-y-4 text-sm border-t border-border pt-8">
               <p><span className="text-muted-foreground block text-xs uppercase tracking-[0.25em] mb-1">Office</span>{OFFICE.address}</p>
@@ -124,7 +124,7 @@ export default function Contact() {
                     {step === 1 && (
                       <motion.div key="s1" {...stepAnim} className="flex-1 flex flex-col">
                         <h2 className="font-display text-2xl font-bold tracking-tight mb-2">What's the budget?</h2>
-                        <p className="text-sm text-muted-foreground mb-6">A rough range is fine — it shapes the plan, not the price.</p>
+                        <p className="text-sm text-muted-foreground mb-6">A rough range is fine - it shapes the plan, not the price.</p>
                         <div className="grid grid-cols-1 gap-3">
                           {BUDGETS.map((b) => (
                             <Option key={b} testId={`contact-budget-${b.split(" ")[0].replace(/[^a-z0-9]/gi, "-").toLowerCase()}`} label={b} active={form.budget === b} onClick={() => set("budget", b)} />
@@ -147,7 +147,7 @@ export default function Contact() {
                     )}
                     {step === 3 && (
                       <motion.div key="s3" {...stepAnim} className="flex-1 flex flex-col">
-                        <h2 className="font-display text-2xl font-bold tracking-tight mb-6">Finally — who are you?</h2>
+                        <h2 className="font-display text-2xl font-bold tracking-tight mb-6">Finally - who are you?</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <Field testId="contact-name-input" label="Name *" value={form.name} onChange={(v) => set("name", v)} />
                           <Field testId="contact-email-input" label="Work email *" type="email" value={form.email} onChange={(v) => set("email", v)} />

@@ -3,7 +3,7 @@ import ReactQuill, { Quill } from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 
 // ---------- MS-Office-style formatting options ----------
-// Font family whitelist — the site's own brand fonts plus common Office-style
+// Font family whitelist - the site's own brand fonts plus common Office-style
 // choices. Uses Quill's style-based font attributor so the chosen font is
 // written as an inline `font-family` style, matching how it's rendered on
 // the public site (no extra CSS classes required).
@@ -58,7 +58,7 @@ const FORMATS = [
 ];
 
 /**
- * Full WYSIWYG rich text editor for CMS content fields — font family, size,
+ * Full WYSIWYG rich text editor for CMS content fields - font family, size,
  * bold/italic/underline/strike, text/highlight color, sub/superscript, lists,
  * indent, alignment, blockquotes and links. Stores content as sanitized HTML.
  */

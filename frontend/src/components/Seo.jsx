@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export default function Seo({ title, description }) {
   useEffect(() => {
-    if (title) document.title = `${title} — MarKendrick`;
+    if (title) document.title = `${title} - MarKendrick`;
     if (description) {
       let tag = document.querySelector('meta[name="description"]');
       if (!tag) {
