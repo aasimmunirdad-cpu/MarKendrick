@@ -35,6 +35,7 @@ import CaseStudyDetail from "@/pages/CaseStudyDetail";
 import Insights from "@/pages/Insights";
 import PostDetail from "@/pages/PostDetail";
 import Contact from "@/pages/Contact";
+import ShareTestimonial from "@/pages/ShareTestimonial";
 import BookConsultation from "@/pages/BookConsultation";
 import NotFound from "@/pages/NotFound";
 import AdminLogin from "@/pages/admin/AdminLogin";
@@ -125,6 +126,7 @@ function Shell() {
           <Route path="/insights" element={<PageWrap><Insights /></PageWrap>} />
           <Route path="/insights/:slug" element={<PageWrap><PostDetail /></PageWrap>} />
           <Route path="/contact" element={<PageWrap><Contact /></PageWrap>} />
+          <Route path="/share-your-experience" element={<PageWrap><ShareTestimonial /></PageWrap>} />
           <Route path="/book-consultation" element={<PageWrap><BookConsultation /></PageWrap>} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />

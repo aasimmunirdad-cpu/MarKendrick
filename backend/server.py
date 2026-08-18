@@ -757,6 +757,56 @@ async def admin_delete_testimonial(t_id: str, user: dict = Depends(get_current_u
     return {"status": "deleted"}
 
 
+class TestimonialSubmitIn(BaseModel):
+    name: str
+    role: str = ""
+    company: str = ""
+    quote: str
+    metric: str = ""
+    email: Optional[EmailStr] = None
+
+
+@api_router.post("/testimonials/submit")
+async def submit_testimonial(body: TestimonialSubmitIn):
+    name = body.name.strip()
+    quote = body.quote.strip()
+    if not name:
+        raise HTTPException(status_code=422, detail="Please tell us your name.")
+    if len(quote) < 20:
+        raise HTTPException(status_code=422, detail="Please share a bit more detail — a sentence or two.")
+    if len(quote) > 2000:
+        raise HTTPException(status_code=422, detail="That's a bit long — please keep it under 2000 characters.")
+
+    doc = {
+        "id": uuid.uuid4().hex[:12],
+        "quote": quote,
+        "name": name,
+        "role": body.role.strip(),
+        "company": body.company.strip(),
+        "industry": "",
+        "metric": body.metric.strip(),
+        "video_url": "",
+        "published": False,
+        "source": "client_submission",
+        "submitter_email": body.email or "",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    }
+    await db.testimonials.insert_one(doc)
+
+    contact_line = f"<strong>Contact:</strong> {doc['submitter_email']}<br/>" if doc["submitter_email"] else ""
+    metric_line = f"<strong>Result:</strong> {doc['metric']}<br/>" if doc["metric"] else ""
+    owner_html = email_shell(
+        "New testimonial submitted",
+        f"""<p><strong>Name:</strong> {doc['name']}<br/>
+        <strong>Role / Company:</strong> {doc['role']}{', ' + doc['company'] if doc['company'] else ''}<br/>
+        {contact_line}{metric_line}</p>
+        <blockquote style="border-left:3px solid #E0923D;padding-left:16px;margin:16px 0;color:#2a2a2a;">{doc['quote']}</blockquote>
+        <p style="color:#8a8a8a;font-size:13px;">Saved as a draft — review and publish it from the Testimonials tab in your admin dashboard.</p>""",
+    )
+    await send_email(OWNER_EMAIL, f"New testimonial from {doc['name']}", owner_html, reply_to=doc["submitter_email"] or None)
+    return {"status": "received"}
+
+
 # ---------- Services ----------
 
 class ServiceIn(BaseModel):
