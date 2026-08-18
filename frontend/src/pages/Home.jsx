@@ -69,12 +69,12 @@ export default function Home() {
           </motion.p>
           <MaskLines
             lines={["INSIGHTS", "THAT INFORM."]}
-            className="font-display font-extrabold tracking-tight leading-[1.12] text-[9vw] sm:text-[8vw] lg:text-[4.5vw]"
+            className="font-display font-extrabold tracking-tight leading-[1.12] text-[7.8vw] sm:text-[8vw] lg:text-[4.5vw]"
             delay={0.25}
           />
           <MaskLines
             lines={["STRATEGIES", "THAT PERFORM."]}
-            className="font-display font-extrabold tracking-tight leading-[1.12] text-[9vw] sm:text-[8vw] lg:text-[4.2vw] text-vermilion"
+            className="font-display font-extrabold tracking-tight leading-[1.12] text-[7.8vw] sm:text-[8vw] lg:text-[4.2vw] text-vermilion"
             delay={0.55}
           />
           <motion.div
