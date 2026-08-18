@@ -1,9 +1,27 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, ArrowRight } from "lucide-react";
+import { Search, X, ArrowRight, Calculator, Gauge, Sparkles, FileText, HelpCircle, MessageSquarePlus, Briefcase, Building2, FolderOpen, BookOpen, User, Mail } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api";
+
+const QUICK_LINKS = [
+  { to: "/services", label: "Services", icon: Briefcase },
+  { to: "/industries", label: "Industries", icon: Building2 },
+  { to: "/work", label: "Work", icon: FolderOpen },
+  { to: "/insights", label: "Insights", icon: BookOpen },
+  { to: "/about", label: "About", icon: User },
+  { to: "/contact", label: "Contact", icon: Mail },
+];
+
+const TOOL_LINKS = [
+  { to: "/roi-calculator", label: "ROI Calculator", icon: Calculator },
+  { to: "/maturity-quiz", label: "Marketing Maturity Grade", icon: Gauge },
+  { to: "/quiz", label: "Take the Quiz", icon: Sparkles },
+  { to: "/whitepapers", label: "Whitepapers & Reports", icon: FileText },
+  { to: "/faq", label: "FAQ", icon: HelpCircle },
+  { to: "/share-your-experience", label: "Share Your Experience", icon: MessageSquarePlus },
+];
 
 export default function SearchOverlay({ open, onClose }) {
   const { data: SERVICES = [] } = useQuery({
@@ -85,7 +103,7 @@ export default function SearchOverlay({ open, onClose }) {
                   data-testid="search-input"
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
-                  placeholder="Search services, insights, case studies…"
+                  placeholder="Search, or jump to any page…"
                   className="w-full bg-transparent font-display text-2xl sm:text-4xl font-bold tracking-tight outline-none placeholder:text-muted-foreground/50"
                 />
                 <button data-testid="search-close-button" onClick={onClose} aria-label="Close search" className="p-2 hover:text-vermilion transition-colors">
@@ -142,12 +160,49 @@ export default function SearchOverlay({ open, onClose }) {
                   <p data-testid="search-no-results" className="text-muted-foreground py-6">Nothing found for “{q}”. Try a service, topic or industry.</p>
                 )}
                 {q.trim().length < 2 && (
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    {["Neuromarketing", "SEO", "FMCG", "Performance", "Branding"].map((t) => (
-                      <button key={t} onClick={() => setQ(t)} className="text-sm border border-border rounded-full px-4 py-2 hover:border-vermilion hover:text-vermilion transition-colors">
-                        {t}
-                      </button>
-                    ))}
+                  <div className="space-y-8">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Jump to</p>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        {QUICK_LINKS.map((l) => (
+                          <button
+                            key={l.to}
+                            data-testid={`command-link-${l.to.slice(1) || "home"}`}
+                            onClick={() => go(l.to)}
+                            className="flex items-center gap-2.5 text-left px-3.5 py-3 border border-border rounded-lg hover:border-vermilion hover:bg-secondary/60 transition-colors group"
+                          >
+                            <l.icon size={16} className="text-vermilion shrink-0" />
+                            <span className="text-sm font-medium group-hover:text-vermilion transition-colors">{l.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Free Tools &amp; Resources</p>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        {TOOL_LINKS.map((l) => (
+                          <button
+                            key={l.to}
+                            data-testid={`command-link-${l.to.slice(1)}`}
+                            onClick={() => go(l.to)}
+                            className="flex items-center gap-2.5 text-left px-3.5 py-3 border border-border rounded-lg hover:border-vermilion hover:bg-secondary/60 transition-colors group"
+                          >
+                            <l.icon size={16} className="text-vermilion shrink-0" />
+                            <span className="text-sm font-medium group-hover:text-vermilion transition-colors">{l.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Or try searching</p>
+                      <div className="flex flex-wrap gap-2">
+                        {["Neuromarketing", "SEO", "FMCG", "Performance", "Branding"].map((t) => (
+                          <button key={t} onClick={() => setQ(t)} className="text-sm border border-border rounded-full px-4 py-2 hover:border-vermilion hover:text-vermilion transition-colors">
+                            {t}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>

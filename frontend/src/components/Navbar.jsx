@@ -157,8 +157,17 @@ export default function Navbar({ onSearchOpen }) {
           <button
             data-testid="nav-search-button"
             onClick={onSearchOpen}
+            aria-label="Search (Cmd+K)"
+            className="hidden sm:flex items-center gap-2 pl-3 pr-2.5 py-2 rounded-full border border-border hover:border-vermilion hover:text-vermilion transition-colors duration-200 text-muted-foreground"
+          >
+            <Search size={15} />
+            <span className="text-xs font-medium border border-current/30 rounded px-1.5 py-0.5 leading-none">⌘K</span>
+          </button>
+          <button
+            data-testid="nav-search-button-mobile"
+            onClick={onSearchOpen}
             aria-label="Search"
-            className="p-2 rounded-full border border-border hover:border-vermilion hover:text-vermilion transition-colors duration-200"
+            className="sm:hidden p-2 rounded-full border border-border hover:border-vermilion hover:text-vermilion transition-colors duration-200"
           >
             <Search size={17} />
           </button>
