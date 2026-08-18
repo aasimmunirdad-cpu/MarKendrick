@@ -5,6 +5,7 @@ import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
 import RichText from "../components/RichText";
 import Seo from "../components/Seo";
+import BreadcrumbSchema from "../components/BreadcrumbSchema";
 
 export default function CaseStudyDetail() {
   const { slug } = useParams();
@@ -25,7 +26,14 @@ export default function CaseStudyDetail() {
 
   return (
     <article data-testid="case-study-detail-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title={`${cs.client} - ${cs.title}`} description={cs.summary} />
+      <Seo title={`${cs.client} - ${cs.title}`} description={cs.summary} image={cs.cover} type="article" path={`/work/${slug}`} />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Work", path: "/work" },
+          { name: cs.client, path: `/work/${slug}` },
+        ]}
+      />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal>
           <Link to="/work" data-testid="case-back-link" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-vermilion transition-colors mb-10">

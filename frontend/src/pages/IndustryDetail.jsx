@@ -5,6 +5,7 @@ import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
 import RichText from "../components/RichText";
 import Seo from "../components/Seo";
+import BreadcrumbSchema from "../components/BreadcrumbSchema";
 import NotFound from "./NotFound";
 
 export default function IndustryDetail() {
@@ -31,7 +32,14 @@ export default function IndustryDetail() {
 
   return (
     <div data-testid="industry-detail-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title={ind.metaTitle} description={ind.metaDesc} />
+      <Seo title={ind.metaTitle} description={ind.metaDesc} path={`/industries/${ind.slug}`} />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Industries", path: "/industries" },
+          { name: ind.name, path: `/industries/${ind.slug}` },
+        ]}
+      />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-16">
           <Link to="/industries" data-testid="industry-back-link" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-vermilion transition-colors mb-10">

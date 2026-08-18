@@ -5,6 +5,7 @@ import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
 import RichText from "../components/RichText";
 import Seo from "../components/Seo";
+import BreadcrumbSchema from "../components/BreadcrumbSchema";
 import NotFound from "./NotFound";
 
 export default function LocationDetail() {
@@ -26,7 +27,13 @@ export default function LocationDetail() {
 
   return (
     <div data-testid="location-detail-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title={loc.metaTitle} description={loc.metaDesc} />
+      <Seo title={loc.metaTitle} description={loc.metaDesc} path={`/locations/${loc.slug}`} />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: loc.name, path: `/locations/${loc.slug}` },
+        ]}
+      />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-16">
           <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-4 flex items-center gap-2"><MapPin size={14} className="text-vermilion" /> {loc.eyebrow}</p>

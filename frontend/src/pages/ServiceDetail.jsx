@@ -5,6 +5,7 @@ import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
 import RichText from "../components/RichText";
 import Seo from "../components/Seo";
+import BreadcrumbSchema from "../components/BreadcrumbSchema";
 import NotFound from "./NotFound";
 
 export default function ServiceDetail() {
@@ -26,7 +27,14 @@ export default function ServiceDetail() {
 
   return (
     <div data-testid="service-detail-page" className="pt-32 sm:pt-40 pb-24">
-      <Seo title={service.metaTitle} description={service.metaDesc} />
+      <Seo title={service.metaTitle} description={service.metaDesc} path={`/services/${service.slug}`} />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Services", path: "/services" },
+          { name: service.name, path: `/services/${service.slug}` },
+        ]}
+      />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-16 sm:mb-24">
           <Link to="/services" data-testid="service-back-link" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-vermilion transition-colors mb-10">

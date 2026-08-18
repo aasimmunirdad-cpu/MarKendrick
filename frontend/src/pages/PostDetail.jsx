@@ -8,6 +8,7 @@ import RichText from "../components/RichText";
 import { AUTHORS } from "../data/content";
 import JsonLd from "../components/JsonLd";
 import Seo from "../components/Seo";
+import BreadcrumbSchema from "../components/BreadcrumbSchema";
 import { motion, useScroll, useSpring } from "framer-motion";
 
 export default function PostDetail() {
@@ -45,7 +46,14 @@ export default function PostDetail() {
           image: post.cover,
         }}
       />
-      <Seo title={post.title} description={post.excerpt} />
+      <Seo title={post.title} description={post.excerpt} image={post.cover} type="article" path={`/insights/${post.slug}`} />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Insights", path: "/insights" },
+          { name: post.title, path: `/insights/${post.slug}` },
+        ]}
+      />
       <div className="max-w-3xl mx-auto px-5 sm:px-8">
         <Reveal>
           <Link to="/insights" data-testid="post-back-link" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-vermilion transition-colors mb-10">
