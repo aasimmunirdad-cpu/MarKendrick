@@ -1,10 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, Check, Loader2, CalendarDays } from "lucide-react";
 import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
 import { api, formatApiError } from "../lib/api";
-import { SERVICES } from "../data/content";
 import { Reveal } from "../components/motion";
 import Seo from "../components/Seo";
 
@@ -12,11 +12,22 @@ const SLOTS = ["10:00", "11:30", "14:00", "15:30", "17:00"];
 
 export default function BookConsultation() {
   const [params] = useSearchParams();
-  const preService = SERVICES.find((s) => s.slug === params.get("service"));
+  const { data: SERVICES = [] } = useQuery({
+    queryKey: ["services"],
+    queryFn: async () => (await api.get("/services")).data,
+  });
   const [step, setStep] = useState(0);
-  const [form, setForm] = useState({ service: preService?.name || "", serviceOther: "", date: "", slot: "", name: "", email: "", company: "", notes: "" });
+  const [form, setForm] = useState({ service: "", serviceOther: "", date: "", slot: "", name: "", email: "", company: "", notes: "" });
   const [status, setStatus] = useState("idle");
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
+
+  useEffect(() => {
+    if (!form.service && SERVICES.length) {
+      const preService = SERVICES.find((s) => s.slug === params.get("service"));
+      if (preService) set("service", preService.name);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [SERVICES]);
 
   const days = useMemo(() => {
     const out = [];

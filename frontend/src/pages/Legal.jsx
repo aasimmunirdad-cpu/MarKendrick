@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
-import { LEGAL } from "../data/legal";
+import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
 import Seo from "../components/Seo";
 import NotFound from "./NotFound";
@@ -7,8 +9,14 @@ import NotFound from "./NotFound";
 export default function Legal({ slugOverride }) {
   const { slug: paramSlug } = useParams();
   const slug = slugOverride || paramSlug;
-  const doc = LEGAL[slug];
-  if (!doc) return <NotFound />;
+  const { data: doc, isLoading, isError } = useQuery({
+    queryKey: ["legal-page", slug],
+    queryFn: async () => (await api.get(`/legal-pages/${slug}`)).data,
+    retry: false,
+  });
+
+  if (isLoading) return <div className="pt-40 pb-24 flex justify-center"><Loader2 className="animate-spin text-vermilion" size={28} /></div>;
+  if (isError || !doc) return <NotFound />;
 
   return (
     <div data-testid={`legal-${slug}`} className="pt-32 sm:pt-40 pb-24">

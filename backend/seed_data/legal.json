@@ -1,0 +1,104 @@
+[
+  {
+    "slug": "privacy-policy",
+    "title": "Privacy Policy",
+    "updated": "Last updated: August 2026",
+    "metaDesc": "MarKendrick's privacy policy — how we collect, use and protect your personal data.",
+    "sections": [
+      {
+        "h": "1. Who we are",
+        "p": "MarKendrick is a marketing agency headquartered in Gulberg III, Lahore, Pakistan. This policy explains how we collect, use, store and protect personal data when you use our website, contact us, book a consultation, or subscribe to our newsletter."
+      },
+      {
+        "h": "2. Data we collect",
+        "p": "We collect information you give us directly: your name, email address, company, phone number, project details and any messages you send through our contact forms, booking system, newsletter signup or email. We also collect standard technical data (browser type, pages visited, approximate location) through analytics tools to improve the site."
+      },
+      {
+        "h": "3. How we use it",
+        "p": "We use your data to respond to enquiries, deliver consultations and services, send our newsletter (only if you subscribed), improve our website, and meet legal obligations. We do not sell your personal data, and we do not share it with third parties except the service providers that run our infrastructure (email delivery, hosting, analytics) under their own data-protection terms."
+      },
+      {
+        "h": "4. Your rights",
+        "p": "You may request a copy of the personal data we hold about you, ask us to correct or delete it, or withdraw consent for marketing at any time by emailing hello@markendrick.com. Newsletter emails include an unsubscribe link. We respond to requests within 30 days."
+      },
+      {
+        "h": "5. Data retention & security",
+        "p": "We keep enquiry and booking data for up to 24 months and newsletter data until you unsubscribe. Data is stored on secured infrastructure with access limited to the team members who need it. No system is perfectly secure, but we apply industry-standard safeguards."
+      },
+      {
+        "h": "6. International transfers",
+        "p": "As a global agency, your data may be processed outside your country of residence. Where required (for example under GDPR), we rely on appropriate safeguards for such transfers."
+      },
+      {
+        "h": "7. Contact",
+        "p": "Questions about this policy or your data: hello@markendrick.com — MarKendrick, Gulberg III, Lahore, Pakistan."
+      }
+    ],
+    "published": true,
+    "id": "privacy-policy"
+  },
+  {
+    "slug": "terms-of-service",
+    "title": "Terms of Service",
+    "updated": "Last updated: August 2026",
+    "metaDesc": "MarKendrick's terms of service — the rules for using our website and working with us.",
+    "sections": [
+      {
+        "h": "1. The website",
+        "p": "This website is provided for general information about MarKendrick's services. Content may change without notice. While we work hard to keep information accurate, we make no warranties that site content is complete, current or error-free."
+      },
+      {
+        "h": "2. Intellectual property",
+        "p": "All content on this site — text, design, case studies, articles and branding — is the property of MarKendrick unless stated otherwise. You may share links to our content, but you may not reproduce, republish or commercially reuse it without written permission."
+      },
+      {
+        "h": "3. Case studies & results",
+        "p": "Case studies and figures presented on this site illustrate the type of work and outcomes MarKendrick pursues. Individual results vary by client, market and engagement; nothing on this site guarantees specific commercial outcomes."
+      },
+      {
+        "h": "4. Enquiries & bookings",
+        "p": "Submitting a contact form or booking request does not create a client relationship. Engagements are governed by individual service agreements signed between MarKendrick and the client."
+      },
+      {
+        "h": "5. Liability",
+        "p": "To the fullest extent permitted by law, MarKendrick is not liable for indirect or consequential losses arising from use of this website. Nothing in these terms excludes liability that cannot be excluded by law."
+      },
+      {
+        "h": "6. Governing law",
+        "p": "These terms are governed by the laws of Pakistan. Disputes are subject to the courts of Lahore, Pakistan."
+      }
+    ],
+    "published": true,
+    "id": "terms-of-service"
+  },
+  {
+    "slug": "cookie-policy",
+    "title": "Cookie Policy",
+    "updated": "Last updated: August 2026",
+    "metaDesc": "MarKendrick's cookie policy — what cookies we use and how to control them.",
+    "sections": [
+      {
+        "h": "1. What cookies we use",
+        "p": "We use a small number of cookies and similar technologies: essential cookies that make the site work (such as your theme preference and cookie consent choice), and analytics cookies that help us understand how visitors use the site so we can improve it."
+      },
+      {
+        "h": "2. Your choice",
+        "p": "When you first visit, you can accept or decline non-essential cookies via the consent banner. You can change your choice at any time by clearing your browser's stored data for this site and revisiting — the banner will ask again."
+      },
+      {
+        "h": "3. Third-party cookies",
+        "p": "Analytics providers (such as Google Analytics, if enabled) may set their own cookies under their own privacy policies. We do not use advertising or cross-site tracking cookies on this website."
+      },
+      {
+        "h": "4. Managing cookies",
+        "p": "Most browsers let you block or delete cookies through their settings. Blocking essential cookies may affect how the site functions — for example, your dark/light mode preference may not be remembered."
+      },
+      {
+        "h": "5. Questions",
+        "p": "Questions about cookies or tracking on this site: hello@markendrick.com."
+      }
+    ],
+    "published": true,
+    "id": "cookie-policy"
+  }
+]

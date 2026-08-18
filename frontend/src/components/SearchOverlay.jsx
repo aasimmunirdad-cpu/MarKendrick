@@ -2,11 +2,18 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, ArrowRight } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api";
-import { SERVICES } from "../data/content";
-import { INDUSTRIES_DETAILED } from "../data/pages";
 
 export default function SearchOverlay({ open, onClose }) {
+  const { data: SERVICES = [] } = useQuery({
+    queryKey: ["services"],
+    queryFn: async () => (await api.get("/services")).data,
+  });
+  const { data: INDUSTRIES_DETAILED = [] } = useQuery({
+    queryKey: ["industries"],
+    queryFn: async () => (await api.get("/industries")).data,
+  });
   const [q, setQ] = useState("");
   const [results, setResults] = useState({ posts: [], case_studies: [] });
   const inputRef = useRef(null);

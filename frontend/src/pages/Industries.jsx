@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { INDUSTRIES_DETAILED } from "../data/pages";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
 import Seo from "../components/Seo";
 
 export default function Industries() {
+  const { data: INDUSTRIES_DETAILED = [] } = useQuery({
+    queryKey: ["industries"],
+    queryFn: async () => (await api.get("/industries")).data,
+  });
   return (
     <div data-testid="industries-page" className="pt-32 sm:pt-40 pb-24">
       <Seo title="Industries We Serve — Sector Playbooks" description="Marketing playbooks across every sector: real estate, education, fintech, e-commerce, healthcare, fashion, F&B, automotive, travel, tech, FMCG, events and NGOs." />

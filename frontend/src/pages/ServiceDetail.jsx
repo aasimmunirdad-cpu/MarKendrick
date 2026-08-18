@@ -1,16 +1,27 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
-import { SERVICES } from "../data/content";
+import { ArrowLeft, ArrowUpRight, Check, Loader2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
 import Seo from "../components/Seo";
 import NotFound from "./NotFound";
 
 export default function ServiceDetail() {
   const { slug } = useParams();
-  const service = SERVICES.find((s) => s.slug === slug);
-  if (!service) return <NotFound />;
+  const { data: service, isLoading, isError } = useQuery({
+    queryKey: ["service", slug],
+    queryFn: async () => (await api.get(`/services/${slug}`)).data,
+    retry: false,
+  });
+  const { data: allServices = [] } = useQuery({
+    queryKey: ["services"],
+    queryFn: async () => (await api.get("/services")).data,
+  });
 
-  const related = SERVICES.filter((s) => s.slug !== slug).slice(0, 3);
+  if (isLoading) return <div className="pt-40 pb-24 flex justify-center"><Loader2 className="animate-spin text-vermilion" size={28} /></div>;
+  if (isError || !service) return <NotFound />;
+
+  const related = allServices.filter((s) => s.slug !== slug).slice(0, 3);
 
   return (
     <div data-testid="service-detail-page" className="pt-32 sm:pt-40 pb-24">

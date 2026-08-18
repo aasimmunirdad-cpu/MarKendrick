@@ -20,6 +20,15 @@ import certifi
 from pydantic import BaseModel, EmailStr
 
 ROOT_DIR = Path(__file__).parent
+SEED_DATA_DIR = ROOT_DIR / "seed_data"
+
+
+def load_seed_json(name: str):
+    import json
+    path = SEED_DATA_DIR / f"{name}.json"
+    if not path.exists():
+        return []
+    return json.loads(path.read_text())
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -702,6 +711,277 @@ async def admin_delete_testimonial(t_id: str, user: dict = Depends(get_current_u
     return {"status": "deleted"}
 
 
+# ---------- Services ----------
+
+class ServiceIn(BaseModel):
+    slug: str
+    name: str
+    short: str = ""
+    icon: str = "Search"
+    metaTitle: str = ""
+    metaDesc: str = ""
+    hero: str = ""
+    body: str = ""
+    deliverables: List[str] = []
+    group: str = "Other"
+    order: int = 0
+    published: bool = True
+
+
+@api_router.get("/services")
+async def list_services():
+    return await db.services.find({"published": True}, {"_id": 0}).sort("order", 1).to_list(200)
+
+
+@api_router.get("/services/{slug}")
+async def get_service(slug: str):
+    doc = await db.services.find_one({"slug": slug, "published": True}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Service not found")
+    return doc
+
+
+@api_router.get("/admin/services")
+async def admin_list_services(user: dict = Depends(get_current_user)):
+    return await db.services.find({}, {"_id": 0}).sort("order", 1).to_list(200)
+
+
+@api_router.post("/admin/services")
+async def admin_create_service(body: ServiceIn, user: dict = Depends(get_current_user)):
+    if await db.services.find_one({"slug": body.slug}):
+        raise HTTPException(status_code=400, detail="A service with this slug already exists")
+    doc = body.model_dump()
+    doc["id"] = body.slug
+    doc["created_at"] = datetime.now(timezone.utc).isoformat()
+    await db.services.insert_one(doc)
+    doc.pop("_id", None)
+    return doc
+
+
+@api_router.put("/admin/services/{svc_id}")
+async def admin_update_service(svc_id: str, body: ServiceIn, user: dict = Depends(get_current_user)):
+    result = await db.services.update_one({"id": svc_id}, {"$set": body.model_dump()})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Service not found")
+    return await db.services.find_one({"id": svc_id}, {"_id": 0})
+
+
+@api_router.delete("/admin/services/{svc_id}")
+async def admin_delete_service(svc_id: str, user: dict = Depends(get_current_user)):
+    result = await db.services.delete_one({"id": svc_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Service not found")
+    return {"status": "deleted"}
+
+
+# ---------- Industries ----------
+
+class IndustryIn(BaseModel):
+    slug: str
+    name: str
+    tagline: str = ""
+    intro: str = ""
+    challenges: List[str] = []
+    services: List[str] = []
+    metaTitle: str = ""
+    metaDesc: str = ""
+    order: int = 0
+    published: bool = True
+
+
+@api_router.get("/industries")
+async def list_industries():
+    return await db.industries.find({"published": True}, {"_id": 0}).sort("order", 1).to_list(200)
+
+
+@api_router.get("/industries/{slug}")
+async def get_industry(slug: str):
+    doc = await db.industries.find_one({"slug": slug, "published": True}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Industry not found")
+    return doc
+
+
+@api_router.get("/admin/industries")
+async def admin_list_industries(user: dict = Depends(get_current_user)):
+    return await db.industries.find({}, {"_id": 0}).sort("order", 1).to_list(200)
+
+
+@api_router.post("/admin/industries")
+async def admin_create_industry(body: IndustryIn, user: dict = Depends(get_current_user)):
+    if await db.industries.find_one({"slug": body.slug}):
+        raise HTTPException(status_code=400, detail="An industry with this slug already exists")
+    doc = body.model_dump()
+    doc["id"] = body.slug
+    doc["created_at"] = datetime.now(timezone.utc).isoformat()
+    await db.industries.insert_one(doc)
+    doc.pop("_id", None)
+    return doc
+
+
+@api_router.put("/admin/industries/{ind_id}")
+async def admin_update_industry(ind_id: str, body: IndustryIn, user: dict = Depends(get_current_user)):
+    result = await db.industries.update_one({"id": ind_id}, {"$set": body.model_dump()})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Industry not found")
+    return await db.industries.find_one({"id": ind_id}, {"_id": 0})
+
+
+@api_router.delete("/admin/industries/{ind_id}")
+async def admin_delete_industry(ind_id: str, user: dict = Depends(get_current_user)):
+    result = await db.industries.delete_one({"id": ind_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Industry not found")
+    return {"status": "deleted"}
+
+
+# ---------- Locations ----------
+
+class LocationIn(BaseModel):
+    slug: str
+    name: str
+    eyebrow: str = ""
+    h1: str = ""
+    intro: str = ""
+    body2: str = ""
+    points: List[str] = []
+    metaTitle: str = ""
+    metaDesc: str = ""
+    order: int = 0
+    published: bool = True
+
+
+@api_router.get("/locations")
+async def list_locations():
+    return await db.locations.find({"published": True}, {"_id": 0}).sort("order", 1).to_list(200)
+
+
+@api_router.get("/locations/{slug}")
+async def get_location(slug: str):
+    doc = await db.locations.find_one({"slug": slug, "published": True}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Location not found")
+    return doc
+
+
+@api_router.get("/admin/locations")
+async def admin_list_locations(user: dict = Depends(get_current_user)):
+    return await db.locations.find({}, {"_id": 0}).sort("order", 1).to_list(200)
+
+
+@api_router.post("/admin/locations")
+async def admin_create_location(body: LocationIn, user: dict = Depends(get_current_user)):
+    if await db.locations.find_one({"slug": body.slug}):
+        raise HTTPException(status_code=400, detail="A location with this slug already exists")
+    doc = body.model_dump()
+    doc["id"] = body.slug
+    doc["created_at"] = datetime.now(timezone.utc).isoformat()
+    await db.locations.insert_one(doc)
+    doc.pop("_id", None)
+    return doc
+
+
+@api_router.put("/admin/locations/{loc_id}")
+async def admin_update_location(loc_id: str, body: LocationIn, user: dict = Depends(get_current_user)):
+    result = await db.locations.update_one({"id": loc_id}, {"$set": body.model_dump()})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Location not found")
+    return await db.locations.find_one({"id": loc_id}, {"_id": 0})
+
+
+@api_router.delete("/admin/locations/{loc_id}")
+async def admin_delete_location(loc_id: str, user: dict = Depends(get_current_user)):
+    result = await db.locations.delete_one({"id": loc_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Location not found")
+    return {"status": "deleted"}
+
+
+# ---------- FAQ ----------
+
+class FaqIn(BaseModel):
+    group: str = "General"
+    question: str
+    answer: str = ""
+    order: int = 0
+    published: bool = True
+
+
+@api_router.get("/faqs")
+async def list_faqs():
+    return await db.faqs.find({"published": True}, {"_id": 0}).sort("order", 1).to_list(300)
+
+
+@api_router.get("/admin/faqs")
+async def admin_list_faqs(user: dict = Depends(get_current_user)):
+    return await db.faqs.find({}, {"_id": 0}).sort("order", 1).to_list(300)
+
+
+@api_router.post("/admin/faqs")
+async def admin_create_faq(body: FaqIn, user: dict = Depends(get_current_user)):
+    doc = body.model_dump()
+    doc["id"] = uuid.uuid4().hex[:12]
+    doc["created_at"] = datetime.now(timezone.utc).isoformat()
+    await db.faqs.insert_one(doc)
+    doc.pop("_id", None)
+    return doc
+
+
+@api_router.put("/admin/faqs/{faq_id}")
+async def admin_update_faq(faq_id: str, body: FaqIn, user: dict = Depends(get_current_user)):
+    result = await db.faqs.update_one({"id": faq_id}, {"$set": body.model_dump()})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="FAQ not found")
+    return await db.faqs.find_one({"id": faq_id}, {"_id": 0})
+
+
+@api_router.delete("/admin/faqs/{faq_id}")
+async def admin_delete_faq(faq_id: str, user: dict = Depends(get_current_user)):
+    result = await db.faqs.delete_one({"id": faq_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="FAQ not found")
+    return {"status": "deleted"}
+
+
+# ---------- Legal pages ----------
+
+class LegalSection(BaseModel):
+    h: str
+    p: str = ""
+
+
+class LegalPageIn(BaseModel):
+    slug: str
+    title: str
+    updated: str = ""
+    metaDesc: str = ""
+    sections: List[LegalSection] = []
+    published: bool = True
+
+
+@api_router.get("/legal-pages/{slug}")
+async def get_legal_page(slug: str):
+    doc = await db.legal_pages.find_one({"slug": slug, "published": True}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Page not found")
+    return doc
+
+
+@api_router.get("/admin/legal-pages")
+async def admin_list_legal_pages(user: dict = Depends(get_current_user)):
+    return await db.legal_pages.find({}, {"_id": 0}).sort("slug", 1).to_list(50)
+
+
+@api_router.put("/admin/legal-pages/{slug}")
+async def admin_update_legal_page(slug: str, body: LegalPageIn, user: dict = Depends(get_current_user)):
+    data = body.model_dump()
+    data["id"] = slug
+    data["updated_at"] = datetime.now(timezone.utc).isoformat()
+    await db.legal_pages.update_one({"slug": slug}, {"$set": data}, upsert=True)
+    data.pop("_id", None)
+    return data
+
+
 # ---------- Media library ----------
 
 MEDIA_MIME_TYPES = {
@@ -1227,6 +1507,41 @@ async def seed_content():
             doc["created_at"] = datetime.now(timezone.utc).isoformat()
             await db.testimonials.insert_one(doc)
         logger.info("Seeded %d testimonials", len(SEED_TESTIMONIALS))
+    if await db.services.count_documents({}) == 0:
+        items = load_seed_json("services")
+        if items:
+            for it in items:
+                it["created_at"] = datetime.now(timezone.utc).isoformat()
+            await db.services.insert_many(items)
+            logger.info("Seeded %d services", len(items))
+    if await db.industries.count_documents({}) == 0:
+        items = load_seed_json("industries")
+        if items:
+            for it in items:
+                it["created_at"] = datetime.now(timezone.utc).isoformat()
+            await db.industries.insert_many(items)
+            logger.info("Seeded %d industries", len(items))
+    if await db.locations.count_documents({}) == 0:
+        items = load_seed_json("locations")
+        if items:
+            for it in items:
+                it["created_at"] = datetime.now(timezone.utc).isoformat()
+            await db.locations.insert_many(items)
+            logger.info("Seeded %d locations", len(items))
+    if await db.faqs.count_documents({}) == 0:
+        items = load_seed_json("faqs")
+        if items:
+            for it in items:
+                it["created_at"] = datetime.now(timezone.utc).isoformat()
+            await db.faqs.insert_many(items)
+            logger.info("Seeded %d faqs", len(items))
+    if await db.legal_pages.count_documents({}) == 0:
+        items = load_seed_json("legal")
+        if items:
+            for it in items:
+                it["created_at"] = datetime.now(timezone.utc).isoformat()
+            await db.legal_pages.insert_many(items)
+            logger.info("Seeded %d legal pages", len(items))
 
 
 @app.on_event("startup")
@@ -1235,6 +1550,10 @@ async def startup():
     await db.login_attempts.create_index("identifier")
     await db.posts.create_index("slug", unique=True)
     await db.case_studies.create_index("slug", unique=True)
+    await db.services.create_index("slug", unique=True)
+    await db.industries.create_index("slug", unique=True)
+    await db.locations.create_index("slug", unique=True)
+    await db.legal_pages.create_index("slug", unique=True)
     await seed_admin()
     await seed_content()
 

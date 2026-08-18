@@ -1,18 +1,32 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ArrowUpRight, X } from "lucide-react";
-import { INDUSTRIES_DETAILED } from "../data/pages";
-import { SERVICES } from "../data/content";
+import { ArrowLeft, ArrowUpRight, X, Loader2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
 import Seo from "../components/Seo";
 import NotFound from "./NotFound";
 
 export default function IndustryDetail() {
   const { slug } = useParams();
-  const ind = INDUSTRIES_DETAILED.find((i) => i.slug === slug);
-  if (!ind) return <NotFound />;
+  const { data: ind, isLoading, isError } = useQuery({
+    queryKey: ["industry", slug],
+    queryFn: async () => (await api.get(`/industries/${slug}`)).data,
+    retry: false,
+  });
+  const { data: allIndustries = [] } = useQuery({
+    queryKey: ["industries"],
+    queryFn: async () => (await api.get("/industries")).data,
+  });
+  const { data: allServices = [] } = useQuery({
+    queryKey: ["services"],
+    queryFn: async () => (await api.get("/services")).data,
+  });
 
-  const relatedServices = ind.services.map((s) => SERVICES.find((x) => x.slug === s)).filter(Boolean);
-  const others = INDUSTRIES_DETAILED.filter((i) => i.slug !== slug).slice(0, 4);
+  if (isLoading) return <div className="pt-40 pb-24 flex justify-center"><Loader2 className="animate-spin text-vermilion" size={28} /></div>;
+  if (isError || !ind) return <NotFound />;
+
+  const relatedServices = (ind.services || []).map((s) => allServices.find((x) => x.slug === s)).filter(Boolean);
+  const others = allIndustries.filter((i) => i.slug !== slug).slice(0, 4);
 
   return (
     <div data-testid="industry-detail-page" className="pt-32 sm:pt-40 pb-24">

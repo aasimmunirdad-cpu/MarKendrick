@@ -1,0 +1,90 @@
+[
+  {
+    "group": "The Agency",
+    "question": "What does MarKendrick actually do?",
+    "answer": "MarKendrick is a research-led, full-service marketing agency. We diagnose the real bottleneck stopping a business's growth through research and consumer psychology, then design and deliver the strategy, campaigns, and digital execution to fix it — instead of jumping straight to ads.",
+    "order": 0,
+    "published": true,
+    "id": "0dc32e06e987"
+  },
+  {
+    "group": "The Agency",
+    "question": "How is MarKendrick different from a typical agency?",
+    "answer": "Most agencies start with execution — ads, content, social — and skip the research step entirely. MarKendrick starts every engagement with a diagnostic process grounded in real consumer research and psychology, run by a founder with a PhD in consumer behaviour, before any campaign work begins.",
+    "order": 1,
+    "published": true,
+    "id": "1d2e884e94cb"
+  },
+  {
+    "group": "The Agency",
+    "question": "What industries do you work with?",
+    "answer": "We have dedicated playbooks across sectors including Real Estate & Property Development, Education & EdTech, Finance, Banking & Fintech, E-commerce & D2C Retail, Healthcare & Pharmaceuticals, Textile, Apparel & Fashion, Food, Beverage & Restaurants, Automotive & Auto Services, Travel, Tourism & Hospitality, IT, Software & Tech Startups, FMCG & Consumer Goods, Weddings, Events & Entertainment, and NGOs & Development Sector. The same diagnostic method applies to any category we haven't built a dedicated page for yet.",
+    "order": 2,
+    "published": true,
+    "id": "9ead9b7f6bf9"
+  },
+  {
+    "group": "The Agency",
+    "question": "What is a Diagnostic Audit?",
+    "answer": "A structured review of your current marketing — website, positioning, ads, competitor gap — delivered as a report with a prioritised fix-list. It is the fastest, lowest-cost way to see exactly where your marketing bottleneck is.",
+    "order": 3,
+    "published": true,
+    "id": "ecb49ef83ca7"
+  },
+  {
+    "group": "The Agency",
+    "question": "Do you build websites and apps too?",
+    "answer": "Yes. Simpler builds — landing pages, funnels, e-commerce sites — are delivered directly by our team. Complex web and app builds go through a vetted delivery-partner network that we scope, manage, and quality-control, so every build still starts with the same diagnostic process as our marketing work. You get one accountable relationship, not a handoff to a separate software house.",
+    "order": 4,
+    "published": true,
+    "id": "c883d0dc513f"
+  },
+  {
+    "group": "Process & Pricing",
+    "question": "How long until we see results?",
+    "answer": "A Diagnostic Audit typically takes 1–2 weeks and gives you a prioritised report immediately. Campaign results depend on the channel and category, but most clients see meaningful movement within the first full campaign cycle, generally 60–90 days into a Growth Retainer.",
+    "order": 5,
+    "published": true,
+    "id": "020e5c844d53"
+  },
+  {
+    "group": "Process & Pricing",
+    "question": "What's the onboarding process like?",
+    "answer": "It starts with a free 20-minute call to understand your business and recommend the right starting tier, typically a Diagnostic Audit. From there we scope the engagement, and work begins within a week of signing.",
+    "order": 6,
+    "published": true,
+    "id": "541c0f63c94d"
+  },
+  {
+    "group": "Process & Pricing",
+    "question": "How do I get started?",
+    "answer": "Book a free audit call through our contact page. We'll ask a few questions about your business and tell you honestly where we think the bottleneck is, before you commit to anything.",
+    "order": 7,
+    "published": true,
+    "id": "bb5bbf77738d"
+  },
+  {
+    "group": "Process & Pricing",
+    "question": "How much does a marketing agency cost in Pakistan?",
+    "answer": "Most Lahore agencies charge PKR 30,000 to PKR 500,000+ per month depending on scope. MarKendrick's Diagnostic Audit starts at PKR 60,000 one-time, and Growth Retainers typically run PKR 150,000–400,000 per month, priced at a premium because every retainer is backed by research rather than guesswork.",
+    "order": 8,
+    "published": true,
+    "id": "48d98a6452e4"
+  },
+  {
+    "group": "Working Together",
+    "question": "Do you only work with businesses in Pakistan?",
+    "answer": "No. MarKendrick is headquartered in Lahore and launching first across Pakistan, but the agency is built to serve clients internationally from day one.",
+    "order": 9,
+    "published": true,
+    "id": "e82eead35584"
+  },
+  {
+    "group": "Working Together",
+    "question": "Do you require long-term contracts?",
+    "answer": "No. Growth Retainers are billed monthly with no long lock-in required, though most clients see stronger results after a minimum 3-month engagement, since research-led strategy needs a full campaign cycle to show its impact.",
+    "order": 10,
+    "published": true,
+    "id": "7021e1b1c4e9"
+  }
+]

@@ -2,13 +2,17 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Loader2, Check } from "lucide-react";
 import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
 import { api, formatApiError } from "../lib/api";
-import { SERVICES } from "../data/content";
 import { useSiteSettings } from "../hooks/useSiteSettings";
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
   const settings = useSiteSettings();
+  const { data: SERVICES = [] } = useQuery({
+    queryKey: ["services"],
+    queryFn: async () => (await api.get("/services")).data,
+  });
 
   const subscribe = async (e) => {
     e.preventDefault();

@@ -2,10 +2,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, Check, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
 import { api, formatApiError } from "../lib/api";
-import { SERVICES, OFFICE } from "../data/content";
 import { Reveal } from "../components/motion";
 import Seo from "../components/Seo";
+import { useSiteSettings } from "../hooks/useSiteSettings";
 
 const BUDGETS = ["Under $2,000 / mo", "$2,000 – $5,000 / mo", "$5,000 – $15,000 / mo", "$15,000+ / mo", "One-off project"];
 const TIMELINES = ["ASAP", "Within 1 month", "1–3 months", "3–6 months", "Exploring options"];
@@ -18,6 +19,12 @@ const stepAnim = {
 };
 
 export default function Contact() {
+  const settings = useSiteSettings();
+  const OFFICE = { address: settings.office_address, email: settings.office_email, hours: settings.office_hours };
+  const { data: SERVICES = [] } = useQuery({
+    queryKey: ["services"],
+    queryFn: async () => (await api.get("/services")).data,
+  });
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({ services: [], serviceOther: "", budget: "", timeline: "", name: "", email: "", company: "", message: "" });
   const [status, setStatus] = useState("idle");

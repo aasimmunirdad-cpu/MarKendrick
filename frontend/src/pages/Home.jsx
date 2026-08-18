@@ -5,7 +5,6 @@ import Marquee from "react-fast-marquee";
 import { ArrowUpRight, ArrowDown } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api";
-import { SERVICES } from "../data/content";
 import { MaskLines, Reveal, SectionHeading } from "../components/motion";
 import NeuralCanvas from "../components/NeuralCanvas";
 import StatsBand from "../components/StatsBand";
@@ -38,6 +37,14 @@ export default function Home() {
   const { data: testimonials = [] } = useQuery({
     queryKey: ["testimonials"],
     queryFn: async () => (await api.get("/testimonials")).data,
+  });
+  const { data: services = [] } = useQuery({
+    queryKey: ["services"],
+    queryFn: async () => (await api.get("/services")).data,
+  });
+  const { data: industries = [] } = useQuery({
+    queryKey: ["industries"],
+    queryFn: async () => (await api.get("/industries")).data,
   });
 
   return (
@@ -165,7 +172,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">
-            {SERVICES.slice(0, 9).map((s, i) => (
+            {services.slice(0, 9).map((s, i) => (
               <Reveal key={s.slug} delay={i * 0.04} className="bg-background">
                 <Link
                   to={`/services/${s.slug}`}
@@ -197,9 +204,9 @@ export default function Home() {
           </Link>
         </div>
         <Marquee speed={25} gradient={false} pauseOnHover>
-          {["Real Estate", "Education & EdTech", "Finance & Fintech", "E-commerce & D2C", "Healthcare & Pharma", "Textile & Fashion", "Food & Beverage", "Automotive", "Travel & Hospitality", "IT & Tech Startups", "FMCG & Consumer Goods", "Weddings & Events", "NGOs & Development"].map((t) => (
-            <Link key={t} to="/industries" className="mx-6 font-display font-bold text-xl sm:text-2xl tracking-tighter text-muted-foreground/60 hover:text-vermilion transition-colors whitespace-nowrap">
-              {t} <span className="text-vermilion">/</span>
+          {industries.map((ind) => (
+            <Link key={ind.slug} to={`/industries/${ind.slug}`} className="mx-6 font-display font-bold text-xl sm:text-2xl tracking-tighter text-muted-foreground/60 hover:text-vermilion transition-colors whitespace-nowrap">
+              {ind.name} <span className="text-vermilion">/</span>
             </Link>
           ))}
         </Marquee>

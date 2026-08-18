@@ -1,16 +1,27 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowUpRight, Check, MapPin } from "lucide-react";
-import { LOCATIONS } from "../data/pages";
+import { ArrowUpRight, Check, MapPin, Loader2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
 import Seo from "../components/Seo";
 import NotFound from "./NotFound";
 
 export default function LocationDetail() {
   const { slug } = useParams();
-  const loc = LOCATIONS.find((l) => l.slug === slug);
-  if (!loc) return <NotFound />;
+  const { data: loc, isLoading, isError } = useQuery({
+    queryKey: ["location", slug],
+    queryFn: async () => (await api.get(`/locations/${slug}`)).data,
+    retry: false,
+  });
+  const { data: allLocations = [] } = useQuery({
+    queryKey: ["locations"],
+    queryFn: async () => (await api.get("/locations")).data,
+  });
 
-  const others = LOCATIONS.filter((l) => l.slug !== slug);
+  if (isLoading) return <div className="pt-40 pb-24 flex justify-center"><Loader2 className="animate-spin text-vermilion" size={28} /></div>;
+  if (isError || !loc) return <NotFound />;
+
+  const others = allLocations.filter((l) => l.slug !== slug);
 
   return (
     <div data-testid="location-detail-page" className="pt-32 sm:pt-40 pb-24">

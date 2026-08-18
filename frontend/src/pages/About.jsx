@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { INDUSTRIES } from "../data/content";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../lib/api";
 import { Reveal, SectionHeading } from "../components/motion";
 import Seo from "../components/Seo";
 import { useSiteSettings } from "../hooks/useSiteSettings";
@@ -30,6 +31,10 @@ const DIFFERENTIATORS = [
 
 export default function About() {
   const settings = useSiteSettings();
+  const { data: industries = [] } = useQuery({
+    queryKey: ["industries"],
+    queryFn: async () => (await api.get("/industries")).data,
+  });
   return (
     <div data-testid="about-page" className="pt-32 sm:pt-40 pb-24">
       <Seo title="About MarKendrick — Full-Service Marketing & Media Agency" description="MarKendrick is a research-led, full-service marketing and media agency. Evidence-based strategy across market research, brand, digital, media and performance marketing." />
@@ -83,9 +88,9 @@ export default function About() {
         <section className="mb-24">
           <SectionHeading index="02" eyebrow="Industries We Serve" title="Category-fluent, not category-blind." className="mb-14" />
           <div className="flex flex-wrap gap-3">
-            {INDUSTRIES.map((ind) => (
-              <span key={ind} data-testid={`industry-chip-${ind.toLowerCase().replace(/[^a-z]+/g, "-")}`} className="border border-border rounded-full px-5 py-2.5 text-sm hover:border-vermilion hover:text-vermilion transition-colors cursor-default">
-                {ind}
+            {industries.map((ind) => (
+              <span key={ind.slug} data-testid={`industry-chip-${ind.slug}`} className="border border-border rounded-full px-5 py-2.5 text-sm hover:border-vermilion hover:text-vermilion transition-colors cursor-default">
+                {ind.name}
               </span>
             ))}
           </div>

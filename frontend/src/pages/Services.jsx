@@ -1,10 +1,26 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { SERVICES, SERVICE_GROUPS } from "../data/content";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
 import Seo from "../components/Seo";
 
 export default function Services() {
+  const { data: services = [] } = useQuery({
+    queryKey: ["services"],
+    queryFn: async () => (await api.get("/services")).data,
+  });
+
+  const groups = [];
+  services.forEach((s) => {
+    let g = groups.find((x) => x.label === (s.group || "Other"));
+    if (!g) {
+      g = { label: s.group || "Other", items: [] };
+      groups.push(g);
+    }
+    g.items.push(s);
+  });
+
   return (
     <div data-testid="services-page" className="pt-32 sm:pt-40 pb-24">
       <Seo title="Marketing & Media Services — Full-Service Capabilities" description="From market research and neuromarketing to SEO, performance marketing, media and brand strategy — every capability under one insight-driven roof." />
@@ -22,21 +38,19 @@ export default function Services() {
           </Link>
         </Reveal>
 
-        {SERVICE_GROUPS.map((group, gi) => (
+        {groups.map((group, gi) => (
           <div key={group.label} className="mb-20">
             <Reveal className="flex items-baseline gap-4 mb-8 border-b border-border pb-4">
               <span className="font-display text-vermilion text-sm font-bold tracking-widest">{String(gi + 1).padStart(2, "0")}</span>
               <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tighter">{group.label}</h2>
             </Reveal>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border">
-              {group.slugs.map((slug) => {
-                const s = SERVICES.find((x) => x.slug === slug);
-                if (!s) return null;
+              {group.items.map((s) => {
                 return (
                   <Link
-                    key={slug}
-                    to={`/services/${slug}`}
-                    data-testid={`services-hub-${slug}`}
+                    key={s.slug}
+                    to={`/services/${s.slug}`}
+                    data-testid={`services-hub-${s.slug}`}
                     className="group bg-background p-8 sm:p-10 hover:bg-vermilion transition-colors duration-300"
                   >
                     <h3 className="font-display text-xl sm:text-2xl font-bold tracking-tight mb-3 group-hover:text-white transition-colors">{s.name}</h3>

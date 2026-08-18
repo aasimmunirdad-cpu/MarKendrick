@@ -7,7 +7,7 @@ import { api, formatApiError } from "../../lib/api";
 import { useAuth } from "../../context/AuthContext";
 import Seo from "../../components/Seo";
 
-const TABS = ["Posts", "Case Studies", "Testimonials", "Whitepapers", "Media", "Settings", "Newsletter", "Leads", "Bookings", "Subscribers"];
+const TABS = ["Posts", "Case Studies", "Services", "Industries", "Locations", "FAQ", "Legal", "Testimonials", "Whitepapers", "Media", "Settings", "Newsletter", "Leads", "Bookings", "Subscribers"];
 const EMPTY_POST = { title: "", category: "Strategy", excerpt: "", body: "", author: "Dr Aasim Munir Dad", tags: "", cover: "", read_time: "5 min read", published: true };
 const EMPTY_CS = { client: "", title: "", industry: "", services: "", summary: "", challenge: "", approach: "", results: "", quote: "", quote_author: "", cover: "", published: true };
 
@@ -27,6 +27,11 @@ export default function AdminDashboard() {
   const { data: whitepapers = [], isLoading: lw } = useQuery({ queryKey: ["admin-whitepapers"], queryFn: async () => (await api.get("/admin/whitepapers")).data, enabled: !!user && tab === "Whitepapers" });
   const { data: media = [], isLoading: lm } = useQuery({ queryKey: ["admin-media"], queryFn: async () => (await api.get("/admin/media")).data, enabled: !!user && tab === "Media" });
   const { data: settings, isLoading: ls } = useQuery({ queryKey: ["admin-settings"], queryFn: async () => (await api.get("/admin/settings")).data, enabled: !!user && tab === "Settings" });
+  const { data: services = [], isLoading: lsv } = useQuery({ queryKey: ["admin-services"], queryFn: async () => (await api.get("/admin/services")).data, enabled: !!user && tab === "Services" });
+  const { data: industries = [], isLoading: lind } = useQuery({ queryKey: ["admin-industries"], queryFn: async () => (await api.get("/admin/industries")).data, enabled: !!user && tab === "Industries" });
+  const { data: locations = [], isLoading: lloc } = useQuery({ queryKey: ["admin-locations"], queryFn: async () => (await api.get("/admin/locations")).data, enabled: !!user && tab === "Locations" });
+  const { data: faqs = [], isLoading: lfaq } = useQuery({ queryKey: ["admin-faqs"], queryFn: async () => (await api.get("/admin/faqs")).data, enabled: !!user && tab === "FAQ" });
+  const { data: legalPages = [], isLoading: lleg } = useQuery({ queryKey: ["admin-legal"], queryFn: async () => (await api.get("/admin/legal-pages")).data, enabled: !!user && tab === "Legal" });
 
   if (user === null) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin text-vermilion" size={28} /></div>;
   if (user === false) return <Navigate to="/admin/login" replace />;
@@ -168,6 +173,46 @@ export default function AdminDashboard() {
               </tbody>
             </table>
           </div>
+        )}
+
+        {tab === "Services" && (
+          <ServicesTab
+            items={services}
+            loading={lsv}
+            onChanged={() => { qc.invalidateQueries({ queryKey: ["admin-services"] }); qc.invalidateQueries({ queryKey: ["services"] }); }}
+          />
+        )}
+
+        {tab === "Industries" && (
+          <IndustriesTab
+            items={industries}
+            loading={lind}
+            onChanged={() => { qc.invalidateQueries({ queryKey: ["admin-industries"] }); qc.invalidateQueries({ queryKey: ["industries"] }); }}
+          />
+        )}
+
+        {tab === "Locations" && (
+          <LocationsTab
+            items={locations}
+            loading={lloc}
+            onChanged={() => { qc.invalidateQueries({ queryKey: ["admin-locations"] }); qc.invalidateQueries({ queryKey: ["locations"] }); }}
+          />
+        )}
+
+        {tab === "FAQ" && (
+          <FaqTab
+            items={faqs}
+            loading={lfaq}
+            onChanged={() => { qc.invalidateQueries({ queryKey: ["admin-faqs"] }); qc.invalidateQueries({ queryKey: ["faqs"] }); }}
+          />
+        )}
+
+        {tab === "Legal" && (
+          <LegalTab
+            items={legalPages}
+            loading={lleg}
+            onChanged={() => { qc.invalidateQueries({ queryKey: ["admin-legal"] }); qc.invalidateQueries({ queryKey: ["legal-page"] }); }}
+          />
         )}
 
         {tab === "Testimonials" && (
@@ -957,6 +1002,446 @@ function SettingsTab({ settings, loading, onChanged }) {
       <button data-testid="settings-save-button" disabled={saving} onClick={save} className="inline-flex items-center gap-2 px-8 py-3 text-sm font-semibold bg-vermilion hover:bg-vermilion-hover text-white transition-colors disabled:opacity-50">
         {saving ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />} Save Settings
       </button>
+    </div>
+  );
+}
+
+// ---------- Generic list/editor scaffolding for Services, Industries, Locations, FAQ, Legal ----------
+
+function ListTable({ testId, columns, rows, renderRow, onNew, newLabel, empty }) {
+  const th = "text-left text-xs uppercase tracking-[0.15em] text-muted-foreground py-3 px-4 font-medium";
+  return (
+    <div data-testid={testId}>
+      {onNew && (
+        <button data-testid={`${testId}-new-button`} onClick={onNew} className="mb-4 inline-flex items-center gap-2 bg-vermilion hover:bg-vermilion-hover text-white text-sm font-semibold px-5 py-2.5 transition-colors">
+          <Plus size={15} /> {newLabel}
+        </button>
+      )}
+      <div className="overflow-x-auto border border-border">
+        <table className="w-full min-w-[680px]">
+          <thead className="bg-card/60"><tr>{columns.map((c) => <th key={c} className={th}>{c}</th>)}</tr></thead>
+          <tbody>
+            {rows.length === 0 && <tr><td colSpan={columns.length} className="py-4 px-4 text-sm border-t border-border">{empty}</td></tr>}
+            {rows.map(renderRow)}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+const td = "py-3 px-4 text-sm border-t border-border align-top";
+
+function EditorShell({ title, onClose, onSave, saving, disabled, children, wide }) {
+  return (
+    <div className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-10 px-4" data-lenis-prevent>
+      <div className={`w-full ${wide ? "max-w-3xl" : "max-w-2xl"} bg-card border border-border p-6 sm:p-8`}>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="font-display text-2xl font-bold tracking-tighter">{title}</h2>
+          <button onClick={onClose} className="p-2 hover:text-vermilion transition-colors"><X size={20} /></button>
+        </div>
+        {children}
+        <div className="flex justify-end gap-3 mt-6">
+          <button onClick={onClose} className="px-6 py-3 text-sm font-semibold border border-border hover:border-vermilion transition-colors">Cancel</button>
+          <button disabled={saving || disabled} onClick={onSave} className="px-8 py-3 text-sm font-semibold bg-vermilion hover:bg-vermilion-hover text-white transition-colors disabled:opacity-50 flex items-center gap-2">
+            {saving ? <Loader2 size={15} className="animate-spin" /> : "Save"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PublishedToggle({ checked, onChange }) {
+  return (
+    <label className="flex items-center gap-2 text-sm mb-2 cursor-pointer">
+      <input type="checkbox" checked={!!checked} onChange={(e) => onChange(e.target.checked)} className="accent-vermilion w-4 h-4" />
+      Published (visible on site)
+    </label>
+  );
+}
+
+// ---------- Services ----------
+
+function ServicesTab({ items, loading, onChanged }) {
+  const EMPTY = { slug: "", name: "", short: "", icon: "Search", metaTitle: "", metaDesc: "", hero: "", body: "", deliverables: "", group: "", order: 0, published: true };
+  const [editing, setEditing] = useState(null); // {id?, data}
+  const [saving, setSaving] = useState(false);
+
+  const openNew = () => setEditing({ data: { ...EMPTY } });
+  const openEdit = (s) => setEditing({ id: s.id, data: { ...s, deliverables: (s.deliverables || []).join("\n") } });
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      const payload = { ...editing.data, deliverables: editing.data.deliverables.split("\n").map((l) => l.trim()).filter(Boolean), order: Number(editing.data.order) || 0 };
+      if (editing.id) await api.put(`/admin/services/${editing.id}`, payload);
+      else await api.post("/admin/services", payload);
+      toast.success("Saved.");
+      setEditing(null);
+      onChanged();
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const remove = async (id) => {
+    if (!window.confirm("Delete this service? Its detail page will 404.")) return;
+    try {
+      await api.delete(`/admin/services/${id}`);
+      toast.success("Deleted.");
+      onChanged();
+    } catch (err) {
+      toast.error(formatApiError(err));
+    }
+  };
+
+  const set = (k, v) => setEditing((s) => ({ ...s, data: { ...s.data, [k]: v } }));
+
+  return (
+    <div data-testid="admin-services-tab">
+      <ListTable
+        testId="admin-services-table"
+        columns={["Name", "Group", "Status", "Actions"]}
+        rows={items}
+        empty={loading ? "Loading…" : "No services yet."}
+        onNew={openNew}
+        newLabel="New Service"
+        renderRow={(s) => (
+          <tr key={s.id}>
+            <td className={td}><span className="font-semibold">{s.name}</span><span className="block text-xs text-muted-foreground">/services/{s.slug}</span></td>
+            <td className={td}>{s.group}</td>
+            <td className={td}><span className={`text-xs px-2 py-1 ${s.published ? "bg-emerald-500/15 text-emerald-500" : "bg-muted text-muted-foreground"}`}>{s.published ? "Live" : "Draft"}</span></td>
+            <td className={td}>
+              <div className="flex gap-2">
+                <button onClick={() => openEdit(s)} className="p-2 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Pencil size={14} /></button>
+                <button onClick={() => remove(s.id)} className="p-2 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Trash2 size={14} /></button>
+              </div>
+            </td>
+          </tr>
+        )}
+      />
+      {editing && (
+        <EditorShell title={editing.id ? "Edit Service" : "New Service"} onClose={() => setEditing(null)} onSave={save} saving={saving} disabled={!editing.data.name || !editing.data.slug}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            {[["slug", "Slug (URL) *"], ["name", "Name *"], ["group", "Group (hub category)"], ["icon", "Icon (lucide name)"], ["hero", "Detail page headline"], ["metaTitle", "SEO Title"], ["metaDesc", "SEO Description"]].map(([k, l]) => (
+              <div key={k}><label className={labelCls}>{l}</label><input className={inputCls} value={editing.data[k] || ""} onChange={(e) => set(k, e.target.value)} /></div>
+            ))}
+          </div>
+          <div className="mb-4"><label className={labelCls}>Short description (used on cards)</label><textarea rows={2} className={`${inputCls} resize-y`} value={editing.data.short || ""} onChange={(e) => set("short", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Body (blank line between paragraphs)</label><textarea rows={6} className={`${inputCls} resize-y`} value={editing.data.body || ""} onChange={(e) => set("body", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Deliverables — one per line</label><textarea rows={5} className={`${inputCls} resize-y`} value={editing.data.deliverables || ""} onChange={(e) => set("deliverables", e.target.value)} /></div>
+          <PublishedToggle checked={editing.data.published} onChange={(v) => set("published", v)} />
+        </EditorShell>
+      )}
+    </div>
+  );
+}
+
+// ---------- Industries ----------
+
+function IndustriesTab({ items, loading, onChanged }) {
+  const EMPTY = { slug: "", name: "", tagline: "", intro: "", challenges: "", services: "", metaTitle: "", metaDesc: "", order: 0, published: true };
+  const [editing, setEditing] = useState(null);
+  const [saving, setSaving] = useState(false);
+
+  const openNew = () => setEditing({ data: { ...EMPTY } });
+  const openEdit = (i) => setEditing({ id: i.id, data: { ...i, challenges: (i.challenges || []).join("\n"), services: (i.services || []).join(", ") } });
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      const payload = {
+        ...editing.data,
+        challenges: editing.data.challenges.split("\n").map((l) => l.trim()).filter(Boolean),
+        services: editing.data.services.split(",").map((s) => s.trim()).filter(Boolean),
+        order: Number(editing.data.order) || 0,
+      };
+      if (editing.id) await api.put(`/admin/industries/${editing.id}`, payload);
+      else await api.post("/admin/industries", payload);
+      toast.success("Saved.");
+      setEditing(null);
+      onChanged();
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const remove = async (id) => {
+    if (!window.confirm("Delete this industry? Its detail page will 404.")) return;
+    try {
+      await api.delete(`/admin/industries/${id}`);
+      toast.success("Deleted.");
+      onChanged();
+    } catch (err) {
+      toast.error(formatApiError(err));
+    }
+  };
+
+  const set = (k, v) => setEditing((s) => ({ ...s, data: { ...s.data, [k]: v } }));
+
+  return (
+    <div data-testid="admin-industries-tab">
+      <ListTable
+        testId="admin-industries-table"
+        columns={["Name", "Tagline", "Status", "Actions"]}
+        rows={items}
+        empty={loading ? "Loading…" : "No industries yet."}
+        onNew={openNew}
+        newLabel="New Industry"
+        renderRow={(i) => (
+          <tr key={i.id}>
+            <td className={td}><span className="font-semibold">{i.name}</span><span className="block text-xs text-muted-foreground">/industries/{i.slug}</span></td>
+            <td className={td}><span className="line-clamp-1 max-w-xs block">{i.tagline}</span></td>
+            <td className={td}><span className={`text-xs px-2 py-1 ${i.published ? "bg-emerald-500/15 text-emerald-500" : "bg-muted text-muted-foreground"}`}>{i.published ? "Live" : "Draft"}</span></td>
+            <td className={td}>
+              <div className="flex gap-2">
+                <button onClick={() => openEdit(i)} className="p-2 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Pencil size={14} /></button>
+                <button onClick={() => remove(i.id)} className="p-2 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Trash2 size={14} /></button>
+              </div>
+            </td>
+          </tr>
+        )}
+      />
+      {editing && (
+        <EditorShell title={editing.id ? "Edit Industry" : "New Industry"} onClose={() => setEditing(null)} onSave={save} saving={saving} disabled={!editing.data.name || !editing.data.slug}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            {[["slug", "Slug (URL) *"], ["name", "Name *"], ["tagline", "Tagline"], ["metaTitle", "SEO Title"], ["metaDesc", "SEO Description"]].map(([k, l]) => (
+              <div key={k} className={k === "metaDesc" ? "sm:col-span-2" : ""}><label className={labelCls}>{l}</label><input className={inputCls} value={editing.data[k] || ""} onChange={(e) => set(k, e.target.value)} /></div>
+            ))}
+          </div>
+          <div className="mb-4"><label className={labelCls}>Intro paragraph</label><textarea rows={3} className={`${inputCls} resize-y`} value={editing.data.intro || ""} onChange={(e) => set("intro", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Challenges — one per line</label><textarea rows={4} className={`${inputCls} resize-y`} value={editing.data.challenges || ""} onChange={(e) => set("challenges", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Related service slugs (comma separated, e.g. market-research, seo)</label><input className={inputCls} value={editing.data.services || ""} onChange={(e) => set("services", e.target.value)} /></div>
+          <PublishedToggle checked={editing.data.published} onChange={(v) => set("published", v)} />
+        </EditorShell>
+      )}
+    </div>
+  );
+}
+
+// ---------- Locations ----------
+
+function LocationsTab({ items, loading, onChanged }) {
+  const EMPTY = { slug: "", name: "", eyebrow: "", h1: "", intro: "", body2: "", points: "", metaTitle: "", metaDesc: "", order: 0, published: true };
+  const [editing, setEditing] = useState(null);
+  const [saving, setSaving] = useState(false);
+
+  const openNew = () => setEditing({ data: { ...EMPTY } });
+  const openEdit = (l) => setEditing({ id: l.id, data: { ...l, points: (l.points || []).join("\n") } });
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      const payload = { ...editing.data, points: editing.data.points.split("\n").map((x) => x.trim()).filter(Boolean), order: Number(editing.data.order) || 0 };
+      if (editing.id) await api.put(`/admin/locations/${editing.id}`, payload);
+      else await api.post("/admin/locations", payload);
+      toast.success("Saved.");
+      setEditing(null);
+      onChanged();
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const remove = async (id) => {
+    if (!window.confirm("Delete this location page?")) return;
+    try {
+      await api.delete(`/admin/locations/${id}`);
+      toast.success("Deleted.");
+      onChanged();
+    } catch (err) {
+      toast.error(formatApiError(err));
+    }
+  };
+
+  const set = (k, v) => setEditing((s) => ({ ...s, data: { ...s.data, [k]: v } }));
+
+  return (
+    <div data-testid="admin-locations-tab">
+      <ListTable
+        testId="admin-locations-table"
+        columns={["Name", "Status", "Actions"]}
+        rows={items}
+        empty={loading ? "Loading…" : "No location pages yet."}
+        onNew={openNew}
+        newLabel="New Location"
+        renderRow={(l) => (
+          <tr key={l.id}>
+            <td className={td}><span className="font-semibold">{l.name}</span><span className="block text-xs text-muted-foreground">/locations/{l.slug}</span></td>
+            <td className={td}><span className={`text-xs px-2 py-1 ${l.published ? "bg-emerald-500/15 text-emerald-500" : "bg-muted text-muted-foreground"}`}>{l.published ? "Live" : "Draft"}</span></td>
+            <td className={td}>
+              <div className="flex gap-2">
+                <button onClick={() => openEdit(l)} className="p-2 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Pencil size={14} /></button>
+                <button onClick={() => remove(l.id)} className="p-2 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Trash2 size={14} /></button>
+              </div>
+            </td>
+          </tr>
+        )}
+      />
+      {editing && (
+        <EditorShell title={editing.id ? "Edit Location" : "New Location"} onClose={() => setEditing(null)} onSave={save} saving={saving} disabled={!editing.data.name || !editing.data.slug}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            {[["slug", "Slug (URL) *"], ["name", "Name *"], ["eyebrow", "Eyebrow label"], ["h1", "Headline"], ["metaTitle", "SEO Title"], ["metaDesc", "SEO Description"]].map(([k, l]) => (
+              <div key={k}><label className={labelCls}>{l}</label><input className={inputCls} value={editing.data[k] || ""} onChange={(e) => set(k, e.target.value)} /></div>
+            ))}
+          </div>
+          <div className="mb-4"><label className={labelCls}>Intro paragraph</label><textarea rows={3} className={`${inputCls} resize-y`} value={editing.data.intro || ""} onChange={(e) => set("intro", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Second paragraph</label><textarea rows={3} className={`${inputCls} resize-y`} value={editing.data.body2 || ""} onChange={(e) => set("body2", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Why brands here choose us — one point per line</label><textarea rows={4} className={`${inputCls} resize-y`} value={editing.data.points || ""} onChange={(e) => set("points", e.target.value)} /></div>
+          <PublishedToggle checked={editing.data.published} onChange={(v) => set("published", v)} />
+        </EditorShell>
+      )}
+    </div>
+  );
+}
+
+// ---------- FAQ ----------
+
+function FaqTab({ items, loading, onChanged }) {
+  const EMPTY = { group: "", question: "", answer: "", order: 0, published: true };
+  const [editing, setEditing] = useState(null);
+  const [saving, setSaving] = useState(false);
+
+  const openNew = () => setEditing({ data: { ...EMPTY, order: items.length } });
+  const openEdit = (f) => setEditing({ id: f.id, data: { ...f } });
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      const payload = { ...editing.data, order: Number(editing.data.order) || 0 };
+      if (editing.id) await api.put(`/admin/faqs/${editing.id}`, payload);
+      else await api.post("/admin/faqs", payload);
+      toast.success("Saved.");
+      setEditing(null);
+      onChanged();
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const remove = async (id) => {
+    if (!window.confirm("Delete this FAQ?")) return;
+    try {
+      await api.delete(`/admin/faqs/${id}`);
+      toast.success("Deleted.");
+      onChanged();
+    } catch (err) {
+      toast.error(formatApiError(err));
+    }
+  };
+
+  const set = (k, v) => setEditing((s) => ({ ...s, data: { ...s.data, [k]: v } }));
+
+  return (
+    <div data-testid="admin-faq-tab">
+      <ListTable
+        testId="admin-faq-table"
+        columns={["Question", "Group", "Order", "Status", "Actions"]}
+        rows={items}
+        empty={loading ? "Loading…" : "No FAQs yet."}
+        onNew={openNew}
+        newLabel="New FAQ"
+        renderRow={(f) => (
+          <tr key={f.id}>
+            <td className={td}><span className="line-clamp-2 max-w-md">{f.question}</span></td>
+            <td className={td}>{f.group}</td>
+            <td className={td}>{f.order}</td>
+            <td className={td}><span className={`text-xs px-2 py-1 ${f.published ? "bg-emerald-500/15 text-emerald-500" : "bg-muted text-muted-foreground"}`}>{f.published ? "Live" : "Draft"}</span></td>
+            <td className={td}>
+              <div className="flex gap-2">
+                <button onClick={() => openEdit(f)} className="p-2 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Pencil size={14} /></button>
+                <button onClick={() => remove(f.id)} className="p-2 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Trash2 size={14} /></button>
+              </div>
+            </td>
+          </tr>
+        )}
+      />
+      {editing && (
+        <EditorShell title={editing.id ? "Edit FAQ" : "New FAQ"} onClose={() => setEditing(null)} onSave={save} saving={saving} disabled={!editing.data.question}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div><label className={labelCls}>Group (section heading)</label><input className={inputCls} value={editing.data.group || ""} onChange={(e) => set("group", e.target.value)} placeholder="e.g. The Agency" /></div>
+            <div><label className={labelCls}>Order (lower = earlier)</label><input type="number" className={inputCls} value={editing.data.order} onChange={(e) => set("order", e.target.value)} /></div>
+          </div>
+          <div className="mb-4"><label className={labelCls}>Question *</label><input className={inputCls} value={editing.data.question || ""} onChange={(e) => set("question", e.target.value)} /></div>
+          <div className="mb-4"><label className={labelCls}>Answer</label><textarea rows={4} className={`${inputCls} resize-y`} value={editing.data.answer || ""} onChange={(e) => set("answer", e.target.value)} /></div>
+          <PublishedToggle checked={editing.data.published} onChange={(v) => set("published", v)} />
+        </EditorShell>
+      )}
+    </div>
+  );
+}
+
+// ---------- Legal pages ----------
+
+function LegalTab({ items, loading, onChanged }) {
+  const [editing, setEditing] = useState(null);
+  const [saving, setSaving] = useState(false);
+
+  const sectionsToText = (sections) => (sections || []).map((s) => `${s.h} | ${s.p}`).join("\n");
+  const textToSections = (text) => text.split("\n").map((l) => l.trim()).filter(Boolean).map((l) => {
+    const [h, ...rest] = l.split("|");
+    return { h: (h || "").trim(), p: rest.join("|").trim() };
+  });
+
+  const openEdit = (doc) => setEditing({ slug: doc.slug, data: { ...doc, sectionsText: sectionsToText(doc.sections) } });
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      const payload = { ...editing.data, sections: textToSections(editing.data.sectionsText) };
+      delete payload.sectionsText;
+      await api.put(`/admin/legal-pages/${editing.slug}`, payload);
+      toast.success("Saved.");
+      setEditing(null);
+      onChanged();
+    } catch (err) {
+      toast.error(formatApiError(err));
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const set = (k, v) => setEditing((s) => ({ ...s, data: { ...s.data, [k]: v } }));
+
+  return (
+    <div data-testid="admin-legal-tab">
+      <ListTable
+        testId="admin-legal-table"
+        columns={["Page", "Last Updated", "Actions"]}
+        rows={items}
+        empty={loading ? "Loading…" : "No legal pages yet."}
+        renderRow={(doc) => (
+          <tr key={doc.slug}>
+            <td className={td}><span className="font-semibold">{doc.title}</span><span className="block text-xs text-muted-foreground">/{doc.slug}</span></td>
+            <td className={td}>{doc.updated}</td>
+            <td className={td}>
+              <button onClick={() => openEdit(doc)} className="p-2 border border-border hover:border-vermilion hover:text-vermilion transition-colors"><Pencil size={14} /></button>
+            </td>
+          </tr>
+        )}
+      />
+      {editing && (
+        <EditorShell title={`Edit ${editing.data.title}`} onClose={() => setEditing(null)} onSave={save} saving={saving} wide>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div><label className={labelCls}>Title</label><input className={inputCls} value={editing.data.title || ""} onChange={(e) => set("title", e.target.value)} /></div>
+            <div><label className={labelCls}>Updated label</label><input className={inputCls} value={editing.data.updated || ""} onChange={(e) => set("updated", e.target.value)} placeholder="Last updated: August 2026" /></div>
+            <div className="sm:col-span-2"><label className={labelCls}>SEO Description</label><input className={inputCls} value={editing.data.metaDesc || ""} onChange={(e) => set("metaDesc", e.target.value)} /></div>
+          </div>
+          <div className="mb-4">
+            <label className={labelCls}>Sections — one per line, format: Heading | Paragraph text</label>
+            <textarea rows={14} className={`${inputCls} resize-y font-mono text-xs`} value={editing.data.sectionsText || ""} onChange={(e) => set("sectionsText", e.target.value)} />
+          </div>
+        </EditorShell>
+      )}
     </div>
   );
 }

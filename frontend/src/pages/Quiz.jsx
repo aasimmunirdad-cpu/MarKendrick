@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, RotateCcw, ArrowUpRight } from "lucide-react";
-import { SERVICES } from "../data/content";
-import { INDUSTRIES_DETAILED } from "../data/pages";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../lib/api";
 import { Reveal } from "../components/motion";
 import Seo from "../components/Seo";
 
@@ -36,6 +36,14 @@ const stepAnim = {
 };
 
 export default function Quiz() {
+  const { data: SERVICES = [] } = useQuery({
+    queryKey: ["services"],
+    queryFn: async () => (await api.get("/services")).data,
+  });
+  const { data: INDUSTRIES_DETAILED = [] } = useQuery({
+    queryKey: ["industries"],
+    queryFn: async () => (await api.get("/industries")).data,
+  });
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({ industry: null, goal: null, stage: null, budget: null });
 

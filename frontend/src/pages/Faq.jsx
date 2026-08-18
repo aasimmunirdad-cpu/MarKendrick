@@ -1,12 +1,28 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../lib/api";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../components/ui/accordion";
-import { FAQS } from "../data/pages";
 import { Reveal } from "../components/motion";
 import JsonLd from "../components/JsonLd";
 import Seo from "../components/Seo";
 
 export default function Faq() {
+  const { data: flatFaqs = [] } = useQuery({
+    queryKey: ["faqs"],
+    queryFn: async () => (await api.get("/faqs")).data,
+  });
+
+  const FAQS = [];
+  flatFaqs.forEach((item) => {
+    let g = FAQS.find((x) => x.group === item.group);
+    if (!g) {
+      g = { group: item.group, items: [] };
+      FAQS.push(g);
+    }
+    g.items.push({ q: item.question, a: item.answer });
+  });
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
