@@ -103,6 +103,8 @@ export default function Footer() {
           <img
             src={settings.logo_url}
             alt="MarKendrick"
+            width="154"
+            height="24"
             className="h-6 w-auto"
           />
           <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} {settings.footer_copyright}</p>

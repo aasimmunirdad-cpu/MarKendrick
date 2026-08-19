@@ -89,6 +89,8 @@ export default function Navbar({ onSearchOpen }) {
           <img
             src={settings.logo_url}
             alt="MarKendrick"
+            width="180"
+            height="32"
             className="h-7 sm:h-8 w-auto"
           />
         </Link>

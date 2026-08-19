@@ -6,6 +6,7 @@ import { Reveal } from "../components/motion";
 import RichText from "../components/RichText";
 import Seo from "../components/Seo";
 import BreadcrumbSchema from "../components/BreadcrumbSchema";
+import JsonLd from "../components/JsonLd";
 import NotFound from "./NotFound";
 
 export default function IndustryDetail() {
@@ -39,6 +40,18 @@ export default function IndustryDetail() {
           { name: "Industries", path: "/industries" },
           { name: ind.name, path: `/industries/${ind.slug}` },
         ]}
+      />
+      <JsonLd
+        id={`industry-schema-${ind.slug}`}
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: `Marketing for ${ind.name}`,
+          description: ind.metaDesc,
+          url: `https://accurate-serenity-production.up.railway.app/industries/${ind.slug}`,
+          provider: { "@type": "ProfessionalService", name: "MarKendrick", url: "https://accurate-serenity-production.up.railway.app/" },
+          audience: { "@type": "Audience", audienceType: ind.name },
+        }}
       />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-16">

@@ -61,6 +61,7 @@ function ScrollTop() {
 function PageWrap({ children }) {
   return (
     <motion.main
+      id="main-content"
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
@@ -99,6 +100,13 @@ function Shell() {
 
   return (
     <>
+      <a
+        href="#main-content"
+        data-testid="skip-to-content-link"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-vermilion focus:text-ink focus:px-4 focus:py-2 focus:rounded-full focus:text-sm focus:font-semibold"
+      >
+        Skip to content
+      </a>
       <div className="grain-overlay" aria-hidden="true" />
       <ScrollTop />
       {!isAdmin && <GlobalTypography />}

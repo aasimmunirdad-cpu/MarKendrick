@@ -6,6 +6,7 @@ import { Reveal } from "../components/motion";
 import RichText from "../components/RichText";
 import Seo from "../components/Seo";
 import BreadcrumbSchema from "../components/BreadcrumbSchema";
+import JsonLd from "../components/JsonLd";
 
 export default function CaseStudyDetail() {
   const { slug } = useParams();
@@ -33,6 +34,19 @@ export default function CaseStudyDetail() {
           { name: "Work", path: "/work" },
           { name: cs.client, path: `/work/${slug}` },
         ]}
+      />
+      <JsonLd
+        id={`case-study-schema-${slug}`}
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          headline: cs.title,
+          about: cs.client,
+          description: cs.summary,
+          image: cs.cover,
+          url: `https://accurate-serenity-production.up.railway.app/work/${slug}`,
+          author: { "@type": "Organization", name: "MarKendrick" },
+        }}
       />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal>

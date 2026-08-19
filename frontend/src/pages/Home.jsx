@@ -73,6 +73,7 @@ export default function Home() {
             delay={0.25}
           />
           <MaskLines
+            as="div"
             lines={["STRATEGIES", "THAT PERFORM."]}
             className="font-display font-extrabold tracking-tight leading-[1.12] text-[7.8vw] sm:text-[8vw] lg:text-[4.2vw] text-vermilion"
             delay={0.55}

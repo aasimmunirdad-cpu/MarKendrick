@@ -6,6 +6,7 @@ import { Reveal } from "../components/motion";
 import RichText from "../components/RichText";
 import Seo from "../components/Seo";
 import BreadcrumbSchema from "../components/BreadcrumbSchema";
+import JsonLd from "../components/JsonLd";
 import NotFound from "./NotFound";
 
 export default function ServiceDetail() {
@@ -34,6 +35,23 @@ export default function ServiceDetail() {
           { name: "Services", path: "/services" },
           { name: service.name, path: `/services/${service.slug}` },
         ]}
+      />
+      <JsonLd
+        id={`service-schema-${service.slug}`}
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: service.name,
+          description: service.metaDesc || service.short,
+          serviceType: service.name,
+          url: `https://accurate-serenity-production.up.railway.app/services/${service.slug}`,
+          provider: {
+            "@type": "ProfessionalService",
+            name: "MarKendrick",
+            url: "https://accurate-serenity-production.up.railway.app/",
+          },
+          areaServed: ["Pakistan", "Middle East", "United Kingdom", "United States", "Europe"],
+        }}
       />
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8">
         <Reveal className="mb-16 sm:mb-24">
