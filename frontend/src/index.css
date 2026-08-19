@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Used by the navbar ServiceWheel for its continuously orbiting rings -
+   applied via inline `animation` (dynamic per-ring durations can't be
+   expressed as static Tailwind arbitrary-value classes, since Tailwind's
+   compiler only detects literal class strings in source). */
+@keyframes mk-wheel-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @layer base {
     :root {
         --background: 0 0% 98%;

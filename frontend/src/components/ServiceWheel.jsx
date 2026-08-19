@@ -1,41 +1,96 @@
-import { useState, useRef, useCallback, useMemo } from "react";
+import { useMemo, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { api } from "../lib/api";
 
-const CENTER = 200;
-const HUB_R = 54;
-const WEDGE_INNER_R = 58;
-const WEDGE_OUTER_R = 140;
-const BUBBLE_SPREAD = 300;
 const WHEEL_TEXT =
   "MARKET RESEARCH • NEUROMARKETING • BRANDING • PERFORMANCE MARKETING • SEO • SOCIAL MEDIA • ";
 
-function polar(angle, r) {
-  const rad = ((angle - 90) * Math.PI) / 180;
-  return { x: CENTER + r * Math.cos(rad), y: CENTER + r * Math.sin(rad) };
-}
+// Short display labels for the wheel - the full CMS `name` is often too
+// long to sit on a rotating ring, so we show a compact form here while
+// every link still points at the real /services/:slug page. Any service
+// not listed here (e.g. a brand new one added later) just falls back to
+// its full name, so the wheel never breaks - it just runs a bit wider.
+const SHORT_LABELS = {
+  "consumer-behaviour-insights": "Consumer Behaviour",
+  "marketing-strategy-consulting": "Marketing Strategy",
+  "sales-decline-diagnosis": "Sales Decline Recovery",
+  seo: "SEO",
+  "sem-ppc": "SEM / PPC",
+  "social-media-marketing": "Social Media",
+  "email-marketing-automation": "Email Marketing",
+  "marketing-analytics-reporting": "Analytics & Reporting",
+  advertising: "Advertising",
+};
 
-function wedgePath(a0, a1, rIn, rOut) {
-  const p1 = polar(a0, rOut);
-  const p2 = polar(a1, rOut);
-  const p3 = polar(a1, rIn);
-  const p4 = polar(a0, rIn);
-  const large = a1 - a0 > 180 ? 1 : 0;
-  return `M ${p1.x} ${p1.y} A ${rOut} ${rOut} 0 ${large} 1 ${p2.x} ${p2.y} L ${p3.x} ${p3.y} A ${rIn} ${rIn} 0 ${large} 0 ${p4.x} ${p4.y} Z`;
+// Three concentric rings, each spinning continuously (alternating
+// direction) via the counter-rotation trick: a ring container animates a
+// full spin, every item's inner wrapper animates the exact reverse over
+// the same duration, so the label itself always stays upright while it
+// orbits. Uses inline `animation` (not Tailwind's arbitrary-value classes,
+// which can't be generated for dynamically-built strings - Tailwind's
+// compiler only scans for literal class names in source).
+const RINGS = [
+  { radius: 96, duration: 55, reverse: false },
+  { radius: 152, duration: 70, reverse: true },
+  { radius: 208, duration: 85, reverse: false },
+];
+
+function WheelRing({ items, radius, duration, reverse, paused }) {
+  const count = items.length;
+  const playState = paused ? "paused" : "running";
+  return (
+    <div
+      className="absolute inset-0"
+      style={{
+        animation: `mk-wheel-spin ${duration}s linear infinite ${reverse ? "reverse" : "normal"}`,
+        animationPlayState: playState,
+        transformOrigin: "50% 50%",
+      }}
+    >
+      {items.map((item, i) => {
+        const angle = (360 / count) * i;
+        return (
+          <div
+            key={item.slug}
+            className="absolute left-1/2 top-1/2"
+            style={{ transform: `rotate(${angle}deg) translateX(${radius}px)` }}
+          >
+            <div
+              style={{
+                animation: `mk-wheel-spin ${duration}s linear infinite ${reverse ? "normal" : "reverse"}`,
+                animationPlayState: playState,
+                transformOrigin: "50% 50%",
+              }}
+            >
+              <div style={{ transform: `translate(-50%, -50%) rotate(${-angle}deg)` }}>
+                <Link
+                  to={`/services/${item.slug}`}
+                  data-testid={`service-wheel-service-${item.slug}`}
+                  className="block whitespace-nowrap bg-coal border border-vermilion/40 text-white text-[10px] font-medium px-2.5 py-1 rounded-full hover:bg-vermilion hover:text-ink hover:border-vermilion transition-colors duration-150"
+                >
+                  {item.label}
+                </Link>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 /**
  * Radial "service wheel" nav trigger. Idle state is a small orbiting-text
- * dot (kept from the original design); hovering/focusing it opens a
- * three-slice wheel grouped by the live service categories from the CMS.
- * Hovering a slice fans that group's services out as a ring of clickable
- * pills that link straight to /services/:slug.
+ * dot; hovering/focusing it opens a wheel with all services already
+ * visible and continuously orbiting across three rings (no click-to-reveal
+ * step). Hovering the open panel pauses the motion so a service is easy
+ * to click; every link goes straight to /services/:slug.
  */
 export default function ServiceWheel({ className = "" }) {
   const [open, setOpen] = useState(false);
-  const [activeGroup, setActiveGroup] = useState(null);
+  const [paused, setPaused] = useState(false);
   const closeTimer = useRef(null);
 
   const { data: SERVICES = [] } = useQuery({
@@ -43,21 +98,17 @@ export default function ServiceWheel({ className = "" }) {
     queryFn: async () => (await api.get("/services")).data,
   });
 
-  const groups = useMemo(() => {
-    const map = new Map();
-    SERVICES.forEach((s) => {
-      const key = s.group || "Services";
-      if (!map.has(key)) map.set(key, []);
-      map.get(key).push(s);
-    });
-    const names = Array.from(map.keys());
-    const span = 360 / (names.length || 1);
-    return names.map((name, i) => ({
-      name,
-      start: i * span,
-      end: (i + 1) * span,
-      services: map.get(name),
+  const rings = useMemo(() => {
+    if (!SERVICES.length) return [];
+    const withLabels = SERVICES.map((s) => ({
+      slug: s.slug,
+      label: SHORT_LABELS[s.slug] || s.name,
     }));
+    const sorted = [...withLabels].sort((a, b) => a.label.length - b.label.length);
+    const n = sorted.length;
+    const chunk = Math.ceil(n / 3);
+    const buckets = [sorted.slice(0, chunk), sorted.slice(chunk, chunk * 2), sorted.slice(chunk * 2)];
+    return RINGS.map((cfg, i) => ({ ...cfg, items: buckets[i] })).filter((r) => r.items.length);
   }, [SERVICES]);
 
   const clearCloseTimer = () => {
@@ -74,20 +125,14 @@ export default function ServiceWheel({ className = "" }) {
 
   const handleClose = useCallback(() => {
     clearCloseTimer();
-    closeTimer.current = setTimeout(() => {
-      setOpen(false);
-      setActiveGroup(null);
-    }, 220);
+    closeTimer.current = setTimeout(() => setOpen(false), 220);
   }, []);
 
   const onKeyDown = useCallback((e) => {
-    if (e.key === "Escape") {
-      setOpen(false);
-      setActiveGroup(null);
-    }
+    if (e.key === "Escape") setOpen(false);
   }, []);
 
-  if (!groups.length) {
+  if (!rings.length) {
     return (
       <Link
         to="/services"
@@ -101,8 +146,6 @@ export default function ServiceWheel({ className = "" }) {
     );
   }
 
-  const active = activeGroup !== null ? groups[activeGroup] : null;
-
   return (
     <div
       className={`relative hidden md:flex items-center justify-center ${className}`}
@@ -113,7 +156,7 @@ export default function ServiceWheel({ className = "" }) {
       <button
         type="button"
         data-testid="nav-service-wheel"
-        aria-label="Explore services by category"
+        aria-label="Explore all services"
         aria-haspopup="true"
         aria-expanded={open}
         onClick={() => (open ? handleClose() : handleOpen())}
@@ -149,115 +192,34 @@ export default function ServiceWheel({ className = "" }) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: -8 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute top-full right-[-190px] mt-3 w-[460px] h-[460px] z-50 drop-shadow-2xl"
+            className="absolute top-full right-[-210px] mt-3 w-[520px] h-[520px] z-50 drop-shadow-2xl"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
           >
-            <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible" aria-hidden="true">
-              <circle
-                cx={CENTER}
-                cy={CENTER}
-                r={WEDGE_OUTER_R + 8}
-                fill="#0A0A0A"
-                stroke="rgba(255,255,255,0.1)"
-                strokeWidth="1"
-              />
-              <circle cx={CENTER} cy={CENTER} r={HUB_R} fill="#141414" stroke="rgba(224,146,61,0.35)" strokeWidth="1" />
-              <text
-                x={CENTER}
-                y={CENTER - 4}
-                textAnchor="middle"
-                className="fill-vermilion"
-                style={{ fontSize: "10px", letterSpacing: "0.15em", fontWeight: 700 }}
-              >
-                SERVICES
-              </text>
-              <text
-                x={CENTER}
-                y={CENTER + 12}
-                textAnchor="middle"
-                fill="rgba(255,255,255,0.5)"
-                style={{ fontSize: "8px", letterSpacing: "0.08em" }}
-              >
-                {active ? active.name.toUpperCase() : "HOVER A SLICE"}
-              </text>
-              {groups.map((g, gi) => {
-                const mid = (g.start + g.end) / 2;
-                const lp = polar(mid, 99);
-                const words = g.name.split(" & ");
-                const isActive = activeGroup === gi;
-                return (
-                  <g key={g.name}>
-                    <path
-                      data-testid={`service-wheel-group-${gi}`}
-                      d={wedgePath(g.start, g.end, WEDGE_INNER_R, WEDGE_OUTER_R)}
-                      fill={isActive ? "#E0923D" : "rgba(255,255,255,0.06)"}
-                      stroke="#0A0A0A"
-                      strokeWidth="2"
-                      className="cursor-pointer transition-colors duration-200"
-                      onMouseEnter={() => setActiveGroup(gi)}
-                      onFocus={() => setActiveGroup(gi)}
-                      tabIndex={0}
-                    />
-                    <text
-                      x={lp.x}
-                      y={lp.y}
-                      textAnchor="middle"
-                      fill={isActive ? "#0A0A0A" : "rgba(255,255,255,0.85)"}
-                      style={{ fontSize: "10px", fontWeight: 600, pointerEvents: "none" }}
-                    >
-                      {words.map((w, i) => (
-                        <tspan key={i} x={lp.x} dy={i === 0 ? 0 : 11}>
-                          {w}
-                        </tspan>
-                      ))}
-                    </text>
-                  </g>
-                );
-              })}
-            </svg>
+            <div className="absolute inset-0 rounded-full bg-ink border border-white/10" />
 
-            <div className="absolute inset-0">
-              <AnimatePresence>
-                {active &&
-                  active.services.map((s, i) => {
-                    const count = active.services.length;
-                    const mid = (active.start + active.end) / 2;
-                    const startA = mid - BUBBLE_SPREAD / 2;
-                    const angle = count > 1 ? startA + (BUBBLE_SPREAD / (count - 1)) * i : mid;
-                    const r = count > 6 ? (i % 2 === 0 ? 176 : 206) : 185;
-                    const p = polar(angle, r);
-                    return (
-                      <motion.div
-                        key={s.slug}
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.5 }}
-                        transition={{ duration: 0.18, delay: i * 0.015 }}
-                        style={{
-                          position: "absolute",
-                          left: `${(p.x / 400) * 100}%`,
-                          top: `${(p.y / 400) * 100}%`,
-                          transform: "translate(-50%, -50%)",
-                        }}
-                      >
-                        <Link
-                          to={`/services/${s.slug}`}
-                          data-testid={`service-wheel-service-${s.slug}`}
-                          className="block whitespace-nowrap bg-coal border border-vermilion/40 text-white text-[10.5px] font-medium px-3 py-1.5 rounded-full hover:bg-vermilion hover:text-ink hover:border-vermilion transition-colors duration-150"
-                        >
-                          {s.name}
-                        </Link>
-                      </motion.div>
-                    );
-                  })}
-              </AnimatePresence>
-            </div>
+            {rings.map((ring, i) => (
+              <WheelRing
+                key={i}
+                items={ring.items}
+                radius={ring.radius}
+                duration={ring.duration}
+                reverse={ring.reverse}
+                paused={paused}
+              />
+            ))}
 
             <Link
               to="/services"
-              data-testid="service-wheel-view-all"
-              className="absolute -bottom-2 left-1/2 -translate-x-1/2 translate-y-full text-[11px] font-medium text-muted-foreground hover:text-vermilion transition-colors pt-2"
+              data-testid="service-wheel-hub"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[108px] h-[108px] rounded-full bg-coal border border-vermilion/35 flex flex-col items-center justify-center text-center hover:border-vermilion transition-colors duration-200"
             >
-              View all services →
+              <span className="text-vermilion font-bold" style={{ fontSize: "10px", letterSpacing: "0.15em" }}>
+                SERVICES
+              </span>
+              <span className="text-white/50 mt-1" style={{ fontSize: "8px", letterSpacing: "0.08em" }}>
+                VIEW ALL →
+              </span>
             </Link>
           </motion.div>
         )}
