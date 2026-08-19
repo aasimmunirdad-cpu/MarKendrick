@@ -149,9 +149,17 @@ export default function ServiceWheel({ className = "" }) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: -8 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute top-full right-[-190px] mt-3 w-[460px] h-[460px] z-50"
+            className="absolute top-full right-[-190px] mt-3 w-[460px] h-[460px] z-50 drop-shadow-2xl"
           >
             <svg viewBox="0 0 400 400" className="w-full h-full overflow-visible" aria-hidden="true">
+              <circle
+                cx={CENTER}
+                cy={CENTER}
+                r={WEDGE_OUTER_R + 8}
+                fill="#0A0A0A"
+                stroke="rgba(255,255,255,0.1)"
+                strokeWidth="1"
+              />
               <circle cx={CENTER} cy={CENTER} r={HUB_R} fill="#141414" stroke="rgba(224,146,61,0.35)" strokeWidth="1" />
               <text
                 x={CENTER}
