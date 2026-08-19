@@ -52,7 +52,7 @@ export default function About() {
           <div className="aspect-[21/9] overflow-hidden">
             <img src={settings.about_office_photo_url} alt="Inside MarKendrick's Lahore studio" loading="lazy" className="w-full h-full object-cover" />
           </div>
-          <p className="text-xs text-muted-foreground mt-3">The strategy floor, Gulberg III, Lahore.</p>
+          <p className="text-xs text-muted-foreground mt-3">The strategy floor, MarKendrick studio, Lahore.</p>
         </Reveal>
 
         <Reveal className="mb-24">

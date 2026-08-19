@@ -63,7 +63,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-5">Agency</p>
             <ul className="space-y-3 text-sm">
-              {[["About", "/about"], ["Industries", "/industries"], ["Work", "/work"], ["Insights", "/insights"], ["Whitepapers", "/whitepapers"], ["ROI Calculator", "/roi-calculator"], ["Maturity Quiz", "/maturity-quiz"], ["FAQ", "/faq"], ["Take the Quiz", "/quiz"], ["Share Your Experience", "/share-your-experience"], ["Contact", "/contact"]].map(([label, to]) => (
+              {[["About", "/about"], ["How We Work", "/how-we-work"], ["Industries", "/industries"], ["Work", "/work"], ["Insights", "/insights"], ["Whitepapers", "/whitepapers"], ["ROI Calculator", "/roi-calculator"], ["Maturity Quiz", "/maturity-quiz"], ["FAQ", "/faq"], ["Take the Quiz", "/quiz"], ["Share Your Experience", "/share-your-experience"], ["Contact", "/contact"]].map(([label, to]) => (
                 <li key={label}><Link to={to} className="hover:text-vermilion transition-colors">{label}</Link></li>
               ))}
             </ul>

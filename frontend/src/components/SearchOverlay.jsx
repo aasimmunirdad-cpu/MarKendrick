@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, ArrowRight, Calculator, Gauge, Sparkles, FileText, HelpCircle, MessageSquarePlus, Briefcase, Building2, FolderOpen, BookOpen, User, Mail } from "lucide-react";
+import { Search, X, ArrowRight, Calculator, Gauge, Sparkles, FileText, HelpCircle, MessageSquarePlus, Briefcase, Building2, FolderOpen, BookOpen, User, Mail, Workflow } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api";
 
@@ -19,6 +19,7 @@ const TOOL_LINKS = [
   { to: "/maturity-quiz", label: "Marketing Maturity Grade", icon: Gauge },
   { to: "/quiz", label: "Take the Quiz", icon: Sparkles },
   { to: "/whitepapers", label: "Whitepapers & Reports", icon: FileText },
+  { to: "/how-we-work", label: "How We Work", icon: Workflow },
   { to: "/faq", label: "FAQ", icon: HelpCircle },
   { to: "/share-your-experience", label: "Share Your Experience", icon: MessageSquarePlus },
 ];

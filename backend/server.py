@@ -1208,7 +1208,7 @@ DEFAULT_SETTINGS = {
     "footer_newsletter_title": "One email a month. Zero fluff.",
     "footer_newsletter_desc": "Consumer psychology, performance media, brand science. Unsubscribe anytime.",
     "footer_copyright": "MarKendrick. Insights that Inform. Strategies that Perform.",
-    "office_address": "Gulberg III, Lahore, Punjab, Pakistan",
+    "office_address": "G-12 Commercial, DHA Phase-I, Lahore, Punjab, Pakistan",
     "office_email": "hello@markendrick.com",
     "office_hours": "Mon–Fri, 9:00–18:00 PKT",
     "office_whatsapp": "923339395444",
@@ -1372,7 +1372,7 @@ async def admin_newsletter_log(user: dict = Depends(get_current_user)):
 SITEMAP_STATIC = [
     "/", "/about", "/services", "/industries", "/work", "/insights", "/contact",
     "/book-consultation", "/faq", "/quiz", "/whitepapers", "/roi-calculator", "/maturity-quiz",
-    "/privacy-policy", "/terms-of-service", "/cookie-policy",
+    "/privacy-policy", "/terms-of-service", "/cookie-policy", "/how-we-work", "/share-your-experience",
 ]
 SITEMAP_SERVICES = [
     "market-research", "consumer-behaviour-insights", "neuromarketing", "digital-marketing",
@@ -1695,104 +1695,87 @@ async def migrate_em_dashes():
         logger.info("Em-dash migration: cleaned %d document(s)", updated)
 
 
-LOCATION_CONTENT_V1 = {
-    "marketing-agency-lahore": {
-        "intro": "If you have searched for a 'digital marketing agency in Lahore' or a 'branding agency near Gulberg', you have probably found a long list of agencies promising the same three things: reels, reach and 'growth'. MarKendrick is different by design. We are headquartered in Gulberg III, and this city is our laboratory - every research method, positioning framework and performance model we sell to clients from Dubai to Chicago was pressure-tested first against Lahore's shoppers, its noisiest bazaars and its fastest-moving feeds. We work with retail brands on MM Alam Road, textile exporters near Sundar Industrial Estate, restaurant groups scaling past their first three outlets, and D2C founders shipping out of DHA warehouses - businesses that need evidence before spend, not vibes.",
-        "body2": "Most Lahore businesses hire a second or third marketing agency, not a first - usually because the last one could not explain why a campaign worked or didn't. We start every engagement with a Diagnostic Audit: a structured look at your positioning, your funnel and your actual buyer behaviour, delivered by senior consultants who sit fifteen minutes from your office, not a WhatsApp group managed by a fresh graduate. From there we build whatever the diagnosis calls for - SEO and content, performance media, brand identity, or full-funnel demand generation - with the same discipline whether the client is a Liberty Market retailer or a Karachi-headquartered enterprise using our Lahore team.",
-        "points": [
-            "Face-to-face strategy sessions at our Gulberg III studio - no relationship managed entirely over WhatsApp",
-            "Deep networks across Lahore's retail, media, production and influencer landscape",
-            "Mystery shopping and field research executed city-wide, from Liberty to DHA Phase 6",
-            "SEO, branding and performance marketing under one senior team, not outsourced to freelancers",
-            "Diagnostic Audits from PKR 60,000, with findings delivered in 1-2 weeks",
-        ],
-        "metaTitle": "Digital Marketing Agency in Lahore | Gulberg III - MarKendrick",
-        "metaDesc": "Lahore's research-led digital marketing agency, based in Gulberg III. Diagnostic audits, SEO, branding and performance marketing. Book a free consultation.",
-    },
-    "marketing-agency-pakistan": {
-        "intro": "Businesses searching for a 'marketing agency in Pakistan' are usually trying to solve a specific problem: their current setup only understands one city. A Lahore-only agency misreads Karachi's price sensitivity. A Karachi agency underestimates how relationship-driven Peshawar and Multan buying decisions are. We built MarKendrick to work across all of them, because the research discipline we apply does not change by postcode - only the findings do. From Karachi's corporate towers and DHA retail belt, to Islamabad's startup and embassy-adjacent audiences, to Faisalabad and Sialkot's export-driven textile houses, we run the same structured process: understand the buyer before we touch the budget.",
-        "body2": "Delivery is remote-first with on-ground research capability, so a brand in Multan gets the same senior strategist and the same rigour as a client fifteen minutes from our Gulberg office. We run bilingual Urdu and English campaigns, because most Pakistani purchase decisions happen in a mix of both, and a campaign that only sounds right in English usually underperforms outside the metro core. Whether you need a national FMCG launch, a fintech's first paid-acquisition engine, or a textile exporter's LinkedIn presence rebuilt for international buyers, we plan media and messaging city by city, not as one undifferentiated 'Pakistan' campaign.",
-        "points": [
-            "Field research and mystery shopping across Karachi, Lahore, Islamabad, Faisalabad and beyond",
-            "Bilingual Urdu and English campaign planning and copywriting",
-            "National media relationships across TV, print, outdoor and digital",
-            "City-by-city media planning instead of one blanket national campaign",
-            "Monthly retainers from PKR 150,000, with no long lock-in contracts",
-        ],
-        "metaTitle": "Marketing Agency in Pakistan | Karachi, Lahore & Islamabad - MarKendrick",
-        "metaDesc": "A research-led marketing agency serving Karachi, Lahore, Islamabad and all of Pakistan. Strategy, branding, digital and performance marketing.",
-    },
-    "middle-east": {
-        "intro": "Brands searching for a 'marketing agency in Dubai' or a 'GCC marketing agency' are often really looking for something Dubai's saturated, expensive market makes hard to find: senior strategists who will actually own the thinking, at a price that does not eat half the media budget. The Gulf's consumers are among the most researched in the world - and, because of that saturation, among the most fatigued by generic campaigns. We help brands across the UAE, Saudi Arabia and the wider GCC build consumer insight, brand strategy and performance campaigns that respect how differently a Riyadh household and a Dubai expat household actually decide to buy.",
-        "body2": "Our Lahore base is not a limitation for Gulf clients, it is the advantage: a senior, insight-led team at a fraction of typical Dubai or Riyadh agency rates, with a timezone overlap tight enough that same-day collaboration is normal, not a stretch. We plan around Ramadan and regional seasonal spikes as a default, not an afterthought, and every brand engagement includes cultural fluency review before anything ships in Arabic-market work, so messaging that tests well in a deck does not misfire in market.",
-        "points": [
-            "Consumer research and message testing across UAE, Saudi Arabia and wider GCC markets",
-            "Ramadan and regional seasonal campaign planning built in from day one",
-            "Arabic-market cultural fluency review on every piece of brand and campaign work",
-            "Timezone-aligned delivery with Gulf-hours availability for reviews and approvals",
-            "Senior strategist access at a fraction of typical Dubai or Riyadh agency rates",
-        ],
-        "metaTitle": "Marketing Agency for the Middle East | UAE & GCC - MarKendrick",
-        "metaDesc": "Research-led marketing for UAE, Saudi and GCC brands: consumer insight, brand strategy and performance campaigns from MarKendrick.",
-    },
-    "united-kingdom": {
-        "intro": "UK businesses searching for a 'marketing agency for UK brands' or comparing offshore options are usually weighing the same trade-off: can a partner outside the UK actually understand a British buyer, or will it just be cheaper and worse? We built MarKendrick to remove that trade-off. UK clients get a research-led partner that thinks in evidence, not opinion: insight studies, brand strategy, SEO and performance programs run by senior strategists who have studied UK search behaviour and buying psychology directly, not junior account handlers reading a template.",
-        "body2": "We work UK-hours overlap as standard, report in the formats UK marketing and finance teams expect, and price in a way that makes an incumbent agency's retainer difficult to defend once you have seen the comparison. Most UK boutique agencies do not have in-house research or neuromarketing capability - we do, and it changes how confidently a campaign can be greenlit before spend goes live. For SEO specifically, competitive UK search results reward exactly the kind of structured, evidence-first content strategy that is our starting point on every engagement, not an add-on.",
-        "points": [
-            "UK-hours collaboration with weekly, senior-led reporting - not a monthly PDF",
-            "SEO and content programs built for competitive UK search results",
-            "In-house research and neuromarketing capability most UK boutique agencies lack",
-            "Senior strategist access, typically 40-60% below comparable UK agency fees",
-            "Transparent, evidence-based reporting your UK finance team will actually trust",
-        ],
-        "metaTitle": "Marketing Agency for UK Brands | Offshore Senior Strategy - MarKendrick",
-        "metaDesc": "Research-led marketing partner for UK businesses: insight, brand strategy, SEO and performance marketing at offshore economics.",
-    },
-    "united-states": {
-        "intro": "US founders and marketing leads searching for an 'offshore marketing agency' or a fractional-CMO alternative are usually past the point of wanting more freelancers. They want senior thinking without a senior agency's overhead. That is exactly the gap MarKendrick fills: market research, positioning, B2B pipeline programs and performance marketing delivered by a team that treats a client's budget like its own, because in a market where every dollar of CAC gets scrutinised, sloppy spend is the fastest way to lose a client.",
-        "body2": "The timezone gap between Lahore and the US is not a problem we work around, it is a feature we use: async-friendly delivery with structured weekly syncs means research runs, campaigns get built and reporting gets prepared while a US team sleeps, so Monday morning starts with decisions ready to make instead of a backlog to review. For funded startups, that means positioning and messaging sprints that move at startup speed. For established B2B brands, it means ABM and pipeline programs measured on revenue influence, not vanity reach.",
-        "points": [
-            "B2B pipeline and account-based marketing programs built for US sales cycles",
-            "Positioning and messaging sprints for funded startups moving at speed",
-            "Performance marketing measured with incrementality-first testing, not last-click vanity metrics",
-            "Async-friendly delivery - work progresses overnight, ready for Monday morning review",
-            "Senior strategist access without US agency-market overhead pricing",
-        ],
-        "metaTitle": "Marketing Agency for US Brands | Offshore Senior Strategy - MarKendrick",
-        "metaDesc": "Offshore, senior-led marketing for US startups and brands: research, positioning, B2B pipeline and performance marketing.",
-    },
-    "europe": {
-        "intro": "European brands searching for a marketing partner outside their home market are usually balancing two concerns most agencies handle badly: genuine language and cultural fluency, and strict data compliance. MarKendrick treats both as non-negotiable, not a checkbox. We deliver insight studies, brand strategy and digital campaigns for European markets with GDPR-aware data practices built into research design from the first questionnaire, and the cultural sensitivity that multilingual, multi-market European audiences actually require - because a campaign that works in Berlin rarely translates directly to Madrid or Milan.",
-        "body2": "From D2C brands scaling out of Germany to hospitality groups across Spain and Italy, we bring the same diagnostic method to every engagement, adapted to the target market's language, regulatory environment and buyer psychology rather than a single template stretched across borders. Consent-first campaign design, CET-friendly collaboration hours, and researchers who can run and interpret studies across multiple European languages mean the insight you get is genuinely local, even when the team producing it is not sitting in the same city as your customers.",
-        "points": [
-            "GDPR-compliant data handling and consent-first campaign design from the first brief",
-            "Multi-market consumer research capability across major European languages",
-            "Brand and content work adapted per market, not stretched across one template",
-            "CET-friendly collaboration hours for smooth day-to-day project management",
-            "Diagnostic method adapted to each market's regulatory environment and buyer psychology",
-        ],
-        "metaTitle": "Marketing Agency for Europe | GDPR-Aware Strategy - MarKendrick",
-        "metaDesc": "GDPR-aware, research-led marketing for European brands: insight, brand strategy and digital campaigns from MarKendrick.",
-    },
-}
-
-
 async def expand_location_content():
     """One-time migration: replaces thin (sub-120-word) location page copy with
     substantially expanded, keyword-researched content. Guarded by a marker in
     the migrations collection so it runs exactly once and never overwrites
-    content an admin edits later via the CMS."""
-    marker = await db.migrations.find_one({"_id": "expand_location_content_v1"})
+    content an admin edits later via the CMS.
+
+    v2: corrects the office-location wording (was "Gulberg III", the real
+    office is DHA Phase-I; the copy now avoids repeating a specific address
+    outside the footer). Versioned as v2 because v1 already ran in production
+    - bumping the marker lets the corrected copy apply once more without
+    reapplying anything already accepted by an admin edit."""
+    marker = await db.migrations.find_one({"_id": "expand_location_content_v2"})
     if marker:
         return
+    locations = load_seed_json("locations")
+    if not locations:
+        return
     updated = 0
-    for slug, content in LOCATION_CONTENT_V1.items():
-        result = await db.locations.update_one({"slug": slug}, {"$set": content})
+    for loc in locations:
+        content = {
+            "intro": loc.get("intro", ""),
+            "body2": loc.get("body2", ""),
+            "points": loc.get("points", []),
+            "metaTitle": loc.get("metaTitle", ""),
+            "metaDesc": loc.get("metaDesc", ""),
+        }
+        result = await db.locations.update_one({"slug": loc["slug"]}, {"$set": content})
         if result.matched_count:
             updated += 1
-    await db.migrations.insert_one({"_id": "expand_location_content_v1", "applied_at": datetime.now(timezone.utc).isoformat(), "updated": updated})
+    await db.migrations.insert_one({"_id": "expand_location_content_v2", "applied_at": datetime.now(timezone.utc).isoformat(), "updated": updated})
     if updated:
-        logger.info("Location content expansion: updated %d document(s)", updated)
+        logger.info("Location content expansion v2: updated %d document(s)", updated)
+
+
+async def expand_service_content():
+    """One-time migration: replaces thin service page copy with expanded,
+    keyword-researched content from seed_data/services.json. Same guard
+    pattern as the other expand_* migrations."""
+    marker = await db.migrations.find_one({"_id": "expand_service_content_v1"})
+    if marker:
+        return
+    services = load_seed_json("services")
+    if not services:
+        return
+    updated = 0
+    for svc in services:
+        content = {
+            "short": svc.get("short", ""),
+            "hero": svc.get("hero", ""),
+            "body": svc.get("body", ""),
+            "deliverables": svc.get("deliverables", []),
+            "metaTitle": svc.get("metaTitle", ""),
+            "metaDesc": svc.get("metaDesc", ""),
+        }
+        result = await db.services.update_one({"slug": svc["slug"]}, {"$set": content})
+        if result.matched_count:
+            updated += 1
+    await db.migrations.insert_one({"_id": "expand_service_content_v1", "applied_at": datetime.now(timezone.utc).isoformat(), "updated": updated})
+    if updated:
+        logger.info("Service content expansion: updated %d document(s)", updated)
+
+
+async def fix_legal_content():
+    """One-time migration: corrects the office-location wording in legal
+    pages (was 'Gulberg III', simplified to city-level per the same policy
+    as expand_location_content v2) from seed_data/legal.json."""
+    marker = await db.migrations.find_one({"_id": "fix_legal_content_v1"})
+    if marker:
+        return
+    pages = load_seed_json("legal")
+    if not pages:
+        return
+    updated = 0
+    for page in pages:
+        content = {"sections": page.get("sections", [])}
+        result = await db.legal_pages.update_one({"slug": page["slug"]}, {"$set": content})
+        if result.matched_count:
+            updated += 1
+    await db.migrations.insert_one({"_id": "fix_legal_content_v1", "applied_at": datetime.now(timezone.utc).isoformat(), "updated": updated})
+    if updated:
+        logger.info("Legal content fix: updated %d document(s)", updated)
 
 
 async def expand_industry_content():
@@ -1848,6 +1831,8 @@ async def startup():
     await run_migration("migrate_em_dashes", migrate_em_dashes())
     await run_migration("expand_location_content", expand_location_content())
     await run_migration("expand_industry_content", expand_industry_content())
+    await run_migration("expand_service_content", expand_service_content())
+    await run_migration("fix_legal_content", fix_legal_content())
 
 
 app.include_router(api_router)

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Menu, X, ArrowUpRight, ChevronDown, Calculator, Gauge, Sparkles, FileText, HelpCircle, MessageSquarePlus } from "lucide-react";
+import { Search, Menu, X, ArrowUpRight, ChevronDown, Calculator, Gauge, Sparkles, FileText, HelpCircle, MessageSquarePlus, Workflow } from "lucide-react";
 import { useSiteSettings } from "../hooks/useSiteSettings";
 import ServiceWheel from "./ServiceWheel";
 
@@ -30,6 +30,7 @@ const RESOURCE_GROUPS = [
     heading: "Resources",
     items: [
       { to: "/whitepapers", label: "Whitepapers & Reports", desc: "Free research, downloadable", icon: FileText },
+      { to: "/how-we-work", label: "How We Work", desc: "Process, staffing, reporting, terms", icon: Workflow },
       { to: "/faq", label: "FAQ", desc: "Common questions, answered", icon: HelpCircle },
       { to: "/share-your-experience", label: "Share Your Experience", desc: "Leave us a testimonial", icon: MessageSquarePlus },
     ],

@@ -6,7 +6,7 @@ export const DEFAULT_SITE_SETTINGS = {
   footer_newsletter_title: "One email a month. Zero fluff.",
   footer_newsletter_desc: "Consumer psychology, performance media, brand science. Unsubscribe anytime.",
   footer_copyright: "MarKendrick. Insights that Inform. Strategies that Perform.",
-  office_address: "Gulberg III, Lahore, Punjab, Pakistan",
+  office_address: "G-12 Commercial, DHA Phase-I, Lahore, Punjab, Pakistan",
   office_email: "hello@markendrick.com",
   office_hours: "Mon–Fri, 9:00–18:00 PKT",
   office_whatsapp: "923339395444",

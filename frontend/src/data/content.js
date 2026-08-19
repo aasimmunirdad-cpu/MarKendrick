@@ -224,7 +224,7 @@ export const INDUSTRIES = [
 
 export const OFFICE = {
   city: "Lahore, Pakistan",
-  address: "Gulberg III, Lahore, Punjab, Pakistan",
+  address: "G-12 Commercial, DHA Phase-I, Lahore, Punjab, Pakistan",
   email: "hello@markendrick.com",
   whatsapp: "923339395444",
   hours: "Mon–Fri, 9:00–18:00 PKT",
