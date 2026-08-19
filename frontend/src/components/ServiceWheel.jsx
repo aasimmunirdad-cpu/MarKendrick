@@ -32,9 +32,9 @@ const SHORT_LABELS = {
 // which can't be generated for dynamically-built strings - Tailwind's
 // compiler only scans for literal class names in source).
 const RINGS = [
-  { radius: 82, duration: 55, reverse: false },
-  { radius: 128, duration: 70, reverse: true },
-  { radius: 176, duration: 85, reverse: false },
+  { radius: 90, duration: 55, reverse: false },
+  { radius: 145, duration: 70, reverse: true },
+  { radius: 195, duration: 85, reverse: false },
 ];
 
 function WheelRing({ items, radius, duration, reverse, paused }) {
