@@ -18,8 +18,9 @@ module.exports = {
         coal: '#141414',
         navy: '#1E3245',
         vermilion: {
-          DEFAULT: '#E0923D',
-          hover: '#EEA654',
+          DEFAULT: 'hsl(var(--vermilion))',
+          hover: 'hsl(var(--vermilion-hover))',
+          bright: '#E0923D',
         },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',

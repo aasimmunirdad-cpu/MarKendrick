@@ -37,6 +37,26 @@
         --input: 0 0% 88%;
         --ring: 28 72% 56%;
         --radius: 0.25rem;
+
+        /* Accessible vermilion: WCAG AA (4.5:1) against the site's light
+           background. Same hue/saturation as the brand's bright vermilion
+           (#E0923D), just darkened - the bright version was only 2.52:1 on
+           white, well under the 4.5:1 required for text. Darkens further
+           on hover instead of lightening, since lightening would drop
+           below 4.5:1 again. */
+        --vermilion: 31 72% 37%;
+        --vermilion-hover: 31 72% 32%;
+    }
+
+    /* Inside deliberately dark UI (the vermilion/ink hub, dark cards, dark
+       panels), restore the brand's original bright vermilion - it already
+       has excellent contrast (7.9:1+) against those dark backgrounds, so
+       darkening it there would only hurt legibility for no reason. */
+    [class*="bg-ink"],
+    [class*="bg-coal"],
+    [class*="bg-navy"] {
+        --vermilion: 31 72% 56%;
+        --vermilion-hover: 32 82% 63%;
     }
 }
 
@@ -54,7 +74,7 @@
         overflow-x: hidden;
     }
     ::selection {
-        background: #E0923D;
+        background: hsl(var(--vermilion));
         color: #fff;
     }
 }
@@ -186,17 +206,17 @@ html.lenis, html.lenis body {
 .rich-text-editor .ql-snow.ql-toolbar button.ql-active,
 .rich-text-editor .ql-snow .ql-picker-label.ql-active,
 .rich-text-editor .ql-snow .ql-picker-item.ql-selected {
-    color: #E0923D;
+    color: hsl(var(--vermilion));
 }
 
 .rich-text-editor .ql-snow.ql-toolbar button:hover .ql-stroke,
 .rich-text-editor .ql-snow.ql-toolbar button.ql-active .ql-stroke {
-    stroke: #E0923D;
+    stroke: hsl(var(--vermilion));
 }
 
 .rich-text-editor .ql-snow.ql-toolbar button:hover .ql-fill,
 .rich-text-editor .ql-snow.ql-toolbar button.ql-active .ql-fill {
-    fill: #E0923D;
+    fill: hsl(var(--vermilion));
 }
 
 /* ---------- Public-facing rich text content (rendered from Quill HTML) ---------- */
@@ -232,13 +252,13 @@ html.lenis, html.lenis body {
 .rich-text li { margin-bottom: 0.4em; }
 
 .rich-text a {
-    color: #E0923D;
+    color: hsl(var(--vermilion));
     text-decoration: underline;
     text-underline-offset: 2px;
 }
 
 .rich-text blockquote {
-    border-left: 3px solid #E0923D;
+    border-left: 3px solid hsl(var(--vermilion));
     padding-left: 1.2em;
     margin: 1.5em 0;
     font-style: italic;
