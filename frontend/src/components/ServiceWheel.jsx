@@ -32,9 +32,9 @@ const SHORT_LABELS = {
 // which can't be generated for dynamically-built strings - Tailwind's
 // compiler only scans for literal class names in source).
 const RINGS = [
-  { radius: 90, duration: 55, reverse: false },
-  { radius: 145, duration: 70, reverse: true },
-  { radius: 195, duration: 85, reverse: false },
+  { radius: 130, duration: 55, reverse: false },
+  { radius: 185, duration: 70, reverse: true },
+  { radius: 235, duration: 85, reverse: false },
 ];
 
 function WheelRing({ items, radius, duration, reverse, paused }) {
@@ -192,7 +192,7 @@ export default function ServiceWheel({ className = "" }) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: -8 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute top-full right-[-180px] mt-8 w-[440px] h-[440px] z-50 drop-shadow-2xl"
+            className="absolute top-full right-[-230px] mt-8 w-[540px] h-[540px] z-50 drop-shadow-2xl"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
           >
