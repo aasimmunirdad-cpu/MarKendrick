@@ -18,6 +18,7 @@ import bleach
 from bleach.css_sanitizer import CSSSanitizer
 from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends
 from starlette.middleware.cors import CORSMiddleware
+from starlette.datastructures import MutableHeaders
 from motor.motor_asyncio import AsyncIOMotorClient
 import certifi
 from pydantic import BaseModel, EmailStr
@@ -1110,6 +1111,14 @@ MEDIA_MIME_TYPES = {
 }
 
 
+@api_router.get("/_version")
+async def _version():
+    """Static, dependency-free marker (no DB call) so a deploy's rollout can
+    be confirmed with a single request, independent of any other route or
+    the database - bump BUILD_MARKER on future deploys to check timing."""
+    return {"build": "media-upload-hardening-2026-08-20a"}
+
+
 @api_router.get("/_debug/media/{filename}")
 async def debug_media_lookup(filename: str):
     """TEMPORARY diagnostic route, added to trace a real bug: a freshly
@@ -1183,6 +1192,14 @@ async def admin_upload_media(request: Request, user: dict = Depends(get_current_
     if ext not in MEDIA_MIME_TYPES:
         raise HTTPException(status_code=400, detail="Unsupported file type. Use PNG, JPG, GIF, WEBP or SVG.")
     content = await file.read()
+    if len(content) == 0:
+        # Seen in the wild: the browser/proxy sends a 0-byte body for a
+        # multipart upload (e.g. a dropped connection mid-request). Without
+        # this check the old code inserted a Mongo doc with an empty
+        # data_b64, which is falsy - serve_media would find the doc but
+        # skip it and 404, while the case study's cover field had already
+        # been silently updated to a URL for a file that could never load.
+        raise HTTPException(status_code=400, detail="Uploaded file is empty. Please try again.")
     if len(content) > 10 * 1024 * 1024:
         raise HTTPException(status_code=400, detail="File too large (max 10 MB)")
     stored = f"{uuid.uuid4().hex}{ext}"
@@ -1207,6 +1224,18 @@ async def admin_upload_media(request: Request, user: dict = Depends(get_current_
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
     await db.media.insert_one(doc)
+
+    # Read the doc back before telling the admin it worked. A prior version
+    # of this endpoint returned "success" as soon as insert_one returned,
+    # even in cases where the record wasn't actually retrievable afterward
+    # (e.g. a truncated/empty body slipping past validation) - the admin
+    # saw an "Uploaded." toast and a cover image that 404s forever with no
+    # error anywhere to explain why. Failing loudly here instead.
+    check = await db.media.find_one({"stored_file": stored}, {"data_b64": 1})
+    if not check or not check.get("data_b64"):
+        logger.error("Media upload verification failed immediately after insert for stored_file=%s", stored)
+        raise HTTPException(status_code=500, detail="Upload did not save correctly. Please try again.")
+
     doc.pop("_id", None)
     doc.pop("data_b64", None)
     return doc
@@ -1980,20 +2009,42 @@ async def startup():
 app.include_router(api_router)
 
 
-@app.middleware("http")
-async def security_headers(request: Request, call_next):
-    """Standard hardening headers, absent by default on this API (found
-    during the launch security audit). Railway terminates TLS at its edge
-    and doesn't add these on its own, so they need to come from the app.
-    Safe defaults for a JSON API with no HTML rendering of its own."""
-    response = await call_next(request)
-    response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["X-Frame-Options"] = "DENY"
-    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
-    response.headers["Permissions-Policy"] = "geolocation=(), camera=(), microphone=()"
-    return response
+class SecurityHeadersMiddleware:
+    """Pure ASGI middleware (not Starlette's BaseHTTPMiddleware) that only
+    appends headers to the outgoing response - it never touches the
+    request body/stream. Switched from the @app.middleware("http") /
+    BaseHTTPMiddleware form after that shape was identified as a suspect
+    in a media-upload bug: BaseHTTPMiddleware runs the downstream app in a
+    separate task and proxies it through an in-memory stream, a pattern
+    with known edge cases around large/multipart request bodies in some
+    Starlette versions. This class-based ASGI middleware can't interact
+    with the request body at all, which rules that mechanism out entirely
+    while keeping the same standard hardening headers (found missing
+    during the launch security audit; Railway terminates TLS at its edge
+    and doesn't add these on its own)."""
 
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] != "http":
+            await self.app(scope, receive, send)
+            return
+
+        async def send_wrapper(message):
+            if message["type"] == "http.response.start":
+                headers = MutableHeaders(scope=message)
+                headers.append("X-Content-Type-Options", "nosniff")
+                headers.append("X-Frame-Options", "DENY")
+                headers.append("Referrer-Policy", "strict-origin-when-cross-origin")
+                headers.append("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
+                headers.append("Permissions-Policy", "geolocation=(), camera=(), microphone=()")
+            await send(message)
+
+        await self.app(scope, receive, send_wrapper)
+
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
