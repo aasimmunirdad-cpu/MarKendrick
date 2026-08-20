@@ -232,6 +232,7 @@ export default function Home() {
                         src={cs.cover}
                         alt={`${cs.client} case study`}
                         loading="lazy"
+                        onError={(e) => { e.currentTarget.parentElement.style.display = "none"; }}
                         className="w-full h-full object-cover grayscale-[35%] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700"
                       />
                     </div>

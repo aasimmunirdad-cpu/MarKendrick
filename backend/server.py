@@ -4,6 +4,7 @@ load_dotenv()
 import os
 import re
 import uuid
+import base64
 import logging
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -135,7 +136,18 @@ def email_shell(title: str, body: str, unsubscribe_url: str = None) -> str:
 
 
 def api_base_url(request: Request) -> str:
-    return os.environ.get("BACKEND_URL", "").rstrip("/") or str(request.base_url).rstrip("/")
+    """Returns the public https origin for this API.
+
+    Railway terminates TLS at its edge proxy and forwards to this container
+    over plain HTTP, so request.base_url (and anything derived from it)
+    resolves to http:// unless we correct the scheme ourselves. Any URL this
+    function produces is always meant to be publicly reachable over https,
+    so forcing the scheme here is safe in every case - there is no
+    legitimate reason for this backend to hand out an http:// link."""
+    base = os.environ.get("BACKEND_URL", "").rstrip("/") or str(request.base_url).rstrip("/")
+    if base.startswith("http://"):
+        base = "https://" + base[len("http://"):]
+    return base
 
 
 # ---------- Auth ----------
@@ -1100,18 +1112,37 @@ MEDIA_MIME_TYPES = {
 
 @api_router.get("/media/{filename}")
 async def serve_media(filename: str):
+    """Serves an uploaded media file.
+
+    Railway's container disk is ephemeral: local files written by
+    admin_upload_media below are wiped on every redeploy, which is why
+    admin-uploaded images (e.g. case study covers) used to disappear and
+    404 after the next deploy, no matter how many times they were
+    re-uploaded. Bytes are now persisted in MongoDB (our one durable store)
+    at upload time, so this route reads from there first. The local disk
+    path is kept only as a fallback for the current deploy's own
+    just-uploaded files, in case Mongo is briefly unavailable."""
     from fastapi.responses import FileResponse
     safe = Path(filename).name
+    mime = MEDIA_MIME_TYPES.get(Path(safe).suffix.lower(), "application/octet-stream")
+
+    doc = await db.media.find_one({"stored_file": safe})
+    if doc and doc.get("data_b64"):
+        content = base64.b64decode(doc["data_b64"])
+        return Response(content=content, media_type=mime, headers={"Cache-Control": "public, max-age=31536000, immutable"})
+
     path = UPLOAD_DIR / "media" / safe
-    if not path.exists():
-        raise HTTPException(status_code=404, detail="File not found")
-    mime = MEDIA_MIME_TYPES.get(path.suffix.lower(), "application/octet-stream")
-    return FileResponse(path, media_type=mime, headers={"Cache-Control": "public, max-age=31536000, immutable"})
+    if path.exists():
+        return FileResponse(path, media_type=mime, headers={"Cache-Control": "public, max-age=31536000, immutable"})
+
+    raise HTTPException(status_code=404, detail="File not found")
 
 
 @api_router.get("/admin/media")
 async def admin_list_media(user: dict = Depends(get_current_user)):
-    return await db.media.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
+    # Exclude data_b64: it can be several MB per image and the admin list
+    # view only needs metadata + the servable url, not the raw bytes.
+    return await db.media.find({}, {"_id": 0, "data_b64": 0}).sort("created_at", -1).to_list(500)
 
 
 @api_router.post("/admin/media")
@@ -1126,15 +1157,22 @@ async def admin_upload_media(request: Request, user: dict = Depends(get_current_
     content = await file.read()
     if len(content) > 10 * 1024 * 1024:
         raise HTTPException(status_code=400, detail="File too large (max 10 MB)")
-    media_dir = UPLOAD_DIR / "media"
-    media_dir.mkdir(exist_ok=True, parents=True)
     stored = f"{uuid.uuid4().hex}{ext}"
-    (media_dir / stored).write_bytes(content)
+    # Best-effort local write too (fast path for this same running instance),
+    # but the source of truth is Mongo below - the local file will not
+    # survive a redeploy on Railway's ephemeral container disk.
+    try:
+        media_dir = UPLOAD_DIR / "media"
+        media_dir.mkdir(exist_ok=True, parents=True)
+        (media_dir / stored).write_bytes(content)
+    except Exception:
+        logger.exception("Local media write failed (non-fatal - Mongo copy is authoritative)")
     url = f"{api_base_url(request)}/api/media/{stored}"
     doc = {
         "id": uuid.uuid4().hex[:12],
         "filename": file.filename,
         "stored_file": stored,
+        "data_b64": base64.b64encode(content).decode("ascii"),
         "url": url,
         "size": len(content),
         "source": "upload",
@@ -1142,6 +1180,7 @@ async def admin_upload_media(request: Request, user: dict = Depends(get_current_
     }
     await db.media.insert_one(doc)
     doc.pop("_id", None)
+    doc.pop("data_b64", None)
     return doc
 
 
@@ -1805,6 +1844,32 @@ async def expand_industry_content():
         logger.info("Industry content expansion: updated %d document(s)", updated)
 
 
+async def fix_broken_media_urls():
+    """One-time migration: upgrades any http:// media URL (case study/post
+    covers, media library entries) to https://.
+
+    Root cause: api_base_url() used to build media URLs from the raw,
+    proxy-unaware request.base_url, which resolves to http:// behind
+    Railway's TLS-terminating edge - so any image uploaded through the CMS
+    before this fix got an http:// URL, which browsers on an https:// page
+    block as mixed content. That helper is now fixed for future uploads;
+    this migration repairs URLs already saved in the database."""
+    marker = await db.migrations.find_one({"_id": "fix_broken_media_urls_v1"})
+    if marker:
+        return
+    updated = 0
+    for coll_name, field in (("case_studies", "cover"), ("posts", "cover"), ("media", "url")):
+        coll = db[coll_name]
+        async for doc in coll.find({field: {"$regex": "^http://"}}):
+            new_url = "https://" + doc[field][len("http://"):]
+            result = await coll.update_one({"_id": doc["_id"]}, {"$set": {field: new_url}})
+            if result.modified_count:
+                updated += 1
+    await db.migrations.insert_one({"_id": "fix_broken_media_urls_v1", "applied_at": datetime.now(timezone.utc).isoformat(), "updated": updated})
+    if updated:
+        logger.info("Media URL scheme fix: updated %d document(s)", updated)
+
+
 async def run_migration(name, coro):
     """Runs a startup migration without letting a failure block app startup.
     A broken migration used to be able to take the entire API down (every
@@ -1833,6 +1898,7 @@ async def startup():
     await run_migration("expand_industry_content", expand_industry_content())
     await run_migration("expand_service_content", expand_service_content())
     await run_migration("fix_legal_content", fix_legal_content())
+    await run_migration("fix_broken_media_urls", fix_broken_media_urls())
 
 
 app.include_router(api_router)

@@ -64,7 +64,13 @@ export default function CaseStudyDetail() {
 
         {cs.cover && (
           <Reveal className="mb-16">
-            <img src={cs.cover} alt={`${cs.client} case study`} className="w-full aspect-[21/9] object-cover" loading="lazy" />
+            <img
+              src={cs.cover}
+              alt={`${cs.client} case study`}
+              className="w-full aspect-[21/9] object-cover"
+              loading="lazy"
+              onError={(e) => { e.currentTarget.parentElement.style.display = "none"; }}
+            />
           </Reveal>
         )}
 
