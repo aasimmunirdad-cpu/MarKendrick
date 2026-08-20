@@ -5,7 +5,7 @@ import Seo from "../components/Seo";
 export default function NotFound() {
   return (
     <div data-testid="not-found-page" className="min-h-[100svh] flex flex-col items-start justify-center px-5 sm:px-8 max-w-[1400px] mx-auto pt-20">
-      <Seo title="404 - Lost Signal" description="This page doesn't exist. The insight does, though." />
+      <Seo title="404 - Lost Signal" description="This page doesn't exist. The insight does, though." noIndex />
       <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground mb-6">Error 404 - Lost Signal</p>
       <MaskLines
         lines={["THIS PAGE", "WENT OFF-BRIEF."]}
