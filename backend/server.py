@@ -1110,6 +1110,34 @@ MEDIA_MIME_TYPES = {
 }
 
 
+@api_router.get("/_debug/media/{filename}")
+async def debug_media_lookup(filename: str):
+    """TEMPORARY diagnostic route, added to trace a real bug: a freshly
+    uploaded case-study cover 404s on GET /api/media/{filename} even though
+    the upload endpoint returns success and the case study record gets the
+    new URL. Reports what's actually in Mongo and on disk for this exact
+    filename, without needing an admin login to check. No image bytes are
+    returned - just existence/size metadata. Remove once the bug is found."""
+    safe = Path(filename).name
+    doc = await db.media.find_one({"stored_file": safe})
+    disk_path = UPLOAD_DIR / "media" / safe
+    return {
+        "queried_filename": safe,
+        "mongo_doc_found": doc is not None,
+        "mongo_doc_has_data_b64": bool(doc and doc.get("data_b64")),
+        "mongo_doc_data_b64_len": len(doc["data_b64"]) if doc and doc.get("data_b64") else 0,
+        "mongo_doc_size_field": doc.get("size") if doc else None,
+        "mongo_doc_created_at": doc.get("created_at") if doc else None,
+        "mongo_doc_source": doc.get("source") if doc else None,
+        "disk_file_exists": disk_path.exists(),
+        "disk_file_size": disk_path.stat().st_size if disk_path.exists() else None,
+        "recent_media_docs": [
+            {"stored_file": d.get("stored_file"), "size": d.get("size"), "created_at": d.get("created_at"), "has_b64": bool(d.get("data_b64"))}
+            async for d in db.media.find({}, {"stored_file": 1, "size": 1, "created_at": 1, "data_b64": 1}).sort("created_at", -1).limit(5)
+        ],
+    }
+
+
 @api_router.get("/media/{filename}")
 async def serve_media(filename: str):
     """Serves an uploaded media file.
