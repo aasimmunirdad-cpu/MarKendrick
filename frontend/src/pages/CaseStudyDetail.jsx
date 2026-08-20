@@ -7,6 +7,7 @@ import RichText from "../components/RichText";
 import Seo from "../components/Seo";
 import BreadcrumbSchema from "../components/BreadcrumbSchema";
 import JsonLd from "../components/JsonLd";
+import CoverImage from "../components/CoverImage";
 
 export default function CaseStudyDetail() {
   const { slug } = useParams();
@@ -64,12 +65,11 @@ export default function CaseStudyDetail() {
 
         {cs.cover && (
           <Reveal className="mb-16">
-            <img
+            <CoverImage
               src={cs.cover}
               alt={`${cs.client} case study`}
-              className="w-full aspect-[21/9] object-cover"
-              loading="lazy"
-              onError={(e) => { e.currentTarget.parentElement.style.display = "none"; }}
+              className="w-full aspect-[21/9]"
+              imgClassName="w-full h-full object-cover"
             />
           </Reveal>
         )}

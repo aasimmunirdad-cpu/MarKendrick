@@ -221,6 +221,16 @@ html.lenis, html.lenis body {
 
 /* ---------- Public-facing rich text content (rendered from Quill HTML) ---------- */
 
+.rich-text {
+    /* Defensive: pasted-in content can carry stray non-breaking spaces
+       (&nbsp;) between every word, which otherwise makes a whole
+       paragraph a single unbreakable line and overflows fixed-width
+       grid/flex columns instead of wrapping. Letting the browser break
+       anywhere as a last resort keeps that from ever overlapping
+       neighboring content again, with no visible effect on normal text. */
+    overflow-wrap: anywhere;
+}
+
 .rich-text p {
     margin-bottom: 1.25em;
 }

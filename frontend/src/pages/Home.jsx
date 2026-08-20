@@ -8,6 +8,7 @@ import { api } from "../lib/api";
 import { MaskLines, Reveal, SectionHeading } from "../components/motion";
 import NeuralCanvas from "../components/NeuralCanvas";
 import StatsBand from "../components/StatsBand";
+import CoverImage from "../components/CoverImage";
 import Seo from "../components/Seo";
 import { useSiteSettings } from "../hooks/useSiteSettings";
 
@@ -227,15 +228,12 @@ export default function Home() {
               <Reveal key={cs.slug} delay={0.05}>
                 <Link to={`/work/${cs.slug}`} data-testid={`case-study-card-${cs.slug}`} className="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                   <div className={`lg:col-span-7 overflow-hidden ${i % 2 === 1 ? "lg:order-2" : ""}`}>
-                    <div className="aspect-[16/9] overflow-hidden">
-                      <img
-                        src={cs.cover}
-                        alt={`${cs.client} case study`}
-                        loading="lazy"
-                        onError={(e) => { e.currentTarget.parentElement.style.display = "none"; }}
-                        className="w-full h-full object-cover grayscale-[35%] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700"
-                      />
-                    </div>
+                    <CoverImage
+                      src={cs.cover}
+                      alt={`${cs.client} case study`}
+                      className="aspect-[16/9] overflow-hidden"
+                      imgClassName="w-full h-full object-cover grayscale-[35%] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700"
+                    />
                   </div>
                   <div className={`lg:col-span-5 ${i % 2 === 1 ? "lg:order-1" : ""}`}>
                     <p className="text-xs uppercase tracking-[0.3em] text-vermilion mb-3">{cs.industry} - {cs.client}</p>

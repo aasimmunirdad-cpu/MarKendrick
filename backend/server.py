@@ -1870,6 +1870,49 @@ async def fix_broken_media_urls():
         logger.info("Media URL scheme fix: updated %d document(s)", updated)
 
 
+async def fix_nbsp_word_spacing():
+    """One-time migration: replaces literal &nbsp; used as the space between
+    ordinary words (e.g. "Khaas&nbsp;Foods&nbsp;owned...") with a normal
+    space, in rich-text fields where that's found.
+
+    Root cause: this specific content (found in the Khaas Foods case
+    study's challenge/approach fields) was entered with a non-breaking
+    space between every word - almost certainly a paste-from-Word/Docs
+    artifact - instead of normal spaces. A non-breaking space forbids the
+    browser from wrapping at that point, so a whole paragraph became one
+    unbreakable line that overflowed its fixed-width column and visually
+    overlapped the neighboring content. Only replaces &nbsp; that sits
+    between two word characters (not the deliberate single &nbsp; some
+    other content may use for a genuine hard space), so nothing else is
+    touched."""
+    marker = await db.migrations.find_one({"_id": "fix_nbsp_word_spacing_v1"})
+    if marker:
+        return
+    pattern = re.compile(r"(?<=\w)&nbsp;(?=\w)")
+    updated = 0
+    for coll_name, fields in (
+        ("case_studies", ["challenge", "approach", "summary"]),
+        ("posts", ["content", "excerpt"]),
+        ("services", ["intro", "content", "description"]),
+        ("industries", ["intro"]),
+    ):
+        coll = db[coll_name]
+        async for doc in coll.find({}):
+            changes = {}
+            for f in fields:
+                v = doc.get(f)
+                if isinstance(v, str) and "&nbsp;" in v:
+                    fixed = pattern.sub(" ", v)
+                    if fixed != v:
+                        changes[f] = fixed
+            if changes:
+                await coll.update_one({"_id": doc["_id"]}, {"$set": changes})
+                updated += 1
+    await db.migrations.insert_one({"_id": "fix_nbsp_word_spacing_v1", "applied_at": datetime.now(timezone.utc).isoformat(), "updated": updated})
+    if updated:
+        logger.info("nbsp word-spacing fix: updated %d document(s)", updated)
+
+
 async def run_migration(name, coro):
     """Runs a startup migration without letting a failure block app startup.
     A broken migration used to be able to take the entire API down (every
@@ -1899,6 +1942,7 @@ async def startup():
     await run_migration("expand_service_content", expand_service_content())
     await run_migration("fix_legal_content", fix_legal_content())
     await run_migration("fix_broken_media_urls", fix_broken_media_urls())
+    await run_migration("fix_nbsp_word_spacing", fix_nbsp_word_spacing())
 
 
 app.include_router(api_router)
