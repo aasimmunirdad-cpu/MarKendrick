@@ -1885,10 +1885,14 @@ async def fix_nbsp_word_spacing():
     between two word characters (not the deliberate single &nbsp; some
     other content may use for a genuine hard space), so nothing else is
     touched."""
-    marker = await db.migrations.find_one({"_id": "fix_nbsp_word_spacing_v1"})
+    marker = await db.migrations.find_one({"_id": "fix_nbsp_word_spacing_v2"})
     if marker:
         return
-    pattern = re.compile(r"(?<=\w)&nbsp;(?=\w)")
+    # v1 only replaced &nbsp; sitting directly between two word characters,
+    # which missed punctuation-adjacent cases like "30.&nbsp;Category" or
+    # "brief:&nbsp;modernise" - still a wrapping problem for the sentence
+    # that follows. A sitewide scan confirmed &nbsp; isn't used
+    # legitimately anywhere in this content, so v2 replaces it outright.
     updated = 0
     for coll_name, fields in (
         ("case_studies", ["challenge", "approach", "summary"]),
@@ -1902,13 +1906,13 @@ async def fix_nbsp_word_spacing():
             for f in fields:
                 v = doc.get(f)
                 if isinstance(v, str) and "&nbsp;" in v:
-                    fixed = pattern.sub(" ", v)
+                    fixed = v.replace("&nbsp;", " ")
                     if fixed != v:
                         changes[f] = fixed
             if changes:
                 await coll.update_one({"_id": doc["_id"]}, {"$set": changes})
                 updated += 1
-    await db.migrations.insert_one({"_id": "fix_nbsp_word_spacing_v1", "applied_at": datetime.now(timezone.utc).isoformat(), "updated": updated})
+    await db.migrations.insert_one({"_id": "fix_nbsp_word_spacing_v2", "applied_at": datetime.now(timezone.utc).isoformat(), "updated": updated})
     if updated:
         logger.info("nbsp word-spacing fix: updated %d document(s)", updated)
 
