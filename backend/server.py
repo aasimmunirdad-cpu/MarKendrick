@@ -2051,6 +2051,30 @@ INSIGHTS_AUDIT_CONTENT_FIXES = {
 }
 
 
+async def add_bakarwal_testimonial():
+    """Adds the Bakarwal testimonial (dairy brand launch, agriculture/FMCG)
+    to the published testimonials shown on the site."""
+    marker = await db.migrations.find_one({"_id": "add_bakarwal_testimonial_v1"})
+    if marker:
+        return
+    existing = await db.testimonials.find_one({"company": "Bakarwal"})
+    if not existing:
+        await db.testimonials.insert_one({
+            "id": uuid.uuid4().hex[:12],
+            "quote": "We came to MarKendrick with a herd, a harvest, and no brand — just a plan to launch our own dairy line. They didn't start with a logo; they started with the supply chain, the shelf, and the shopper, and built the brand out from there. Six months in, we've gone from an unnamed idea to a retail-ready dairy brand with a distribution plan that actually holds up in the field. Rare to find a team that respects the farm as much as the market.",
+            "name": "Faisal Bakarwal",
+            "role": "Founder & CEO",
+            "company": "Bakarwal",
+            "industry": "Agriculture / Dairy (FMCG)",
+            "metric": "Concept to retail-ready launch in 6 months",
+            "video_url": "",
+            "published": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        })
+    await db.migrations.insert_one({"_id": "add_bakarwal_testimonial_v1", "applied_at": datetime.now(timezone.utc).isoformat()})
+    logger.info("Added Bakarwal testimonial")
+
+
 async def fix_insights_audit_content():
     """One-off content fix for the two posts identified in the 22 Aug 2026
     UX audit (broken cover image + unstructured body). Cover URLs and body
@@ -2110,6 +2134,7 @@ async def startup():
     await run_migration("fix_broken_media_urls", fix_broken_media_urls())
     await run_migration("fix_nbsp_word_spacing", fix_nbsp_word_spacing())
     await run_migration("fix_insights_audit_content", fix_insights_audit_content())
+    await run_migration("add_bakarwal_testimonial", add_bakarwal_testimonial())
 
 
 app.include_router(api_router)
