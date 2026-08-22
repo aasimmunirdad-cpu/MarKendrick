@@ -1501,7 +1501,7 @@ SITEMAP_INDUSTRIES = [
 ]
 SITEMAP_LOCATIONS = [
     "marketing-agency-lahore", "marketing-agency-pakistan", "middle-east",
-    "united-kingdom", "united-states", "europe",
+    "united-kingdom", "united-states", "europe", "saudi-arabia",
 ]
 
 
@@ -2162,6 +2162,27 @@ async def fix_insights_audit_content():
         logger.info("Insights audit content fix: updated %d post(s)", updated)
 
 
+async def add_ksa_location():
+    """Adds the Saudi Arabia location page to the already-seeded live
+    database. The normal seed_content() count_documents({}) == 0 gate only
+    fires on an empty collection, so a new location added to
+    seed_data/locations.json after launch needs an explicit migration to
+    reach production."""
+    marker = await db.migrations.find_one({"_id": "add_ksa_location_v1"})
+    if marker:
+        return
+    existing = await db.locations.find_one({"slug": "saudi-arabia"})
+    if not existing:
+        items = load_seed_json("locations")
+        item = next((i for i in items if i.get("slug") == "saudi-arabia"), None)
+        if item:
+            item = dict(item)
+            item["created_at"] = datetime.now(timezone.utc).isoformat()
+            await db.locations.insert_one(item)
+    await db.migrations.insert_one({"_id": "add_ksa_location_v1", "applied_at": datetime.now(timezone.utc).isoformat()})
+    logger.info("Added Saudi Arabia location page")
+
+
 async def run_migration(name, coro):
     """Runs a startup migration without letting a failure block app startup.
     A broken migration used to be able to take the entire API down (every
@@ -2195,6 +2216,7 @@ async def startup():
     await run_migration("fix_insights_audit_content", fix_insights_audit_content())
     await run_migration("add_bakarwal_testimonial", add_bakarwal_testimonial())
     await run_migration("replace_khaas_foods_with_ensound", replace_khaas_foods_with_ensound())
+    await run_migration("add_ksa_location", add_ksa_location())
 
 
 app.include_router(api_router)

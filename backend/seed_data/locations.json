@@ -118,5 +118,25 @@
     "order": 5,
     "published": true,
     "id": "europe"
+  },
+  {
+    "slug": "saudi-arabia",
+    "name": "Serving Saudi Arabia",
+    "eyebrow": "Growth Market",
+    "h1": "Vision 2030's fastest-growing market, built for evidence.",
+    "intro": "Businesses searching for a 'marketing agency in Saudi Arabia' or a 'Riyadh marketing agency' are usually eyeing the same opportunity: a market Vision 2030 is reshaping faster than most agencies can keep up with. The Kingdom's e-commerce sector is on track to grow at roughly 13.5% a year through 2027, ahead of the global average, on the back of 99% internet penetration, 78% 5G coverage and a population where the majority are under 35 and online by default. Digital ad spend in Saudi Arabia is growing faster than anywhere else in MENA - upward of 18% year-on-year - which means the market rewards brands that move early, but punishes generic, imported campaigns just as fast. We help Saudi and Saudi-facing brands build the consumer insight, positioning and performance marketing to win that window on evidence, not guesswork.",
+    "body2": "Riyadh, Jeddah and the giga-project economy around NEOM are pulling in retail, real estate, hospitality and fintech spend at a pace few markets match, and over 80% of that spend converts on mobile, through Mada and a fast-maturing social-commerce layer led by Gen-Z buyers. We build Arabic-first, mobile-first campaigns rather than English work translated after the fact, with cultural fluency review on everything that ships and Ramadan and seasonal planning built in from day one - the same discipline we apply across the wider Gulf, sharpened for Saudi Arabia's own regulatory environment and buyer psychology. Our Lahore base keeps senior strategist access affordable against Riyadh or Jeddah agency rates, with tight timezone overlap for same-day collaboration.",
+    "points": [
+      "Consumer research and message testing built for Saudi Arabia's under-35, mobile-first majority",
+      "Arabic-first campaign development, not English work translated after the fact",
+      "Social-commerce and performance strategy tuned to Mada payments and Gen-Z buying habits",
+      "Ramadan and Vision 2030-aligned seasonal campaign planning built in from day one",
+      "Senior strategist access at a fraction of typical Riyadh or Jeddah agency rates"
+    ],
+    "metaTitle": "Marketing Agency for Saudi Arabia | KSA & Vision 2030 - MarKendrick",
+    "metaDesc": "Research-led marketing for Saudi Arabia's Vision 2030 economy: consumer insight, digital and performance marketing from MarKendrick.",
+    "order": 6,
+    "published": true,
+    "id": "saudi-arabia"
   }
 ]

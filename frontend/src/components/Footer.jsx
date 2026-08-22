@@ -137,7 +137,7 @@ export default function Footer() {
               <div>
                 <p className="text-[11px] font-semibold text-foreground/70 mb-2">International</p>
                 <ul className="space-y-2 text-xs text-muted-foreground">
-                  {[["Middle East", "/locations/middle-east"], ["United Kingdom", "/locations/united-kingdom"], ["United States", "/locations/united-states"], ["Europe", "/locations/europe"]].map(([label, to]) => (
+                  {[["Middle East", "/locations/middle-east"], ["Saudi Arabia", "/locations/saudi-arabia"], ["United Kingdom", "/locations/united-kingdom"], ["United States", "/locations/united-states"], ["Europe", "/locations/europe"]].map(([label, to]) => (
                     <li key={label}><Link to={to} className="hover:text-vermilion transition-colors">{label}</Link></li>
                   ))}
                 </ul>
