@@ -225,10 +225,15 @@ html.lenis, html.lenis body {
     /* Defensive: pasted-in content can carry stray non-breaking spaces
        (&nbsp;) between every word, which otherwise makes a whole
        paragraph a single unbreakable line and overflows fixed-width
-       grid/flex columns instead of wrapping. Letting the browser break
-       anywhere as a last resort keeps that from ever overlapping
-       neighboring content again, with no visible effect on normal text. */
+       grid/flex columns instead of wrapping. word-break:normal keeps
+       ordinary text wrapping at spaces as usual; overflow-wrap:anywhere is
+       only the last-resort fallback for a genuinely unbreakable token;
+       hyphens:auto adds a real hyphen on the rare occasion a break does
+       fall mid-word, instead of a bare, unexplained cut (recommended by
+       the 22 Aug 2026 UX audit). */
+    word-break: normal;
     overflow-wrap: anywhere;
+    hyphens: auto;
 }
 
 .rich-text p {

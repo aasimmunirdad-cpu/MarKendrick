@@ -64,7 +64,66 @@
     </head>
     <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
+        <!--
+          Pre-hydration skeleton: this app is client-rendered with no
+          server-side content, so the raw HTML response is empty until the
+          JS bundle downloads, parses and hydrates - a UX audit (22 Aug
+          2026) measured that as a 6-10s blank white screen with no
+          indication anything was loading. This inline, dependency-free
+          skeleton paints instantly (it's plain HTML/CSS, not a React
+          component) and disappears the moment React mounts and replaces
+          #root's contents below it, so there is never a truly blank frame.
+          It is not a substitute for real prerendering/SSR, which would
+          also fix the SEO and link-preview gaps noted in the same audit -
+          this only closes the visual gap in the meantime.
+        -->
+        <style>
+          #mk-preload { position: fixed; inset: 0; z-index: 0; background: #FAFAFA; display: flex; flex-direction: column; }
+          #mk-preload .bar { height: 64px; border-bottom: 1px solid #ECECEC; }
+          #mk-preload .body { max-width: 1400px; width: 100%; margin: 0 auto; padding: 140px 32px 0; }
+          #mk-preload .line { background: #ECECEC; border-radius: 3px; animation: mk-pulse 1.4s ease-in-out infinite; }
+          #mk-preload .l1 { height: 14px; width: 180px; margin-bottom: 24px; }
+          #mk-preload .l2 { height: 56px; width: 70%; margin-bottom: 40px; }
+          #mk-preload .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+          #mk-preload .card { height: 280px; }
+          @media (max-width: 900px) { #mk-preload .grid { grid-template-columns: repeat(2, 1fr); } }
+          @media (max-width: 600px) { #mk-preload .grid { grid-template-columns: 1fr; } #mk-preload .card:nth-child(n+3) { display: none; } }
+          @keyframes mk-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+          @media (prefers-color-scheme: dark) {
+            #mk-preload { background: #0F1216; }
+            #mk-preload .bar { border-bottom-color: #212730; }
+            #mk-preload .line { background: #212730; }
+          }
+        </style>
+        <div id="mk-preload" aria-hidden="true">
+          <div class="bar"></div>
+          <div class="body">
+            <div class="line l1"></div>
+            <div class="line l2"></div>
+            <div class="grid">
+              <div class="line card"></div>
+              <div class="line card"></div>
+              <div class="line card"></div>
+            </div>
+          </div>
+        </div>
         <div id="root"></div>
+        <script>
+          // Remove the skeleton the moment React has actually painted
+          // something into #root, whichever tick that happens on.
+          (function () {
+            var root = document.getElementById("root");
+            var pre = document.getElementById("mk-preload");
+            if (!root || !pre) return;
+            var remove = function () { pre.remove(); observer.disconnect(); };
+            var observer = new MutationObserver(function () {
+              if (root.childNodes.length > 0) remove();
+            });
+            observer.observe(root, { childList: true });
+            // Safety net in case the observer never fires for some reason.
+            setTimeout(remove, 15000);
+          })();
+        </script>
         <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

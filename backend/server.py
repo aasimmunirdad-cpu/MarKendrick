@@ -289,7 +289,18 @@ async def get_post(slug: str):
     post = await db.posts.find_one({"slug": slug, "published": True}, {"_id": 0})
     if not post:
         raise HTTPException(status_code=404, detail="Post not found")
-    related = await db.posts.find({"category": post["category"], "slug": {"$ne": slug}, "published": True}, {"_id": 0}).limit(3).to_list(3)
+    # Same-category matches first; if fewer than 3 exist (common with only
+    # a handful of posts per category), fill the rest with the most recent
+    # other posts rather than rendering a short/stretched related section.
+    related = await db.posts.find(
+        {"category": post["category"], "slug": {"$ne": slug}, "published": True}, {"_id": 0}
+    ).sort("created_at", -1).limit(3).to_list(3)
+    if len(related) < 3:
+        have = {slug} | {r["slug"] for r in related}
+        fill = await db.posts.find(
+            {"slug": {"$nin": list(have)}, "published": True}, {"_id": 0}
+        ).sort("created_at", -1).limit(3 - len(related)).to_list(3 - len(related))
+        related += fill
     post["related"] = related
     return post
 
@@ -1550,7 +1561,7 @@ SEED_POSTS = [
     {
         "title": "The Founder's Guide to Brand Positioning",
         "category": "Guides",
-        "excerpt": "Positioning is not your tagline. It is the single decision about who you are for and why you win - and it compounds like capital.",
+        "excerpt": "Positioning is not your tagline. It is the single decision about who you are for and why you win — and it compounds like capital.",
         "body": "Ask ten founders what their positioning is and eight will recite their mission statement. Mission is what you tell yourself. Positioning is what the market believes when you are not in the room.\n\nA working positioning answers three questions in plain language: Who is this for, specifically? What do they use it for? Why you instead of the alternative - including the alternative of doing nothing? If any answer is 'everyone', 'everything' or 'because we care more', you have a slogan, not a position.\n\nThe test we run with clients is brutal and simple: the enemy test. Strong positioning has a visible enemy - the bloated incumbent, the spreadsheet workflow, the category's dirty secret. If no one would ever disagree with your positioning, it carries no information.\n\nPositioning also compounds. Every campaign, sales deck and product decision either reinforces the position or spends it. Brands that hold one position for three years build memory structures; brands that reposition every quarter rent attention.\n\nStart with the segment you can dominate, not the market you dream of. Own a narrow hill completely. Expansion is a strategy; dilution is a panic.",
         "author": "Ayesha Rahman",
         "tags": ["positioning", "brand strategy", "founders"],
@@ -1942,7 +1953,7 @@ async def fix_nbsp_word_spacing():
     between two word characters (not the deliberate single &nbsp; some
     other content may use for a genuine hard space), so nothing else is
     touched."""
-    marker = await db.migrations.find_one({"_id": "fix_nbsp_word_spacing_v2"})
+    marker = await db.migrations.find_one({"_id": "fix_nbsp_word_spacing_v3"})
     if marker:
         return
     # v1 only replaced &nbsp; sitting directly between two word characters,
@@ -1950,10 +1961,16 @@ async def fix_nbsp_word_spacing():
     # "brief:&nbsp;modernise" - still a wrapping problem for the sentence
     # that follows. A sitewide scan confirmed &nbsp; isn't used
     # legitimately anywhere in this content, so v2 replaces it outright.
+    # v3 fixes a real bug in v1/v2: the posts collection's article body is
+    # stored in a field called "body" (see PostDetail.jsx / RichText), not
+    # "content" - that typo meant this migration never actually touched
+    # article bodies, so two posts pasted from Word kept &nbsp; between
+    # every word and broke mid-word on every line (an independent UX audit
+    # caught this in production). Re-running with the correct field name.
     updated = 0
     for coll_name, fields in (
         ("case_studies", ["challenge", "approach", "summary"]),
-        ("posts", ["content", "excerpt"]),
+        ("posts", ["body", "excerpt"]),
         ("services", ["intro", "content", "description"]),
         ("industries", ["intro"]),
     ):
@@ -1969,9 +1986,97 @@ async def fix_nbsp_word_spacing():
             if changes:
                 await coll.update_one({"_id": doc["_id"]}, {"$set": changes})
                 updated += 1
-    await db.migrations.insert_one({"_id": "fix_nbsp_word_spacing_v2", "applied_at": datetime.now(timezone.utc).isoformat(), "updated": updated})
+    await db.migrations.insert_one({"_id": "fix_nbsp_word_spacing_v3", "applied_at": datetime.now(timezone.utc).isoformat(), "updated": updated})
     if updated:
         logger.info("nbsp word-spacing fix: updated %d document(s)", updated)
+
+
+# Two posts (both pasted from Word around the same time) had a broken cover
+# image URL pointing at a pre-Mongo-storage upload that never had real
+# bytes behind it, and a body that was one giant unbroken <p> instead of
+# proper paragraphs for its numbered "Five shifts" / "Four inputs"
+# structure - both caught by an independent UX audit. Replacement covers
+# are stable Unsplash CDN images (not yet used elsewhere on the site);
+# bodies are restructured into real paragraphs with no &nbsp;.
+INSIGHTS_AUDIT_CONTENT_FIXES = {
+    "consumer-behaviour-shifts-reshaping-south-asian-retail": {
+        "cover": "https://images.unsplash.com/photo-1528035417020-6685853dcd79?q=80&w=1600&auto=format&fit=crop",
+        "body": (
+            "<p>South Asia is not one market, but its shoppers are moving in shared directions. "
+            "Five shifts keep surfacing in our fieldwork across Pakistan and the wider region.</p>"
+            "<h3>One: the basket is fragmenting</h3>"
+            "<p>Households are trading bulk trips for frequent small baskets, pressuring pack architecture. "
+            "Brands that win own the small-format occasion instead of discounting the big one.</p>"
+            "<h3>Two: discovery has moved to the feed</h3>"
+            "<p>For under-35 urban shoppers, the first aisle is TikTok and Instagram, not the shelf. "
+            "The implication is not ‘do social media’ — it is that packaging and point-of-sale "
+            "must now photograph well enough to survive a repost.</p>"
+            "<h3>Three: trust is the real currency</h3>"
+            "<p>Counterfeits and inconsistent quality have made verification behaviour routine — checking "
+            "seals, asking the shopkeeper, scanning QR codes. Visible quality signals convert better than "
+            "claims.</p>"
+            "<h3>Four: social commerce is infrastructure</h3>"
+            "<p>WhatsApp ordering and COD logistics are not a workaround; for millions of shoppers they are "
+            "the preferred channel. Meeting that behaviour beats trying to retrain it.</p>"
+            "<h3>Five: value is being redefined</h3>"
+            "<p>Shoppers are not buying the cheapest option; they are buying the option that best justifies "
+            "its price to the household. Brands that arm buyers with that justification — per-use cost, "
+            "durability, status — defend margin.</p>"
+            "<p>The brands that treat these as structural, not seasonal, will take the decade.</p>"
+        ),
+    },
+    "performance-marketing-in-2026-signal-over-noise": {
+        "cover": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
+        "body": (
+            "<p>The golden age of duct-taped attribution is over. Between signal loss, consent frameworks "
+            "and platform black boxes, the media buyer who wins in 2026 is not the one with the cleverest "
+            "audience hack — it is the one with the strongest inputs.</p>"
+            "<h3>Input one: creative</h3>"
+            "<p>Platforms now optimise delivery better than any human. What they cannot do is make people "
+            "care. Accounts running 15 to 20 creative variants per month consistently see 25 to 40 percent "
+            "lower CPAs than accounts resting three ads per quarter. Creative is the new targeting.</p>"
+            "<h3>Input two: first-party data</h3>"
+            "<p>Your CRM, your purchase history, your churned users — this is the fuel algorithms learn "
+            "from. Brands feeding clean conversion signals back into platforms outperform those optimising "
+            "toward a pixel by every meaningful margin.</p>"
+            "<h3>Input three: measurement you can defend</h3>"
+            "<p>Last-click flatters the bottom of the funnel and starves the top. Triangulate: platform "
+            "reporting for direction, geo-experiments for truth, and a simple MMM for budget allocation. "
+            "Perfect attribution is dead; confident incrementality is the replacement.</p>"
+            "<p>The agencies still selling dashboard screenshots are selling noise. Performance in 2026 is "
+            "a system: signal in, creative out, incrementality checked. Build the system and the platforms "
+            "work for you.</p>"
+        ),
+    },
+}
+
+
+async def fix_insights_audit_content():
+    """One-off content fix for the two posts identified in the 22 Aug 2026
+    UX audit (broken cover image + unstructured body). Cover URLs and body
+    HTML are hardcoded above rather than derived, since this is fixing
+    specific known-bad records, not a generalizable pattern."""
+    marker = await db.migrations.find_one({"_id": "fix_insights_audit_content_v1"})
+    if marker:
+        return
+    updated = 0
+    for slug, fix in INSIGHTS_AUDIT_CONTENT_FIXES.items():
+        changes = {"cover": fix["cover"], "body": fix["body"]}
+        result = await db.posts.update_one({"slug": slug}, {"$set": changes})
+        if result.modified_count:
+            updated += 1
+    # Same audit flagged a hyphen standing in for an em dash in this
+    # excerpt ("why you win - and it compounds") - fixed at the source
+    # above for future reseeds, and here for the document already live.
+    result = await db.posts.update_one(
+        {"slug": "the-founder-s-guide-to-brand-positioning"},
+        {"$set": {"excerpt": "Positioning is not your tagline. It is the single decision about who you are for and why you win — and it compounds like capital."}},
+    )
+    if result.modified_count:
+        updated += 1
+    await db.migrations.insert_one({"_id": "fix_insights_audit_content_v1", "applied_at": datetime.now(timezone.utc).isoformat(), "updated": updated})
+    if updated:
+        logger.info("Insights audit content fix: updated %d post(s)", updated)
 
 
 async def run_migration(name, coro):
@@ -2004,6 +2109,7 @@ async def startup():
     await run_migration("fix_legal_content", fix_legal_content())
     await run_migration("fix_broken_media_urls", fix_broken_media_urls())
     await run_migration("fix_nbsp_word_spacing", fix_nbsp_word_spacing())
+    await run_migration("fix_insights_audit_content", fix_insights_audit_content())
 
 
 app.include_router(api_router)

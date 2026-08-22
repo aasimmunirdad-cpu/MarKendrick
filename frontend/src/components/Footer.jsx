@@ -63,7 +63,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-5">Agency</p>
             <ul className="space-y-3 text-sm">
-              {[["About", "/about"], ["How We Work", "/how-we-work"], ["Industries", "/industries"], ["Work", "/work"], ["Insights", "/insights"], ["Whitepapers", "/whitepapers"], ["ROI Calculator", "/roi-calculator"], ["Maturity Quiz", "/maturity-quiz"], ["FAQ", "/faq"], ["Take the Quiz", "/quiz"], ["Share Your Experience", "/share-your-experience"], ["Contact", "/contact"]].map(([label, to]) => (
+              {[["About", "/about"], ["How We Work", "/how-we-work"], ["Industries", "/industries"], ["Work", "/work"], ["Insights", "/insights"], ["Whitepapers", "/whitepapers"], ["ROI Calculator", "/roi-calculator"], ["Marketing Maturity Grade", "/maturity-quiz"], ["FAQ", "/faq"], ["Find Your Fit", "/quiz"], ["Share Your Experience", "/share-your-experience"], ["Contact", "/contact"]].map(([label, to]) => (
                 <li key={label}><Link to={to} className="hover:text-vermilion transition-colors">{label}</Link></li>
               ))}
             </ul>
@@ -86,12 +86,31 @@ export default function Footer() {
               <p><a href={`mailto:${settings.office_email}`} className="hover:text-vermilion transition-colors">{settings.office_email}</a></p>
               <p>{settings.office_hours}</p>
             </address>
-            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mt-8 mb-4">Locations</p>
-            <ul className="space-y-2 text-xs text-muted-foreground">
-              {[["Lahore", "/locations/marketing-agency-lahore"], ["Pakistan", "/locations/marketing-agency-pakistan"], ["Middle East", "/locations/middle-east"], ["United Kingdom", "/locations/united-kingdom"], ["United States", "/locations/united-states"], ["Europe", "/locations/europe"]].map(([label, to]) => (
-                <li key={label}><Link to={to} className="hover:text-vermilion transition-colors">{label}</Link></li>
-              ))}
-            </ul>
+            {/* Grouped by level instead of one flat list - the old list
+                mixed a city, a country, and three regions with no
+                indication of the hierarchy (Lahore sits inside Pakistan,
+                UK sits inside Europe), which read as inconsistent (UX
+                audit, 22 Aug 2026). These are SEO/service landing pages,
+                so the heading says that plainly. */}
+            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mt-8 mb-4">Where We Work</p>
+            <div className="space-y-4">
+              <div>
+                <p className="text-[11px] font-semibold text-foreground/70 mb-2">Pakistan</p>
+                <ul className="space-y-2 text-xs text-muted-foreground">
+                  {[["Lahore", "/locations/marketing-agency-lahore"], ["Nationwide", "/locations/marketing-agency-pakistan"]].map(([label, to]) => (
+                    <li key={label}><Link to={to} className="hover:text-vermilion transition-colors">{label}</Link></li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold text-foreground/70 mb-2">International</p>
+                <ul className="space-y-2 text-xs text-muted-foreground">
+                  {[["Middle East", "/locations/middle-east"], ["United Kingdom", "/locations/united-kingdom"], ["United States", "/locations/united-states"], ["Europe", "/locations/europe"]].map(([label, to]) => (
+                    <li key={label}><Link to={to} className="hover:text-vermilion transition-colors">{label}</Link></li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 

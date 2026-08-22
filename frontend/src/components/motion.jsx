@@ -5,7 +5,31 @@ export const fadeUp = {
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
-export function Reveal({ children, delay = 0, className = "", once = true }) {
+/**
+ * @param {boolean} [eager] - for content that's already in the initial
+ *   viewport (page heroes). whileInView depends on an IntersectionObserver
+ *   firing after layout, which stacks on top of the JS-bundle load/parse/
+ *   hydrate time this app already pays before anything renders - a UX
+ *   audit (22 Aug 2026) found hero content sitting at opacity:0 for that
+ *   whole stretch. `eager` animates on mount instead of waiting for
+ *   viewport intersection, so above-the-fold content is never held back by
+ *   an observer that has nothing new to tell it. Below-the-fold content
+ *   should stay on the default (non-eager) scroll-triggered reveal.
+ */
+export function Reveal({ children, delay = 0, className = "", once = true, eager = false }) {
+  if (eager) {
+    return (
+      <motion.div
+        className={className}
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {children}
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       className={className}

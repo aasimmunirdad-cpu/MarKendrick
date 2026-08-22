@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Menu, X, ArrowUpRight, ChevronDown, Calculator, Gauge, Sparkles, FileText, HelpCircle, MessageSquarePlus, Workflow } from "lucide-react";
+import { Search, Menu, X, ArrowUpRight, ChevronDown, Calculator, Gauge, Sparkles, FileText, HelpCircle, MessageSquarePlus, Workflow, CalendarDays } from "lucide-react";
 import { useSiteSettings } from "../hooks/useSiteSettings";
 import ServiceWheel from "./ServiceWheel";
 
@@ -23,7 +23,7 @@ const RESOURCE_GROUPS = [
     items: [
       { to: "/roi-calculator", label: "ROI Calculator", desc: "What fixing your funnel is worth", icon: Calculator },
       { to: "/maturity-quiz", label: "Marketing Maturity Grade", desc: "Get graded A to F in 2 minutes", icon: Gauge },
-      { to: "/quiz", label: "Take the Quiz", desc: "A quick fit-check for your brand", icon: Sparkles },
+      { to: "/quiz", label: "Find Your Fit", desc: "A quick fit-check for your brand", icon: Sparkles },
     ],
   },
   {
@@ -58,6 +58,26 @@ export default function Navbar({ onSearchOpen }) {
     setMobileResourcesOpen(false);
   }, [location.pathname]);
 
+  // Lock body scroll while the mobile menu is open - without this, touch
+  // scrolls over the (fixed-position) menu panel could pass through to the
+  // page behind it, which visibly slid underneath the panel (UX audit,
+  // 22 Aug 2026). Restores the scroll position on close.
+  useEffect(() => {
+    if (!open) return;
+    const scrollY = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    return () => {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      window.scrollTo(0, scrollY);
+    };
+  }, [open]);
+
   useEffect(() => {
     if (!resourcesOpen) return;
     const onClick = (e) => {
@@ -81,11 +101,11 @@ export default function Navbar({ onSearchOpen }) {
     <header
       data-testid="main-navbar"
       className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${
-        scrolled || open ? "bg-background/70 backdrop-blur-xl border-b border-border" : "border-b border-transparent"
+        scrolled || open ? "bg-background/95 backdrop-blur-xl border-b border-border" : "border-b border-transparent"
       }`}
     >
-      <nav className="max-w-[1400px] mx-auto px-5 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
-        <Link to="/" data-testid="nav-logo" className="flex items-center">
+      <nav className="max-w-[1400px] mx-auto px-5 sm:px-8 h-16 sm:h-20 flex items-center justify-between gap-4">
+        <Link to="/" data-testid="nav-logo" className="flex items-center shrink-0">
           <img
             src={settings.logo_url}
             alt="MarKendrick"
@@ -95,7 +115,12 @@ export default function Navbar({ onSearchOpen }) {
           />
         </Link>
 
-        <div className="hidden lg:flex items-center gap-8">
+        {/* Breakpoint raised from 1024 to 1200 (arbitrary min-[] variant):
+            at 1024, the full nav - logo, 4 links, Resources dropdown, About,
+            Contact, service badge, search and a large CTA - genuinely ran
+            out of room and the logo overlapped "Services" (UX audit,
+            22 Aug 2026). 1200px gives it enough width to never collide. */}
+        <div className="hidden min-[1200px]:flex items-center gap-8">
           {LINKS.map((l) => (
             <NavLink key={l.to} to={l.to} data-testid={`nav-link-${l.label.toLowerCase()}`} className={navLinkCls}>
               {l.label}
@@ -158,7 +183,11 @@ export default function Navbar({ onSearchOpen }) {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <ServiceWheel />
+          {/* Decorative rotating service badge: illegible at its rendered
+              size and a direct contributor to the header running out of
+              room (UX audit, 22 Aug 2026) - hidden below 1280px where
+              space is tightest. */}
+          <div className="hidden xl:block"><ServiceWheel /></div>
           <button
             data-testid="nav-search-button"
             onClick={onSearchOpen}
@@ -183,11 +212,24 @@ export default function Navbar({ onSearchOpen }) {
           >
             Book a Consultation <ArrowUpRight size={15} />
           </Link>
+          {/* Compact mobile CTA: the full "Book a Consultation" button was
+              hidden below the sm breakpoint with no replacement, so the
+              site's one conversion action was invisible until a visitor
+              opened the menu (UX audit, 22 Aug 2026). This keeps a tappable
+              CTA in the header at every width. */}
+          <Link
+            to="/book-consultation"
+            data-testid="nav-book-consultation-button-mobile"
+            aria-label="Book a Consultation"
+            className="sm:hidden inline-flex items-center gap-1.5 bg-vermilion hover:bg-vermilion-hover text-white text-xs font-semibold px-3.5 py-2 rounded-full transition-colors duration-200"
+          >
+            Book <CalendarDays size={14} />
+          </Link>
           <button
             data-testid="mobile-menu-button"
             onClick={() => setOpen(!open)}
             aria-label="Menu"
-            className="lg:hidden p-2 rounded-full border border-border"
+            className="min-[1200px]:hidden p-2 rounded-full border border-border"
           >
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -202,12 +244,17 @@ export default function Navbar({ onSearchOpen }) {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="lg:hidden overflow-hidden border-t border-border bg-background/95 backdrop-blur-xl max-h-[calc(100svh-4rem)] overflow-y-auto"
+            className="min-[1200px]:hidden overflow-hidden border-t border-border bg-background/95 backdrop-blur-xl h-[calc(100dvh-4rem)] overflow-y-auto"
           >
             <div className="px-6 py-6 flex flex-col gap-1">
               {LINKS.map((l, i) => (
                 <motion.div key={l.to} initial={{ x: -16, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: i * 0.05 }}>
-                  <NavLink to={l.to} className="block py-3 font-display text-2xl font-bold tracking-tight hover:text-vermilion transition-colors">
+                  <NavLink
+                    to={l.to}
+                    className={({ isActive }) =>
+                      `block py-3 font-display text-2xl font-bold tracking-tight transition-colors ${isActive ? "text-vermilion" : "hover:text-vermilion"}`
+                    }
+                  >
                     {l.label}
                   </NavLink>
                 </motion.div>
@@ -245,7 +292,12 @@ export default function Navbar({ onSearchOpen }) {
 
               {AFTER_LINKS.map((l, i) => (
                 <motion.div key={l.to} initial={{ x: -16, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: (LINKS.length + 1 + i) * 0.05 }}>
-                  <NavLink to={l.to} className="block py-3 font-display text-2xl font-bold tracking-tight hover:text-vermilion transition-colors">
+                  <NavLink
+                    to={l.to}
+                    className={({ isActive }) =>
+                      `block py-3 font-display text-2xl font-bold tracking-tight transition-colors ${isActive ? "text-vermilion" : "hover:text-vermilion"}`
+                    }
+                  >
                     {l.label}
                   </NavLink>
                 </motion.div>
