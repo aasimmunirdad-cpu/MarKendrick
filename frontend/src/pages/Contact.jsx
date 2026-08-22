@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, Check, Loader2 } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Loader2, MessageCircle, Instagram, Facebook } from "lucide-react";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { api, formatApiError } from "../lib/api";
@@ -79,6 +79,38 @@ export default function Contact() {
               <p><span className="text-muted-foreground block text-xs uppercase tracking-[0.25em] mb-1">Email</span><a href={`mailto:${OFFICE.email}`} className="hover:text-vermilion transition-colors">{OFFICE.email}</a></p>
               <p><span className="text-muted-foreground block text-xs uppercase tracking-[0.25em] mb-1">Hours</span>{OFFICE.hours}</p>
             </address>
+            <div className="flex items-center gap-3 mt-8">
+              <a
+                href={`https://wa.me/${settings.office_whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat on WhatsApp"
+                data-testid="contact-whatsapp-link"
+                className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:border-vermilion hover:text-vermilion transition-colors"
+              >
+                <MessageCircle size={17} />
+              </a>
+              <a
+                href={settings.instagram_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="MarKendrick on Instagram"
+                data-testid="contact-instagram-link"
+                className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:border-vermilion hover:text-vermilion transition-colors"
+              >
+                <Instagram size={17} />
+              </a>
+              <a
+                href={settings.facebook_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="MarKendrick on Facebook"
+                data-testid="contact-facebook-link"
+                className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:border-vermilion hover:text-vermilion transition-colors"
+              >
+                <Facebook size={17} />
+              </a>
+            </div>
           </Reveal>
         </div>
 

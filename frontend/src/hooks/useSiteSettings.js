@@ -10,6 +10,8 @@ export const DEFAULT_SITE_SETTINGS = {
   office_email: "hello@markendrick.com",
   office_hours: "Mon–Fri, 9:00–18:00 PKT",
   office_whatsapp: "923339395444",
+  facebook_url: "https://www.facebook.com/share/18kcWG5kt1/?mibextid=wwXIfr",
+  instagram_url: "https://www.instagram.com/markendrick360?igsi=aDkzZ2gzNnQ1c3Fu&utm_source=qr",
   studio_video_url: "/media/studio-session.mp4",
   about_office_photo_url: "/media/office/office-1.jpg",
   home_showreel_poster_url: "/media/office/office-2.jpg",

@@ -990,6 +990,18 @@ function SettingsTab({ settings, loading, onChanged }) {
         </div>
       </div>
 
+      <h3 className="font-display text-lg font-bold tracking-tight mb-3">Social links</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+        <div>
+          <label className={labelCls}>Facebook URL</label>
+          <input data-testid="settings-field-facebook_url" className={inputCls} value={data.facebook_url} onChange={(e) => set("facebook_url", e.target.value)} />
+        </div>
+        <div>
+          <label className={labelCls}>Instagram URL</label>
+          <input data-testid="settings-field-instagram_url" className={inputCls} value={data.instagram_url} onChange={(e) => set("instagram_url", e.target.value)} />
+        </div>
+      </div>
+
       <h3 className="font-display text-lg font-bold tracking-tight mb-3">Page imagery</h3>
       <div className="grid grid-cols-1 gap-4 mb-8">
         <div>

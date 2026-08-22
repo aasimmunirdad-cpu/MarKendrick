@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Loader2, Check } from "lucide-react";
+import { ArrowUpRight, Loader2, Check, Facebook, Instagram, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { api, formatApiError } from "../lib/api";
@@ -86,6 +86,38 @@ export default function Footer() {
               <p><a href={`mailto:${settings.office_email}`} className="hover:text-vermilion transition-colors">{settings.office_email}</a></p>
               <p>{settings.office_hours}</p>
             </address>
+            <div className="flex items-center gap-3 mt-6">
+              <a
+                href={`https://wa.me/${settings.office_whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat on WhatsApp"
+                data-testid="footer-whatsapp-link"
+                className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:border-vermilion hover:text-vermilion transition-colors"
+              >
+                <MessageCircle size={16} />
+              </a>
+              <a
+                href={settings.instagram_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="MarKendrick on Instagram"
+                data-testid="footer-instagram-link"
+                className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:border-vermilion hover:text-vermilion transition-colors"
+              >
+                <Instagram size={16} />
+              </a>
+              <a
+                href={settings.facebook_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="MarKendrick on Facebook"
+                data-testid="footer-facebook-link"
+                className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:border-vermilion hover:text-vermilion transition-colors"
+              >
+                <Facebook size={16} />
+              </a>
+            </div>
             {/* Grouped by level instead of one flat list - the old list
                 mixed a city, a country, and three regions with no
                 indication of the hierarchy (Lahore sits inside Pakistan,
