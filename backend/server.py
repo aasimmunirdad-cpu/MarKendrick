@@ -2051,6 +2051,61 @@ INSIGHTS_AUDIT_CONTENT_FIXES = {
 }
 
 
+async def replace_khaas_foods_with_ensound():
+    """Replaces the Khaas Foods case study with a real client, Ensound
+    Hearing (a Lahore hearing-care provider - ensoundhearing.com). Updates
+    the existing document in place (same _id) rather than delete+insert, so
+    it keeps its slot in the Work listing. Results are described
+    qualitatively, not with invented numbers, since no real metrics were
+    provided for this case study."""
+    marker = await db.migrations.find_one({"_id": "replace_khaas_foods_with_ensound_v1"})
+    if marker:
+        return
+    existing = await db.case_studies.find_one({"client": "Khaas Foods"})
+    if not existing:
+        await db.migrations.insert_one({"_id": "replace_khaas_foods_with_ensound_v1", "applied_at": datetime.now(timezone.utc).isoformat(), "note": "no Khaas Foods doc found"})
+        return
+    new_doc = {
+        "client": "Ensound Hearing",
+        "title": "Building trust and demand for a new hearing care brand in Lahore",
+        "industry": "Healthcare & Hearing Care",
+        "services": ["Brand & Positioning", "Performance Marketing", "Market Research"],
+        "summary": "Hearing loss is a category people avoid until they can't - and the decision is often made by a family member, not the patient. Research-led positioning and a patient-journey-first funnel turned a new name into a trusted one in Lahore hearing care.",
+        "challenge": (
+            "<p>Hearing loss carries a stigma most product categories don't: denial keeps sufferers from "
+            "seeking help for years, and the eventual decision is frequently driven by an adult child rather "
+            "than the patient. Ensound was entering Lahore's hearing care market against established "
+            "audiology clinics, needing to turn a genuinely strong offer - modern, discreet hearing "
+            "technology with personalised fittings and lifetime support - into something a first-time, "
+            "skeptical audience could actually trust before they'd ever set foot in the clinic.</p>"
+        ),
+        "approach": (
+            "<p>We started with the real decision journey, not the product spec sheet: denial, a family "
+            "member noticing first, cost anxiety, and worry about looking old or disabled. Positioning was "
+            "built around clarity, comfort and confidence rather than the technology itself, with a second "
+            "message track built specifically for the adult children who initiate most first appointments. "
+            "Local search and performance channels were built around the objections that actually stall a "
+            "booking - visible tests versus invisible devices, real cost versus perceived cost, and what a "
+            "first visit involves - paired with content marketing that treats hearing health as an ongoing "
+            "relationship, not a one-time sale.</p>"
+        ),
+        "results": [
+            {"metric": "Clearer", "label": "A positioning patients and their families both respond to"},
+            {"metric": "Consistent", "label": "A booking funnel that runs on a defined patient journey, not guesswork"},
+            {"metric": "Evidence-led", "label": "Messaging built from real objections, not assumptions"},
+        ],
+        "quote": "MarKendrick understood that we weren't selling a device - we were selling the confidence to make the appointment in the first place.",
+        "quote_author": "Founder, Ensound Hearing",
+        "cover": "https://images.unsplash.com/photo-1603336540413-009bd9dc5133?q=80&w=1600&auto=format&fit=crop",
+        "published": True,
+        "slug": "ensound-hearing-building-trust-and-demand-for-a-new-hearing-care-brand-in-lahore",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    }
+    await db.case_studies.update_one({"_id": existing["_id"]}, {"$set": new_doc})
+    await db.migrations.insert_one({"_id": "replace_khaas_foods_with_ensound_v1", "applied_at": datetime.now(timezone.utc).isoformat()})
+    logger.info("Replaced Khaas Foods case study with Ensound Hearing")
+
+
 async def add_bakarwal_testimonial():
     """Adds the Bakarwal testimonial (dairy brand launch, agriculture/FMCG)
     to the published testimonials shown on the site."""
@@ -2135,6 +2190,7 @@ async def startup():
     await run_migration("fix_nbsp_word_spacing", fix_nbsp_word_spacing())
     await run_migration("fix_insights_audit_content", fix_insights_audit_content())
     await run_migration("add_bakarwal_testimonial", add_bakarwal_testimonial())
+    await run_migration("replace_khaas_foods_with_ensound", replace_khaas_foods_with_ensound())
 
 
 app.include_router(api_router)

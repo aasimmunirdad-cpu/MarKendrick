@@ -314,7 +314,7 @@ export default function Home() {
               {[
                 { metric: "+212%", label: "ROAS - Velora Beauty" },
                 { metric: "3.4x", label: "Pipeline - NimbusPay" },
-                { metric: "+61%", label: "Recall - Khaas Foods" },
+                { metric: "Trusted", label: "Patient funnel - Ensound Hearing" },
               ].map((m, i) => (
                 <motion.div
                   key={m.label}
